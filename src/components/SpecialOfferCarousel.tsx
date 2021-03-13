@@ -12,15 +12,17 @@ import { RiArrowRightSLine, RiArrowLeftSLine } from "react-icons/ri";
 import LazyLoad from "react-lazyload";
 import { useHistory } from "react-router-dom";
 import useWindowDimensions from "../windowDimensions";
-import { FeaturedCarouselProps } from "./Home";
+import { Game, SpecialOfferCarouselProps } from "./Home";
 import anime from "animejs/lib/anime.es.js";
-import { LG_SCREEN_SIZE, MED_SCREEN_SIZE } from "../constants";
+import { LG_SCREEN_SIZE, SM_SCREEN_SIZE, MED_SCREEN_SIZE } from "../constants";
+import _ from "lodash";
 
-const FeaturedCarousel: React.FC<FeaturedCarouselProps> = (props) => {
+const SpecialOfferCarousel: React.FC<SpecialOfferCarouselProps> = (props) => {
     const { width } = useWindowDimensions();
-
+    const specialofferContent = _.chunk(props.content, 6);
+    console.log(specialofferContent);
     const renderSlides = () => {
-        return props.content.map((content, index) => {
+        return specialofferContent.map((contents, index) => {
             return (
                 <Slide index={index} key={index}>
                     <LazyLoad>
@@ -42,36 +44,32 @@ const FeaturedCarousel: React.FC<FeaturedCarouselProps> = (props) => {
                                 });
                             }}
                         >
-                            <div className="featuredCarouselSectionWrap">
-                                <div className="featuredCarouselImageSection">
-                                    <img
-                                        src={content.image}
-                                        alt="movie poster"
-                                    ></img>
-                                </div>
-                                <div className="featuredCarouselScreenshotSection">
-                                    <h1 className="featuredCarouselGameTitle">
-                                        Game TItle
-                                    </h1>
-                                    <div className="featuredCarouselGameScreenshotsWrap">
-                                        <img
-                                            src={content.image}
-                                            alt="game screenshot"
-                                        ></img>
-                                        <img
-                                            src={content.image}
-                                            alt="game screenshot"
-                                        ></img>
-                                        <img
-                                            src={content.image}
-                                            alt="game screenshot"
-                                        ></img>
-                                        <img
-                                            src={content.image}
-                                            alt="game screenshot"
-                                        ></img>
-                                    </div>
-                                </div>
+                            <div className="specialOfferCarouselSectionContainer">
+                                {contents.map((content: Game, index) => {
+                                    return (
+                                        <div className="specialOfferGameContainer">
+                                            <img
+                                                src={content.image}
+                                                alt="game"
+                                            ></img>
+                                            <div className="specialOfferGameTextWrap">
+                                                <div className="highlightedGamePriceWrap">
+                                                    <div className="discountGamePrice">
+                                                        -50%
+                                                    </div>
+                                                    <div className="adjustedPriceWrap">
+                                                        <p className="gameOrigPrice">
+                                                            28.00
+                                                        </p>
+                                                        <p className="gameAdjustedPrice">
+                                                            $20.00
+                                                        </p>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    );
+                                })}
                             </div>
                         </div>
                     </LazyLoad>
@@ -79,7 +77,17 @@ const FeaturedCarousel: React.FC<FeaturedCarouselProps> = (props) => {
             );
         });
     };
-
+    const renderHeight = () => {
+        if (width < SM_SCREEN_SIZE) {
+            return 78;
+        } else if (width < MED_SCREEN_SIZE) {
+            return 76;
+        } else if (width < LG_SCREEN_SIZE) {
+            return 33;
+        } else if (width >= LG_SCREEN_SIZE) {
+            return 30;
+        } else return 28;
+    };
     const renderCarousel = (): JSX.Element | JSX.Element[] => {
         return (
             <div
@@ -92,13 +100,13 @@ const FeaturedCarousel: React.FC<FeaturedCarouselProps> = (props) => {
             >
                 <CarouselProvider
                     naturalSlideWidth={100}
-                    naturalSlideHeight={width < LG_SCREEN_SIZE ? 55 : 33}
-                    totalSlides={props.content.length}
+                    naturalSlideHeight={renderHeight()}
+                    totalSlides={specialofferContent.length}
                     className="gameCarouselWrap"
                     visibleSlides={1}
                     infinite={true}
                     step={1}
-                    isPlaying={true}
+                    isPlaying={false}
                     interval={5000}
                 >
                     <div className="sliderAndButtonWrap">
@@ -153,4 +161,4 @@ const FeaturedCarousel: React.FC<FeaturedCarouselProps> = (props) => {
     return <div>{renderCarousel()}</div>;
 };
 
-export default FeaturedCarousel;
+export default SpecialOfferCarousel;
