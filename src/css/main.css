@@ -357,7 +357,7 @@ html {
 
 body {
   /*Make default font-size bigger. If default font-size is 16px; 1.6 rem = 16 px*/
-  font: 1.1rem "", sans-serif, Arial, Helvetica;
+  font: 1.1rem "", Arial, sans-serif, Helvetica;
 }
 
 .loadingCenter {
@@ -409,6 +409,218 @@ body {
 }
 .headerLogoImageWrap img {
   width: 100%;
+}
+
+@media screen and (min-width: 992px) {
+  .featuredContainerCarousel {
+    margin: 0 5rem;
+  }
+}
+
+.featuredCarouselSectionWrap {
+  display: flex;
+}
+
+.featuredCarouselImageSection {
+  width: 100%;
+}
+@media screen and (min-width: 992px) {
+  .featuredCarouselImageSection {
+    width: 70%;
+  }
+}
+
+.hideFeaturedCarouselScreenshotSection {
+  display: none;
+}
+
+.featuredCarouselScreenshotSection {
+  background-color: black;
+  display: none;
+}
+@media screen and (min-width: 992px) {
+  .featuredCarouselScreenshotSection {
+    display: block;
+    width: 30%;
+  }
+}
+.featuredCarouselScreenshotSection .featuredCarouselGameTitle {
+  margin-left: 1.5rem;
+  font-weight: normal;
+  letter-spacing: 0.2rem;
+  margin: 0;
+}
+@media screen and (min-width: 992px) {
+  .featuredCarouselScreenshotSection .featuredCarouselGameTitle {
+    margin: 2rem 0.7rem;
+  }
+}
+@media screen and (min-width: 1200px) {
+  .featuredCarouselScreenshotSection .featuredCarouselGameTitle {
+    margin: 3rem 1rem;
+  }
+}
+.featuredCarouselScreenshotSection .featuredCarouselGameScreenshotsWrap {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 0.5rem;
+}
+@media screen and (min-width: 1200px) {
+  .featuredCarouselScreenshotSection .featuredCarouselGameScreenshotsWrap {
+    grid-gap: 1rem;
+  }
+}
+
+.mediaCarouselWrap {
+  width: 100%;
+}
+.mediaCarouselWrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.sliderAndButtonWrap {
+  position: relative;
+}
+
+.showButtonsForSmallScreensWrap {
+  display: flex;
+  justify-content: space-between;
+}
+
+.hideFeaturedCarouselButton,
+.hideFeaturedCarouselButtonsWrap {
+  display: none !important;
+}
+
+.mediaNextButton {
+  display: block;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.3) 5%, rgba(0, 0, 0, 0) 95%);
+  font-size: 2rem;
+  color: white;
+  border: none;
+  padding: 0;
+  padding-right: 0.5rem;
+  padding-left: 3rem;
+  outline: none !important;
+  transition: opacity 0.5s;
+}
+.mediaNextButton:hover {
+  background: linear-gradient(to right, rgba(171, 218, 244, 0) 5%, rgba(171, 218, 244, 0.3) 95%);
+}
+@media screen and (min-width: 520px) {
+  .mediaNextButton {
+    font-size: 3rem;
+  }
+}
+@media screen and (min-width: 768px) {
+  .mediaNextButton {
+    font-size: 4rem;
+  }
+}
+@media screen and (min-width: 992px) {
+  .mediaNextButton {
+    font-size: 5rem;
+  }
+}
+@media screen and (min-width: 992px) {
+  .mediaNextButton {
+    padding: 3rem 0rem;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}
+
+.mediaBackButton {
+  display: block;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.3) 5%, rgba(0, 0, 0, 0) 95%);
+  font-size: 2rem;
+  color: white;
+  border: none;
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0.3) 5%, rgba(0, 0, 0, 0) 95%);
+  padding: 0;
+  padding-right: 3rem;
+  padding-left: 0.5rem;
+  outline: none !important;
+  transition: opacity 0.5s;
+}
+.mediaBackButton:hover {
+  background: linear-gradient(to right, rgba(171, 218, 244, 0) 5%, rgba(171, 218, 244, 0.3) 95%);
+}
+@media screen and (min-width: 520px) {
+  .mediaBackButton {
+    font-size: 3rem;
+  }
+}
+@media screen and (min-width: 768px) {
+  .mediaBackButton {
+    font-size: 4rem;
+  }
+}
+@media screen and (min-width: 992px) {
+  .mediaBackButton {
+    font-size: 5rem;
+  }
+}
+@media screen and (min-width: 992px) {
+  .mediaBackButton {
+    padding: 3rem 0rem;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}
+
+.bannerTitle {
+  text-transform: uppercase;
+  font-weight: 500;
+  font-size: 1rem;
+  letter-spacing: 0.2rem;
+}
+@media screen and (min-width: 520px) {
+  .bannerTitle {
+    font-size: 1.3rem;
+  }
+}
+@media screen and (min-width: 768px) {
+  .bannerTitle {
+    font-size: 1.6rem;
+  }
+}
+@media screen and (min-width: 992px) {
+  .bannerTitle {
+    margin-left: 5.5rem;
+  }
+}
+
+.homeContainer {
+  background: url(https://store.akamai.steamstatic.com/public/images/v6/home/cluster_bg.png?v=1) bottom center no-repeat;
+  padding: 1rem 3rem;
+}
+@media screen and (min-width: 520px) {
+  .homeContainer {
+    padding: 1rem 3rem;
+  }
+}
+@media screen and (min-width: 768px) {
+  .homeContainer {
+    padding: 1rem 6rem;
+  }
+}
+@media screen and (min-width: 992px) {
+  .homeContainer {
+    padding: 1rem 10rem;
+  }
 }
 
 /*# sourceMappingURL=main.css.map */

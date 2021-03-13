@@ -7,28 +7,38 @@
 //     }
 // }
 
-// @mixin carouselNextAndPrevButton {
-//     display: flex;
-//     align-items: center;
-//     text-align: center;
-//     height: 100%;
-//     background: rgba(0, 0, 0, 0.6);
-//     font-size: 2rem;
-//     color: white;
+@mixin carouselNextAndPrevButton {
+    display: flex;
+    align-items: center;
+    text-align: center;
 
-//     border: none;
+    background: linear-gradient(
+        to right,
+        rgba(0, 0, 0, 0.3) 5%,
+        rgba(0, 0, 0, 0) 95%
+    );
+    font-size: 2rem;
+    color: white;
+    border: none;
+    transition: all 0.3s ease-in;
+    &:hover {
+        background: linear-gradient(
+            to right,
+            rgba(171, 218, 244, 0) 5%,
+            rgba(171, 218, 244, 0.3) 95%
+        );
+    }
+    @media screen and (min-width: $sm_breakpoint) {
+        font-size: 3rem;
+    }
 
-//     @media screen and (min-width: $sm_breakpoint) {
-//         font-size: 3rem;
-//     }
-
-//     @media screen and (min-width: $md_breakpoint) {
-//         font-size: 4rem;
-//     }
-//     @media screen and (min-width: $lg_breakpoint) {
-//         font-size: 5rem;
-//     }
-// }
+    @media screen and (min-width: $md_breakpoint) {
+        font-size: 4rem;
+    }
+    @media screen and (min-width: $lg_breakpoint) {
+        font-size: 5rem;
+    }
+}
 
 // @mixin sidePaddingForCarouselAndTitle {
 //     padding-left: 3rem;
