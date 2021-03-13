@@ -1,0 +1,30 @@
+.headerContainer {
+    background: #171a21;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 2rem;
+    @media screen and (min-width: $sm_breakpoint) {
+        padding: 2rem 4rem;
+    }
+    @media screen and (min-width: $md_breakpoint) {
+        padding: 2rem 6rem;
+    }
+}
+.headerAuthText {
+    font-size: 1.3rem;
+    @media screen and (min-width: $sm_breakpoint) {
+        font-size: 1.7rem;
+    }
+
+    @media screen and (min-width: $lg_breakpoint) {
+        font-size: 2rem;
+    }
+}
+.headerLogoImageWrap {
+    width: 15rem;
+    img {
+        width: 100%;
+    }
+    cursor: pointer;
+}

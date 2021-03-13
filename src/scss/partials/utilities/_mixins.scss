@@ -1,0 +1,48 @@
+// @mixin step {
+//     text-transform: uppercase;
+//     font-size: 1.4rem;
+//     margin-bottom: 0.5rem;
+//     @media screen and (min-width: $sm_breakpoint) {
+//         font-size: 1.4rem;
+//     }
+// }
+
+// @mixin carouselNextAndPrevButton {
+//     display: flex;
+//     align-items: center;
+//     text-align: center;
+//     height: 100%;
+//     background: rgba(0, 0, 0, 0.6);
+//     font-size: 2rem;
+//     color: white;
+
+//     border: none;
+
+//     @media screen and (min-width: $sm_breakpoint) {
+//         font-size: 3rem;
+//     }
+
+//     @media screen and (min-width: $md_breakpoint) {
+//         font-size: 4rem;
+//     }
+//     @media screen and (min-width: $lg_breakpoint) {
+//         font-size: 5rem;
+//     }
+// }
+
+// @mixin sidePaddingForCarouselAndTitle {
+//     padding-left: 3rem;
+//     padding-right: 3rem;
+//     @media screen and (min-width: $sm_breakpoint) {
+//         padding-left: 4rem;
+//         padding-right: 4rem;
+//     }
+//     @media screen and (min-width: $md_breakpoint) {
+//         padding-left: 4.5rem;
+//         padding-right: 4.5rem;
+//     }
+//     @media screen and (min-width: $lg_breakpoint) {
+//         padding-left: 5rem;
+//         padding-right: 5rem;
+//     }
+// }
