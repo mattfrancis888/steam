@@ -48,3 +48,10 @@ test("Steam logo clicked", async () => {
     expect(pushSpy).toBeCalledWith("/");
     pushSpy.mockRestore();
 });
+
+test("Sections exist", async () => {
+    expect(app.getByText(/Featured And Recommended/i)).toBeInTheDocument();
+    expect(app.getByText(/Special Offers/i)).toBeInTheDocument();
+    expect(app.getByText(/The Community Recommends/i)).toBeInTheDocument();
+    expect(app.getByText(/Top Sellers/i)).toBeInTheDocument();
+});

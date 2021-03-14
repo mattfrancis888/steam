@@ -18,6 +18,7 @@ import { LG_SCREEN_SIZE, XL_SCREEN_SIZE, MED_SCREEN_SIZE } from "../constants";
 
 const FeaturedCarousel: React.FC<FeaturedCarouselProps> = (props) => {
     const { width } = useWindowDimensions();
+    const [style, setStyle] = useState({ opacity: "1" });
 
     const renderSlides = () => {
         return props.content.map((content, index) => {
@@ -25,6 +26,7 @@ const FeaturedCarousel: React.FC<FeaturedCarouselProps> = (props) => {
                 <Slide index={index} key={index}>
                     <LazyLoad>
                         <div
+                            key={index}
                             className={`featuredContainerCarousel featuredAnime${index}`}
                             onLoad={() => {
                                 anime({
@@ -43,8 +45,30 @@ const FeaturedCarousel: React.FC<FeaturedCarouselProps> = (props) => {
                             }}
                         >
                             <div className="communityCarouselSectionWrap">
-                                <div className="communityCarouselImageSection">
+                                <div
+                                    className="communityCarouselImageSection"
+                                    onMouseEnter={(e) => {
+                                        setStyle({ opacity: "1" });
+                                    }}
+                                    onMouseLeave={(e) => {
+                                        setStyle({ opacity: "0" });
+                                    }}
+                                >
                                     <img src={content.image} alt="game"></img>
+
+                                    <video
+                                        className="communityCarouselVid"
+                                        autoPlay={true}
+                                        playsInline={false}
+                                        muted={true}
+                                        loop={true}
+                                        style={style}
+                                    >
+                                        <source
+                                            src="  https://cdn.cloudflare.steamstatic.com/steam/apps/256820708/movie480_vp9.webm?t=1612810771"
+                                            type="video/mp4"
+                                        />
+                                    </video>
                                     <p className="communityPrice">$18.88</p>
                                 </div>
                                 <div className="communityCarouselReviewSection">

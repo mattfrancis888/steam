@@ -772,6 +772,15 @@ body {
     font-size: 1.4rem;
   }
 }
+.communityCarouselImageSection .communityCarouselVid {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  transition: all 0.3s ease;
+  width: 100%;
+  z-index: 1;
+}
 
 .hideFeaturedCarouselScreenshotSection {
   display: none;
@@ -981,19 +990,19 @@ body {
 .chartGameInfo {
   color: #c7d5e0;
   width: 100%;
-  padding: 0.5rem 0.5rem;
+  margin: 0.5rem 0.5rem;
   display: flex;
   align-items: center;
   justify-content: space-between;
 }
 @media screen and (min-width: 520px) {
   .chartGameInfo {
-    padding: 1rem 2rem;
+    margin: 1rem 2rem;
   }
 }
 @media screen and (min-width: 768px) {
   .chartGameInfo {
-    padding: 1.5rem 2rem;
+    margin: 1.5rem 2rem;
   }
 }
 

@@ -92,7 +92,7 @@ const Home: React.FC<{}> = (props) => {
                 <FeaturedCarousel content={games} />
                 <h1 className="bannerTitle">Special Offers</h1>
                 <SpecialOfferCarousel content={specialOfferGames} />
-                <h1 className="bannerTitle">The Community Recomends</h1>
+                <h1 className="bannerTitle">The Community Recommends</h1>
                 <CommunityCarousel content={games} />
             </div>
             <div className="chartTabsWrap">
@@ -105,15 +105,14 @@ const Home: React.FC<{}> = (props) => {
                     {specialOfferGames.map((content, index) => {
                         return (
                             <div
+                                key={index}
                                 className={`chartGameContainer ${
                                     hoverData === index + 1
                                         ? "chartGameContainerToggled"
                                         : ""
                                 }`}
                                 onMouseOver={() => setHoverData(content.id)}
-                                onClick={(event) => {
-                                    // setHoverData(content.id);
-                                }}
+                                onClick={(event) => {}}
                             >
                                 <div className="chartGameImage">
                                     <img

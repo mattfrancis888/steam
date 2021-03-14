@@ -47,7 +47,10 @@ const SpecialOfferCarousel: React.FC<SpecialOfferCarouselProps> = (props) => {
                             <div className="specialOfferCarouselSectionContainer">
                                 {contents.map((content: Game, index) => {
                                     return (
-                                        <div className="specialOfferGameContainer">
+                                        <div
+                                            className="specialOfferGameContainer"
+                                            key={index}
+                                        >
                                             <img
                                                 src={content.image}
                                                 alt="game"

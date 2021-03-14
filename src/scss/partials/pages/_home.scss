@@ -111,17 +111,19 @@
 .chartGameInfo {
     color: #c7d5e0;
     width: 100%;
-    padding: 0.5rem 0.5rem;
+    //Used margin instead of padding here becasue margin and box-sizing: content-box; dosent affect the spacings
+    margin: 0.5rem 0.5rem;
     display: flex;
     align-items: center;
     justify-content: space-between;
     @media screen and (min-width: $sm_breakpoint) {
-        padding: 1rem 2rem;
+        margin: 1rem 2rem;
     }
     @media screen and (min-width: $md_breakpoint) {
-        padding: 1.5rem 2rem;
+        margin: 1.5rem 2rem;
     }
 }
+
 .chartGameGenres {
     color: #384959;
     font-size: 1rem;
@@ -205,9 +207,6 @@
     @media screen and (min-width: $lg_breakpoint) {
         display: block;
     }
-    // position: absolute;
-    // right: -30rem;
-    // top: 0;
     max-width: 30rem;
     padding: 1rem;
     background: linear-gradient(to right, #c6e6f8 5%, #95bcd3 95%);

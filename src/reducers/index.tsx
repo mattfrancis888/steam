@@ -16,7 +16,7 @@ export interface StoreState {
     // watching: WatchingStateResponse;
     // errors: ErrorStateResponse;
     // search: SearchStateResponse;
-    // form: FormStateMap;
+    form: FormStateMap;
 }
 export default combineReducers<StoreState>({
     // authStatus: authReducer,
@@ -25,5 +25,5 @@ export default combineReducers<StoreState>({
     // errors: errorReducer,
     // mediaGenreAndCast: mediaGenreAndCastReducer,
     // search: searchReducer,
-    // form: formReducer,
+    form: formReducer,
 });
