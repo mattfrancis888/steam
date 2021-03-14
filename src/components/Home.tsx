@@ -6,6 +6,8 @@ import FeaturedCarousel from "./FeaturedCarousel";
 import SpecialOfferCarousel from "./SpecialOfferCarousel";
 import CommunityCarousel from "./CommunityCarousel";
 import _ from "lodash";
+import { LG_SCREEN_SIZE, MED_SCREEN_SIZE } from "../constants";
+import useWindowDimensions from "../windowDimensions";
 const games = [
     {
         image:
@@ -62,26 +64,26 @@ export interface SpecialOfferCarouselProps {
 
 const Home: React.FC<{}> = (props) => {
     const [hoverData, setHoverData] = useState(1);
-
-    const renderChartGamePreview = (index: number) => {
-        if (hoverData === index) {
-            return (
-                <div className="chartGamePreviewHover">
-                    <p className="chartGamePreviewTitle">Game Title</p>
-                    <div className="chartGamePreviewGenresWrap">
-                        <p className="chartGamePreviewGenres">Genres</p>
-                    </div>
-                    <div className="chartGamePreviewScreenshots">
-                        <img
-                            src="https://cdn.cloudflare.steamstatic.com/steam/apps/1282730/ss_455789884ed94fd20410ac5a139e8c3bb8f6f369.600x338.jpg"
-                            alt="preview"
-                        ></img>
-                    </div>
+    const { width } = useWindowDimensions();
+    const renderChartGamePreview = () => {
+        // if (hoverData === index && width > LG_SCREEN_SIZE) {
+        return (
+            <div className="chartGamePreviewHover">
+                <p className="chartGamePreviewTitle">Game Title</p>
+                <div className="chartGamePreviewGenresWrap">
+                    <p className="chartGamePreviewGenres">Genres</p>
                 </div>
-            );
-        } else {
-            return null;
-        }
+                <div className="chartGamePreviewScreenshots">
+                    <img
+                        src="https://cdn.cloudflare.steamstatic.com/steam/apps/1282730/ss_455789884ed94fd20410ac5a139e8c3bb8f6f369.600x338.jpg"
+                        alt="preview"
+                    ></img>
+                </div>
+            </div>
+        );
+        // } else {
+        //     return null;
+        // }
     };
     return (
         <div className="homeContainer">
@@ -99,30 +101,42 @@ const Home: React.FC<{}> = (props) => {
             </div>
 
             <div className="chart">
-                {specialOfferGames.map((content, index) => {
-                    return (
-                        <div
-                            className="chartGameContainer"
-                            onMouseOver={() => setHoverData(content.id)}
-                            // onMouseOut={() => setHoverData(-1)}
-                        >
-                            <div className="chartGameImage">
-                                <img
-                                    src="https://cdn.cloudflare.steamstatic.com/steam/apps/412020/capsule_184x69.jpg?t=1614093928"
-                                    alt="game"
-                                ></img>
-                            </div>
-                            <div className="chartGameInfo">
-                                <div className="chartGameGenreAndTitle">
-                                    <p className="chartGameTitle">Game Title</p>
-                                    <p className="chartGameGenres">Genres</p>
+                <div className="chartGamesColumn">
+                    {specialOfferGames.map((content, index) => {
+                        return (
+                            <div
+                                className={`chartGameContainer ${
+                                    hoverData === index + 1
+                                        ? "chartGameContainerToggled"
+                                        : ""
+                                }`}
+                                onMouseOver={() => setHoverData(content.id)}
+                                onClick={(event) => {
+                                    // setHoverData(content.id);
+                                }}
+                            >
+                                <div className="chartGameImage">
+                                    <img
+                                        src="https://cdn.cloudflare.steamstatic.com/steam/apps/412020/capsule_184x69.jpg?t=1614093928"
+                                        alt="game"
+                                    ></img>
                                 </div>
-                                <p className="chartGamePrice">$49.99</p>
+                                <div className="chartGameInfo">
+                                    <div className="chartGameGenreAndTitle">
+                                        <p className="chartGameTitle">
+                                            Game Title
+                                        </p>
+                                        <p className="chartGameGenres">
+                                            Genres
+                                        </p>
+                                    </div>
+                                    <p className="chartGamePrice">$49.99</p>
+                                </div>
                             </div>
-                            {renderChartGamePreview(content.id)}
-                        </div>
-                    );
-                })}
+                        );
+                    })}
+                </div>
+                {renderChartGamePreview()}
             </div>
         </div>
     );

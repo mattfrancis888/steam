@@ -892,6 +892,8 @@ body {
 }
 
 .chart {
+  display: flex;
+  width: 100%;
   background-image: linear-gradient(#2a475e 5%, rgba(42, 71, 94, 0) 70%);
   padding: 0 1rem;
 }
@@ -905,10 +907,13 @@ body {
     padding: 0 6rem;
   }
 }
+
+.chartGamesColumn {
+  width: 100%;
+}
 @media screen and (min-width: 992px) {
-  .chart {
-    padding-right: 10rem;
-    padding-right: 35rem;
+  .chartGamesColumn {
+    width: 80%;
   }
 }
 
@@ -925,14 +930,29 @@ body {
   cursor: pointer;
   margin-bottom: 0.5rem;
   width: 100%;
-  height: 7rem;
+  height: 5rem;
 }
-.chartGameContainer:hover {
-  color: red;
+@media screen and (min-width: 768px) {
+  .chartGameContainer {
+    height: 6rem;
+  }
+}
+
+.chartGameContainerToggled {
   background: linear-gradient(to right, #c6e6f8 5%, #95bcd3 95%);
-  box-sizing: content-box;
-  padding-right: 5rem;
+  padding-right: 0;
 }
+.chartGameContainerToggled .chartGameTitle,
+.chartGameContainerToggled .chartGamePrice {
+  color: #384959;
+}
+@media screen and (min-width: 992px) {
+  .chartGameContainerToggled {
+    box-sizing: content-box;
+    padding-right: 5rem;
+  }
+}
+
 .chartGameImage {
   width: 22rem;
   height: 100%;
@@ -964,15 +984,25 @@ body {
 
 .chartGameGenres {
   color: #384959;
-  font-size: 1.2rem;
+  font-size: 1rem;
   margin: 0;
   display: -webkit-box;
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
 }
+@media screen and (min-width: 520px) {
+  .chartGameGenres {
+    font-size: 1.2rem;
+  }
+}
 @media screen and (min-width: 768px) {
   .chartGameGenres {
     font-size: 1.4rem;
+  }
+}
+@media screen and (min-width: 992px) {
+  .chartGameGenres {
+    font-size: 1.2rem;
   }
 }
 
@@ -994,7 +1024,7 @@ body {
 }
 @media screen and (min-width: 992px) {
   .chartGameTitle {
-    font-size: 1.8rem;
+    font-size: 1.4rem;
   }
 }
 
@@ -1014,7 +1044,7 @@ body {
 }
 @media screen and (min-width: 992px) {
   .chartGamePrice {
-    font-size: 1.8rem;
+    font-size: 1.4rem;
   }
 }
 
@@ -1031,11 +1061,6 @@ body {
 @media screen and (min-width: 768px) {
   .chartTabsWrap {
     padding: 0 6rem;
-  }
-}
-@media screen and (min-width: 992px) {
-  .chartTabsWrap {
-    padding: 0 10rem;
   }
 }
 
@@ -1060,13 +1085,16 @@ body {
 }
 
 .chartGamePreviewHover {
-  position: absolute;
-  padding: 1rem;
-  right: -35rem;
-  bottom: 0;
+  display: none;
+  margin-left: 5rem;
   max-width: 30rem;
   padding: 1rem;
   background: linear-gradient(to right, #c6e6f8 5%, #95bcd3 95%);
+}
+@media screen and (min-width: 992px) {
+  .chartGamePreviewHover {
+    display: block;
+  }
 }
 
 .chartGamePreviewScreenshots {
