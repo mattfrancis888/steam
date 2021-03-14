@@ -63,6 +63,28 @@ const Home: React.FC<{}> = () => {
             <SpecialOfferCarousel content={specialOfferGames} />
             <h1 className="bannerTitle">The Community Recomends</h1>
             <CommunityCarousel content={games} />
+
+            <div className="chart">
+                {specialOfferGames.map((content, index) => {
+                    return (
+                        <div className="chartGameContainer">
+                            <div className="chartGameImage">
+                                <img
+                                    src="https://cdn.cloudflare.steamstatic.com/steam/apps/412020/capsule_184x69.jpg?t=1614093928"
+                                    alt="game"
+                                ></img>
+                            </div>
+                            <div className="chartGameInfo">
+                                <div className="chartGameGenreAndTitle">
+                                    <p className="chartGameTitle">Game Title</p>
+                                    <p className="chartGameGenres">Genres</p>
+                                </div>
+                                <p className="chartPrice">$49.99</p>
+                            </div>
+                        </div>
+                    );
+                })}
+            </div>
         </div>
     );
 };

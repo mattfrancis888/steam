@@ -1,3 +1,9 @@
+.communityContainerCarousel {
+    @media screen and (min-width: $lg_breakpoint) {
+        margin: 0 5rem;
+    }
+}
+
 .communityCarouselSectionWrap {
     display: flex;
 }
@@ -46,6 +52,9 @@
         margin: 3rem 2rem;
         font-size: 1.8rem;
     }
+    display: -webkit-box;
+    -webkit-line-clamp: 4;
+    -webkit-box-orient: vertical;
 }
 
 .communityCarouselReadMore {
@@ -83,7 +92,7 @@
     display: flex;
     justify-content: space-between;
 }
-.hideFeaturedCarouselButton,
-.hideFeaturedCarouselButtonsWrap {
+.hideCommunityCarouselButton,
+.hideCommunityCarouselButtonsWrap {
     display: none !important;
 }

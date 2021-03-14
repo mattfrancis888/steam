@@ -32,3 +32,84 @@
         padding: 1rem 10rem;
     }
 }
+
+.chart {
+    margin-top: 10rem;
+}
+.chartGameContainer {
+    display: flex;
+    background: rgba(0, 0, 0, 0.2);
+    align-items: center;
+    margin-bottom: 0.5rem;
+    &:hover {
+        background: linear-gradient(to right, #c6e6f8 5%, #95bcd3 95%);
+    }
+}
+
+.chartGameImage {
+    max-width: 12rem;
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
+    @media screen and (min-width: $lg_breakpoint) {
+        max-height: 7rem;
+        max-width: 16rem;
+    }
+}
+.chartGameInfo {
+    color: #c7d5e0;
+    width: 100%;
+    padding: 0.5rem 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    @media screen and (min-width: $sm_breakpoint) {
+        padding: 1rem 2rem;
+    }
+}
+.chartGameGenres {
+    color: #384959;
+    font-size: 1.2rem;
+    margin: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+
+    @media screen and (min-width: $md_breakpoint) {
+        font-size: 1.4rem;
+    }
+}
+.chartGameTitle {
+    overflow: hidden;
+    display: inline;
+    text-overflow: ellipsis;
+    font-size: 1.2rem;
+
+    margin: 0;
+    margin-bottom: 1rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    @media screen and (min-width: $sm_breakpoint) {
+        font-size: 1.6rem;
+    }
+
+    @media screen and (min-width: $lg_breakpoint) {
+        font-size: 1.8rem;
+    }
+}
+.chartPrice {
+    font-size: 1.4rem;
+    margin: 0;
+    @media screen and (min-width: $sm_breakpoint) {
+        font-size: 1.4rem;
+    }
+    @media screen and (min-width: $md_breakpoint) {
+        font-size: 1.6rem;
+    }
+    @media screen and (min-width: $lg_breakpoint) {
+        font-size: 1.8rem;
+    }
+}

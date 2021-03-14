@@ -116,7 +116,7 @@ const FeaturedCarousel: React.FC<FeaturedCarouselProps> = (props) => {
                         <ButtonBack
                             className={`gameBackButton ${
                                 width < LG_SCREEN_SIZE
-                                    ? "hideFeaturedCarouselButton"
+                                    ? "hideCommunityCarouselButton"
                                     : ""
                             }`}
                         >
@@ -125,7 +125,7 @@ const FeaturedCarousel: React.FC<FeaturedCarouselProps> = (props) => {
                         <ButtonNext
                             className={`gameNextButton ${
                                 width < LG_SCREEN_SIZE
-                                    ? "hideFeaturedCarouselButton"
+                                    ? "hideCommunityCarouselButton"
                                     : ""
                             }`}
                         >
@@ -135,7 +135,7 @@ const FeaturedCarousel: React.FC<FeaturedCarouselProps> = (props) => {
                         <div
                             className={`showButtonsForSmallScreensWrap ${
                                 width > LG_SCREEN_SIZE
-                                    ? "hideFeaturedCarouselButtonsWrap"
+                                    ? "hideCommunityCarouselButtonsWrap"
                                     : ""
                             }`}
                         >

@@ -25,7 +25,7 @@ const FeaturedCarousel: React.FC<FeaturedCarouselProps> = (props) => {
                 <Slide index={index} key={index}>
                     <LazyLoad>
                         <div
-                            className={`featuredContainerCarousel featuredAnime${index}`}
+                            className={`communityContainerCarousel featuredAnime${index}`}
                             onLoad={() => {
                                 anime({
                                     targets: `.featuredAnime${index}`,
