@@ -1,0 +1,103 @@
+.specialOfferCarouselSectionContainer {
+    width: 100%;
+    // display: flex;
+    display: grid;
+    grid-template-rows: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
+
+    grid-gap: 1rem;
+    // display: flex;
+    flex-wrap: wrap;
+    @media screen and (min-width: $md_breakpoint) {
+        grid-template-rows: repeat(2, 1fr);
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+.specialOfferGameContainer {
+    position: relative;
+
+    width: 100%;
+    //width: calc(100% / 3);
+    img {
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+    }
+}
+
+.specialOfferGameTextWrap {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    padding: 0.25rem;
+    background: url("https://store.akamai.steamstatic.com/public/images/v6/home/background_spotlight.jpg")
+        bottom center repeat;
+    @media screen and (min-width: $sm_breakpoint) {
+        padding: 0.5rem;
+    }
+}
+
+.highlightedGamePriceWrap {
+    display: flex;
+    align-items: stretch;
+    justify-content: flex-end;
+}
+
+.adjustedPriceWrap {
+    background-color: rgba(20, 31, 44, 0.8);
+    padding: 0.25rem;
+    .gameOrigPrice {
+        margin: 0;
+        text-decoration: line-through;
+        font-size: 0.5rem;
+        color: #626366;
+        @media screen and (min-width: $sm_breakpoint) {
+            font-size: 1rem;
+        }
+        @media screen and (min-width: $md_breakpoint) {
+            font-size: 1rem;
+        }
+        @media screen and (min-width: $xl_breakpoint) {
+            font-size: 1.4rem;
+        }
+    }
+    .gameAdjustedPrice {
+        margin: 0;
+        font-size: 0.5rem;
+        color: #acdbf5;
+        @media screen and (min-width: $sm_breakpoint) {
+            font-size: 1.2rem;
+        }
+        @media screen and (min-width: $md_breakpoint) {
+            font-size: 1rem;
+        }
+        @media screen and (min-width: $xl_breakpoint) {
+            font-size: 1.4rem;
+        }
+    }
+    @media screen and (min-width: $sm_breakpoint) {
+        padding: 0.5rem;
+    }
+}
+.discountGamePrice {
+    display: flex;
+    padding: 0 0.5rem;
+    font-size: 0.8rem;
+    align-items: center;
+    background: #4c6b22;
+    color: #a4d007;
+    @media screen and (min-width: $sm_breakpoint) {
+        font-size: 1.3rem;
+    }
+    @media screen and (min-width: $lg_breakpoint) {
+        font-size: 1.5rem;
+    }
+    @media screen and (min-width: $lg_breakpoint) {
+        font-size: 1.7rem;
+    }
+    @media screen and (min-width: $xl_breakpoint) {
+        font-size: 2rem;
+    }
+}

@@ -1,0 +1,66 @@
+.featuredContainerCarousel {
+    @media screen and (min-width: $lg_breakpoint) {
+        margin: 0 5rem;
+    }
+}
+
+.featuredCarouselSectionWrap {
+    display: flex;
+}
+.featuredCarouselImageSection {
+    width: 100%;
+    @media screen and (min-width: $lg_breakpoint) {
+        width: 70%;
+    }
+}
+
+.hideFeaturedCarouselScreenshotSection {
+    display: none;
+}
+.featuredCarouselScreenshotSection {
+    background-color: black;
+    display: none;
+    @media screen and (min-width: $lg_breakpoint) {
+        display: block;
+        width: 30%;
+    }
+
+    .featuredCarouselGameTitle {
+        margin-left: 1.5rem;
+        font-weight: normal;
+        letter-spacing: 0.2rem;
+        margin: 0;
+        @media screen and (min-width: $lg_breakpoint) {
+            margin: 2rem 0.7rem;
+        }
+        @media screen and (min-width: $xl_breakpoint) {
+            margin: 3rem 1rem;
+        }
+    }
+    .featuredCarouselGameScreenshotsWrap {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        grid-gap: 0.5rem;
+        @media screen and (min-width: $xl_breakpoint) {
+            grid-gap: 1rem;
+        }
+    }
+}
+
+.sliderAndButtonWrap {
+    position: relative;
+}
+
+.showButtonsForSmallScreensWrap {
+    display: flex;
+    justify-content: space-between;
+}
+.hideFeaturedCarouselButton,
+.hideFeaturedCarouselButtonsWrap {
+    display: none !important;
+}
+.featuredCarouselGamePrice {
+    margin-top: 1rem;
+    margin-left: 1.3rem;
+    color: #acdbf5;
+}

@@ -1,0 +1,89 @@
+.gameCarouselWrap {
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    width: 100%;
+}
+.gameNextButton {
+    display: block;
+    @include carouselNextAndPrevButton;
+    background: linear-gradient(
+        to right,
+        rgba(0, 0, 0, 0) 5%,
+        rgba(0, 0, 0, 0.3) 95%
+    );
+
+    &:hover {
+        background: linear-gradient(
+            to right,
+            rgba(171, 218, 244, 0) 5%,
+            rgba(171, 218, 244, 0.3) 95%
+        );
+    }
+    padding: 0;
+    padding-left: 3rem;
+    @media screen and (min-width: $lg_breakpoint) {
+        padding: 3rem 0rem;
+        position: absolute;
+        right: 0;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+    outline: none !important;
+    transition: opacity 0.5s;
+}
+
+.gameBackButton {
+    display: block;
+    @include carouselNextAndPrevButton;
+    background: linear-gradient(
+        to right,
+        rgba(0, 0, 0, 0.3) 5%,
+        rgba(0, 0, 0, 0) 95%
+    );
+    &:hover {
+        background: linear-gradient(
+            to right,
+            rgba(171, 218, 244, 0.3) 5%,
+            rgba(171, 218, 244, 0) 95%
+        );
+    }
+    padding: 0;
+    padding-right: 3rem;
+    @media screen and (min-width: $lg_breakpoint) {
+        padding: 3rem 0rem;
+        position: absolute;
+        left: 0;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+    outline: none !important;
+    transition: opacity 0.5s;
+}
+
+.carouselDotGroupWrap {
+    padding: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .carousel__dot--selected {
+        background-color: hsla(202, 60%, 100%, 0.4) !important;
+    }
+    button {
+        transition: background-color 0.2s;
+        background-color: hsla(202, 60%, 100%, 0.2);
+
+        outline: none !important;
+        box-shadow: none !important;
+        border: none;
+        margin-right: 0.3rem;
+        padding: 0.4rem 1rem;
+        border-radius: 0.3rem;
+    }
+}
+
+.hideCarouselDotGroup {
+    display: none !important;
+}
