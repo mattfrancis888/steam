@@ -1,0 +1,89 @@
+.communityCarouselSectionWrap {
+    display: flex;
+}
+
+.communityCarouselImageSection {
+    width: 100%;
+    position: relative;
+    @media screen and (min-width: $lg_breakpoint) {
+        width: 70%;
+    }
+    .communityPrice {
+        position: absolute;
+        bottom: 5rem;
+        right: 0;
+        padding: 1rem 2rem;
+        font-size: 1.4rem;
+        background: black;
+        color: white;
+    }
+}
+
+.hideFeaturedCarouselScreenshotSection {
+    display: none;
+}
+.communityCarouselReviewSection {
+    background: linear-gradient(to bottom, #506c86 5%, #10143100 96%);
+
+    display: none;
+    @media screen and (min-width: $lg_breakpoint) {
+        display: block;
+        width: 30%;
+    }
+}
+
+.communityCarouselGameReview {
+    color: white;
+    margin-left: 1.5rem;
+    font-weight: normal;
+    font-size: 1.4rem;
+    line-height: 2.4rem;
+    margin: 0;
+    @media screen and (min-width: $lg_breakpoint) {
+        margin: 2rem 1rem;
+    }
+    @media screen and (min-width: $xl_breakpoint) {
+        margin: 3rem 2rem;
+        font-size: 1.8rem;
+    }
+}
+
+.communityCarouselReadMore {
+    text-align: center;
+    color: $light-blue;
+    cursor: pointer;
+}
+
+.sliderAndButtonWrap {
+    position: relative;
+}
+
+.communityUserInfoWrap {
+    margin-top: 5rem;
+    display: flex;
+    padding: 1rem;
+    align-items: center;
+    .communityAvatar {
+        width: 5rem;
+        height: 5rem;
+        @media screen and (min-width: $xl_breakpoint) {
+            width: 7rem;
+            height: 7rem;
+        }
+    }
+    .communityUsername {
+        margin: 0;
+        margin-left: 1rem;
+        font-weight: bold;
+        color: $light-blue;
+        font-size: 1.3rem;
+    }
+}
+.showButtonsForSmallScreensWrap {
+    display: flex;
+    justify-content: space-between;
+}
+.hideFeaturedCarouselButton,
+.hideFeaturedCarouselButtonsWrap {
+    display: none !important;
+}

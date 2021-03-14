@@ -485,6 +485,12 @@ body {
   display: none !important;
 }
 
+.featuredCarouselGamePrice {
+  margin-top: 8rem;
+  margin-left: 1.3rem;
+  color: #acdbf5;
+}
+
 .gameCarouselWrap {
   width: 100%;
 }
@@ -727,6 +733,108 @@ body {
   .discountGamePrice {
     font-size: 2rem;
   }
+}
+
+.communityCarouselSectionWrap {
+  display: flex;
+}
+
+.communityCarouselImageSection {
+  width: 100%;
+  position: relative;
+}
+@media screen and (min-width: 992px) {
+  .communityCarouselImageSection {
+    width: 70%;
+  }
+}
+.communityCarouselImageSection .communityPrice {
+  position: absolute;
+  bottom: 5rem;
+  right: 0;
+  padding: 1rem 2rem;
+  font-size: 1.4rem;
+  background: black;
+  color: white;
+}
+
+.hideFeaturedCarouselScreenshotSection {
+  display: none;
+}
+
+.communityCarouselReviewSection {
+  background: linear-gradient(to bottom, #506c86 5%, #10143100 96%);
+  display: none;
+}
+@media screen and (min-width: 992px) {
+  .communityCarouselReviewSection {
+    display: block;
+    width: 30%;
+  }
+}
+
+.communityCarouselGameReview {
+  color: white;
+  margin-left: 1.5rem;
+  font-weight: normal;
+  font-size: 1.4rem;
+  line-height: 2.4rem;
+  margin: 0;
+}
+@media screen and (min-width: 992px) {
+  .communityCarouselGameReview {
+    margin: 2rem 1rem;
+  }
+}
+@media screen and (min-width: 1200px) {
+  .communityCarouselGameReview {
+    margin: 3rem 2rem;
+    font-size: 1.8rem;
+  }
+}
+
+.communityCarouselReadMore {
+  text-align: center;
+  color: #c1dbf4;
+  cursor: pointer;
+}
+
+.sliderAndButtonWrap {
+  position: relative;
+}
+
+.communityUserInfoWrap {
+  margin-top: 5rem;
+  display: flex;
+  padding: 1rem;
+  align-items: center;
+}
+.communityUserInfoWrap .communityAvatar {
+  width: 5rem;
+  height: 5rem;
+}
+@media screen and (min-width: 1200px) {
+  .communityUserInfoWrap .communityAvatar {
+    width: 7rem;
+    height: 7rem;
+  }
+}
+.communityUserInfoWrap .communityUsername {
+  margin: 0;
+  margin-left: 1rem;
+  font-weight: bold;
+  color: #c1dbf4;
+  font-size: 1.3rem;
+}
+
+.showButtonsForSmallScreensWrap {
+  display: flex;
+  justify-content: space-between;
+}
+
+.hideFeaturedCarouselButton,
+.hideFeaturedCarouselButtonsWrap {
+  display: none !important;
 }
 
 .bannerTitle {

@@ -4,6 +4,7 @@ import history from "../browserHistory";
 import Routes from "./Routes";
 import FeaturedCarousel from "./FeaturedCarousel";
 import SpecialOfferCarousel from "./SpecialOfferCarousel";
+import CommunityCarousel from "./CommunityCarousel";
 import _ from "lodash";
 const games = [
     {
@@ -60,6 +61,8 @@ const Home: React.FC<{}> = () => {
             <FeaturedCarousel content={games} />
             <h1 className="bannerTitle">Special Offers</h1>
             <SpecialOfferCarousel content={specialOfferGames} />
+            <h1 className="bannerTitle">The Community Recomends</h1>
+            <CommunityCarousel content={games} />
         </div>
     );
 };

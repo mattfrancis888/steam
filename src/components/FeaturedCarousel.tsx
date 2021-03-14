@@ -71,6 +71,9 @@ const FeaturedCarousel: React.FC<FeaturedCarouselProps> = (props) => {
                                             alt="game screenshot"
                                         ></img>
                                     </div>
+                                    <p className="featuredCarouselGamePrice">
+                                        $17.99
+                                    </p>
                                 </div>
                             </div>
                         </div>

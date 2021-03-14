@@ -3,3 +3,4 @@ export const SERVER_ERROR_MESSAGE =
 export const SM_SCREEN_SIZE = 520;
 export const MED_SCREEN_SIZE = 768;
 export const LG_SCREEN_SIZE = 992;
+export const XL_SCREEN_SIZE = 1200;
