@@ -3,6 +3,7 @@
     font-weight: 500;
     font-size: 1rem;
     letter-spacing: 0.2rem;
+    margin-top: 5rem;
 
     @media screen and(min-width: $sm_breakpoint) {
         font-size: 1.3rem;
@@ -42,13 +43,14 @@
         rgb(42, 71, 94) 5%,
         rgba(42, 71, 94, 0) 70%
     );
-    padding: 0 1rem;
+
+    padding: 1rem 1rem;
     @media screen and (min-width: $sm_breakpoint) {
-        padding: 0 3rem;
+        padding: 1rem 3rem;
     }
 
     @media screen and (min-width: $md_breakpoint) {
-        padding: 0 6rem;
+        padding: 1rem 6rem;
     }
 }
 
@@ -116,6 +118,9 @@
     @media screen and (min-width: $sm_breakpoint) {
         padding: 1rem 2rem;
     }
+    @media screen and (min-width: $md_breakpoint) {
+        padding: 1.5rem 2rem;
+    }
 }
 .chartGameGenres {
     color: #384959;
@@ -146,32 +151,26 @@
     -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
     @media screen and (min-width: $sm_breakpoint) {
-        font-size: 1.6rem;
+        font-size: 1.4rem;
     }
 
-    @media screen and (min-width: $lg_breakpoint) {
-        font-size: 1.4rem;
-    }
-}
-.chartGamePrice {
-    font-size: 1.4rem;
-    margin: 0;
-    @media screen and (min-width: $sm_breakpoint) {
-        font-size: 1.4rem;
-    }
     @media screen and (min-width: $md_breakpoint) {
         font-size: 1.6rem;
     }
-    @media screen and (min-width: $lg_breakpoint) {
+}
+.chartGamePrice {
+    font-size: 1.2rem;
+    margin: 0;
+
+    @media screen and (min-width: $md_breakpoint) {
         font-size: 1.4rem;
     }
 }
 
 .chartTabsWrap {
     display: flex;
-
-    margin-top: 10rem;
     padding: 0 1rem;
+    margin-top: 1.5rem;
     @media screen and (min-width: $sm_breakpoint) {
         padding: 0 3rem;
     }
