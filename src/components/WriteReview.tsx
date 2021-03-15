@@ -51,7 +51,7 @@ const renderTextArea = ({ input, label, meta, placeHolder }: any) => {
     //props to <input>
 };
 
-const RegisterForm: React.FC<
+const WriteReview: React.FC<
     WriteReviewFormProps & InjectedFormProps<{}, WriteReviewFormProps>
 > = (props) => {
     const onSubmit = (formValues: any, dispatch: any) => {
@@ -172,7 +172,7 @@ const mapStateToProps = (state: StoreState) => {
 
 export default connect(mapStateToProps)(
     reduxForm<{}, WriteReviewFormProps>({
-        form: "registerForm",
+        form: "writeReview",
         validate,
-    })(RegisterForm)
+    })(WriteReview)
 );
