@@ -9,7 +9,7 @@ const Routes: React.FC<{}> = () => {
             <Header />
             <Switch>
                 <Route path="/" exact component={Home} />
-                <Route path="/game" exact component={GameInfo} />
+                <Route path="/game/:gameId" exact component={GameInfo} />
             </Switch>
         </React.Fragment>
     );
