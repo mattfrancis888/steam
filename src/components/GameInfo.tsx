@@ -8,7 +8,6 @@ const GameInfo: React.FC<{}> = (props) => {
             <h1 className="gameInfoTitle">
                 The Elder Scrolls V: Skyrim Special Edition
             </h1>
-
             <div className="gameInfoShowcaseContainer">
                 <div className="gameInfoShowcasePreviewWrap">
                     <img
@@ -25,6 +24,32 @@ const GameInfo: React.FC<{}> = (props) => {
                     <GameInfoCarousel content={games} />
                 </div>
             </div>
+            <div className="gameInfoBuyContainer">
+                <h1>Buy The Elder Scrolls V: Skyrim Special Edition </h1>
+                <div className="gameInfoAddToCartWrap">
+                    <div className="gameInfoPriceWrap">
+                        <p className="gameInfoOrigPrice">18.99</p>
+                        <p className="gameInfoadjustedPrice">16.99</p>
+                    </div>
+                    <button className="gameInfoAddToCartButton">
+                        Add To Cart
+                    </button>
+                </div>
+            </div>
+
+            <h1 className="aboutThisGame">About This Game</h1>
+            <p>
+                {" "}
+                Winner of more than 200 Game of the Year Awards, Skyrim Special
+                Edition brings the epic fantasy to life in stunning detail. The
+                Special Edition includes the critically acclaimed game and
+                add-ons with all-new features like remastered art and effects,
+                volumetric god rays, dynamic depth of field, screen-space
+                reflections, and more. Skyrim Special Edition also brings the
+                full power of mods to the PC and consoles. New quests,
+                environments, characters, dialogue, armor, weapons and more –
+                with Mods, there are no limits to what you can experience.{" "}
+            </p>
         </div>
     );
 };

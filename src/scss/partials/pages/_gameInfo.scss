@@ -10,9 +10,6 @@
 }
 .gameInfoTitle {
     padding: 0 0rem;
-    // @media screen and (min-width: $xl_breakpoint) {
-    //     padding: 0 2%;
-    // }
 }
 .gameInfoShowcaseContainer {
     display: flex;
@@ -23,9 +20,7 @@
         rgba(0, 0, 0, 0) 50%,
         rgba(0, 0, 0, 0.4) 100%
     );
-    // @media screen and (min-width: $lg_breakpoint) {
-    //     width: 70%;
-    // }
+
     @media screen and (min-width: $lg_breakpoint) {
         flex-direction: row-reverse;
     }
@@ -83,4 +78,87 @@
     @media screen and (min-width: $lg_breakpoint) {
         width: 100%;
     }
+}
+
+.gameInfoBuyContainer {
+    position: relative;
+    width: 100%;
+
+    @media screen and (min-width: $lg_breakpoint) {
+        width: 59%;
+    }
+    background: linear-gradient(
+        -60deg,
+        rgba(226, 244, 255, 0.3) 5%,
+        rgba(84, 107, 115, 0.3) 95%
+    );
+    border-radius: 0.4rem;
+    color: white;
+    padding: 1.6rem;
+    margin: 5rem 0;
+    > h1 {
+        font-size: 1.4rem;
+        @media screen and (min-width: $sm_breakpoint) {
+            font-size: 1.6rem;
+        }
+        @media screen and (min-width: $md_breakpoint) {
+            font-size: 1.8rem;
+        }
+        @media screen and (min-width: $lg_breakpoint) {
+            font-size: 1.6rem;
+        }
+    }
+}
+
+.gameInfoAddToCartWrap {
+    display: flex;
+    background: black;
+    position: absolute;
+    bottom: -1.5rem;
+    right: 4rem;
+
+    @media screen and (min-width: $sm_breakpoint) {
+        font-size: 1.2rem;
+    }
+    @media screen and (min-width: $md_breakpoint) {
+        font-size: 1.4rem;
+    }
+}
+.gameInfoOrigPrice {
+    text-decoration: line-through;
+    margin: 0;
+    margin-right: 1rem;
+}
+.gameInfoadjustedPrice {
+    margin: 0;
+}
+.gameInfoPriceWrap {
+    display: flex;
+    align-items: center;
+    padding: 0.25rem 1.5rem;
+}
+
+.gameInfoAddToCartButton {
+    border-radius: 0.25rem;
+    background-color: #80a106;
+    color: #d2efa9;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    padding: 0.7rem 1.5rem;
+    font-weight: bold;
+    &:hover {
+        color: white;
+
+        background-color: #769605;
+        transition: all 0.3s ease;
+    }
+    outline: none !important;
+    box-shadow: none !important;
+    border: none;
+}
+
+.aboutThisGame {
+    border-bottom: 1px solid white;
+    text-transform: uppercase;
+    font-weight: normal;
 }
