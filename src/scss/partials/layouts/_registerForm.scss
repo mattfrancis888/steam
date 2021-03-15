@@ -64,17 +64,9 @@
         background-color: white;
         color: black;
     }
-    @media screen and (min-width: $sm_breakpoint) {
-        font-size: 1.5rem;
-    }
+
     @media screen and (min-width: $md_breakpoint) {
-        font-size: 1.7rem;
-    }
-    @media screen and (min-width: $lg_breakpoint) {
-        font-size: 1.9rem;
-    }
-    @media screen and (min-width: $xl_breakpoint) {
-        padding: 1.3rem;
+        font-size: 1.4rem;
     }
 }
 
