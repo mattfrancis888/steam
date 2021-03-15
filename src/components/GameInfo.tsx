@@ -2,7 +2,19 @@ import React, { useEffect } from "react";
 import history from "../browserHistory";
 import GameInfoCarousel from "./GameInfoCarousel";
 import { games } from "./Home";
+import WriteReview, { EmailAndPasswordFormValues } from "./WriteReview";
+
+export interface RegisterFormProps {
+    onSubmit(formValues: any): void;
+    authStatus?: string | null;
+}
+
 const GameInfo: React.FC<{}> = (props) => {
+    const onSubmitRegister = async (formValues: EmailAndPasswordFormValues) => {
+        // props.signUp(formValues);
+        console.log(formValues);
+    };
+
     return (
         <div className="gameInfoContainer">
             <h1 className="gameInfoTitle">
@@ -24,6 +36,9 @@ const GameInfo: React.FC<{}> = (props) => {
                     <GameInfoCarousel content={games} />
                 </div>
             </div>
+            <WriteReview
+                onSubmit={(formValues: any) => onSubmitRegister(formValues)}
+            />
             <div className="gameInfoBuyContainer">
                 <h1>Buy The Elder Scrolls V: Skyrim Special Edition </h1>
                 <div className="gameInfoAddToCartWrap">

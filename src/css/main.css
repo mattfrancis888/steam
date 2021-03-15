@@ -885,6 +885,151 @@ body {
   width: 100%;
 }
 
+.reviewForm {
+  background-image: linear-gradient(135deg, rgba(97, 100, 101, 0.3) 0%, rgba(226, 244, 255, 0.3) 100%);
+  padding: 1rem;
+}
+
+.writeAReviewTitle {
+  color: #66c0f4;
+}
+
+.pleaseDescribe {
+  color: #8f98a0;
+}
+
+.reviewFieldTitleWrap {
+  margin-top: 1rem;
+  align-items: center;
+  padding: 0.5rem 0;
+}
+@media screen and (min-width: 520px) {
+  .reviewFieldTitleWrap {
+    margin-bottom: 0.7rem;
+  }
+}
+.reviewFieldTitleWrap h1 {
+  font-size: 1.4rem;
+  font-weight: normal;
+}
+
+.authFormFieldTitleEmailInUse {
+  margin: 0;
+  color: red;
+  margin-left: 0.3rem;
+  font-size: 1.4rem;
+  font-weight: normal;
+}
+
+.errorText {
+  margin: 0.2rem 0;
+  color: red;
+  font-size: 1rem;
+}
+@media screen and (min-width: 520px) {
+  .errorText {
+    font-size: 1.2rem;
+    margin: 1rem 0;
+  }
+}
+@media screen and (min-width: 768px) {
+  .errorText {
+    font-size: 1.4rem;
+  }
+}
+
+.createReviewTextArea {
+  background: #222b35;
+  color: #d6d7d8;
+  border: 1px solid #233c51;
+  box-shadow: inset 0px 0px 7px rgba(0, 0, 0, 0.5);
+  padding: 1rem;
+  border: 1px solid #c1dbf4;
+  padding: 1rem;
+  height: 13rem;
+  font-size: 1.2rem;
+  width: 100%;
+  margin-bottom: 0.5rem;
+}
+.createReviewTextArea:focus {
+  outline: none;
+}
+@media screen and (min-width: 520px) {
+  .createReviewTextArea {
+    font-size: 1.5rem;
+  }
+}
+@media screen and (min-width: 768px) {
+  .createReviewTextArea {
+    font-size: 1.7rem;
+  }
+}
+@media screen and (min-width: 992px) {
+  .createReviewTextArea {
+    font-size: 1.9rem;
+  }
+}
+
+.reviewTextAreaAndAvatarWrap {
+  display: flex;
+}
+
+.reviewAvatar {
+  width: 9.5rem;
+  height: 9.5rem;
+  background: red;
+  margin-right: 1rem;
+}
+
+.myReviewWrap {
+  width: 100%;
+}
+
+.recommendOrNotButtonsWrap {
+  display: flex;
+  width: 20%;
+}
+
+.recommendOrNotButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1rem;
+  width: 100%;
+  color: #67c1f5;
+  font-size: 1.4rem;
+  padding: 0.8rem;
+  background: rgba(103, 193, 245, 0.2);
+  outline: none !important;
+  box-shadow: none !important;
+  border: none;
+  cursor: pointer;
+  margin-right: 1rem;
+}
+.recommendOrNotButton:hover {
+  transition: all 0.2s ease;
+  background: rgba(103, 193, 245, 0.6);
+}
+.recommendOrNotButton > p {
+  margin: 0;
+  margin-left: 1rem;
+}
+
+.reviewContentExceptAvatarWrap {
+  width: 100%;
+}
+
+.postReviewButton {
+  color: white;
+  padding: 0.25rem 1rem;
+  background: linear-gradient(to bottom, #c1e4f9 5%, #94b7ca 95%);
+}
+
+.reviewButtonsWrap {
+  display: flex;
+  justify-content: space-between;
+}
+
 .bannerTitle {
   text-transform: uppercase;
   font-weight: 500;
