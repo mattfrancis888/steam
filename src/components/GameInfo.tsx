@@ -38,8 +38,7 @@ const GameInfo: React.FC<{}> = (props) => {
             </div>
 
             <h1 className="aboutThisGame">About This Game</h1>
-            <p>
-                {" "}
+            <p className="gameDescription">
                 Winner of more than 200 Game of the Year Awards, Skyrim Special
                 Edition brings the epic fantasy to life in stunning detail. The
                 Special Edition includes the critically acclaimed game and
