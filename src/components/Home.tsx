@@ -8,10 +8,10 @@ import CommunityCarousel from "./CommunityCarousel";
 import _ from "lodash";
 import { LG_SCREEN_SIZE, MED_SCREEN_SIZE } from "../constants";
 import useWindowDimensions from "../windowDimensions";
-const games = [
+export const games = [
     {
         image:
-            "https://cdn.akamai.steamstatic.com/steam/apps/1086940/capsule_616x353.jpg?t=1614870777",
+            "https://cdn.akamai.steamstatic.com/steam/apps/489830/ss_921ccea650df936a0b14ebd5dd4ecc73c1d2a12d.600x338.jpg?t=1590515887",
     },
     {
         image:
