@@ -4,6 +4,7 @@ import Home from "./Home";
 import Header from "./Header";
 import GameInfo from "./GameInfo";
 import Cart from "./Cart";
+import Register from "./Register";
 const Routes: React.FC<{}> = () => {
     return (
         <React.Fragment>
@@ -12,6 +13,7 @@ const Routes: React.FC<{}> = () => {
                 <Route path="/" exact component={Home} />
                 <Route path="/game/:gameId" exact component={GameInfo} />
                 <Route path="/cart" exact component={Cart} />
+                <Route path="/register" exact component={Register} />
             </Switch>
         </React.Fragment>
     );
