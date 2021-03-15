@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import history from "../browserHistory";
 import GameInfoCarousel from "./GameInfoCarousel";
 import { games } from "./Home";
@@ -7,12 +7,19 @@ import WriteReview, { EmailAndPasswordFormValues } from "./WriteReview";
 export interface RegisterFormProps {
     onSubmit(formValues: any): void;
     authStatus?: string | null;
+    onRecommendorNot(response: boolean): void;
+    recommend: boolean;
 }
 
 const GameInfo: React.FC<{}> = (props) => {
     const onSubmitRegister = async (formValues: EmailAndPasswordFormValues) => {
         // props.signUp(formValues);
         console.log(formValues);
+    };
+    const [recommend, setRecommend] = useState(true);
+    const onRecommendorNot = (response: boolean) => {
+        if (response) setRecommend(true);
+        else setRecommend(false);
     };
 
     return (
@@ -37,6 +44,8 @@ const GameInfo: React.FC<{}> = (props) => {
                 </div>
             </div>
             <WriteReview
+                recommend={recommend}
+                onRecommendorNot={onRecommendorNot}
                 onSubmit={(formValues: any) => onSubmitRegister(formValues)}
             />
             <div className="gameInfoBuyContainer">

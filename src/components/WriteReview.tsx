@@ -16,7 +16,6 @@ import { FiThumbsUp, FiThumbsDown } from "react-icons/fi";
 //Re-usable component
 export interface EmailAndPasswordFormValues {
     review: string;
-    recommendOrNot: string;
 }
 
 //Typescriptand redux form:
@@ -93,15 +92,41 @@ const RegisterForm: React.FC<
                                 />
                             </div>
                             <div>
-                                <div>
-                                    <p>Do you recommend this game? </p>
+                                <div className="reviewButtonsSection">
+                                    <p className="doYouRecommend">
+                                        Do you recommend this game?{" "}
+                                    </p>
                                     <div className="reviewButtonsWrap">
                                         <div className="recommendOrNotButtonsWrap">
-                                            <button className="recommendOrNotButton">
+                                            {/* https://stackoverflow.com/questions/41590766/redux-form-always-validates-even-on-a-normal-button-press */}
+                                            {/* By adding type="button" the button will not be a "submit" button */}
+                                            <button
+                                                className={`recommendOrNotButton ${
+                                                    props.recommend
+                                                        ? `recommendOrNotButtonClicked`
+                                                        : ``
+                                                }`}
+                                                type="button"
+                                                onClick={() =>
+                                                    props.onRecommendorNot(true)
+                                                }
+                                            >
                                                 <FiThumbsUp />
                                                 <p> Yes</p>
                                             </button>
-                                            <button className="recommendOrNotButton">
+                                            <button
+                                                className={`recommendOrNotButton ${
+                                                    !props.recommend
+                                                        ? `recommendOrNotButtonClicked`
+                                                        : ``
+                                                }`}
+                                                type="button"
+                                                onClick={() =>
+                                                    props.onRecommendorNot(
+                                                        false
+                                                    )
+                                                }
+                                            >
                                                 <FiThumbsDown />
                                                 <p>No</p>
                                             </button>
@@ -133,9 +158,6 @@ const validate = (
         //user did not enter title, so undefined
         errors.review = "You must enter a review";
         //Must be the same name as field name! The "error" property in {meta} would receive this
-    }
-    if (!formValues.recommendOrNot) {
-        errors.recommendOrNot = "You must pick";
     }
 
     return errors;
