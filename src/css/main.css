@@ -1656,12 +1656,23 @@ body {
   font-size: 3rem;
   letter-spacing: 0.4rem;
   margin-bottom: 3rem;
+  font-weight: normal;
 }
 
 .cartHeaderContainer {
   background: url(https://store.akamai.steamstatic.com/public/images/v6/temp/cluster_bg_2.png) bottom center no-repeat;
   padding: 5rem 2rem;
   padding-top: 1rem;
+}
+@media screen and (min-width: 768px) {
+  .cartHeaderContainer {
+    padding: 5rem 5rem;
+  }
+}
+@media screen and (min-width: 768px) {
+  .cartHeaderContainer {
+    padding: 5rem 10rem;
+  }
 }
 
 .cartContainer {
