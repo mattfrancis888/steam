@@ -1,0 +1,20 @@
+.gameInfoCarouselScreenshots {
+    // display: grid;
+    // grid-template-columns: repeat(2, 1fr);
+    display: flex;
+}
+.gameInfoCarouselSectionWrap {
+    display: flex;
+    flex-direction: column;
+}
+.gameInfoCarouselImageSection {
+    width: 100%;
+}
+
+.gameInfoContainerCarousel {
+    width: 100%;
+}
+
+.gameInfoDisplayImag {
+    width: 100%;
+}
