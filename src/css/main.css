@@ -1547,7 +1547,7 @@ body {
   transition: all 0.3s ease;
 }
 
-.aboutThisGame {
+.gameInfoSectionTitle {
   font-size: 1.5rem;
   letter-spacing: 0.3rem;
   padding-bottom: 0.25rem;
@@ -1561,6 +1561,94 @@ body {
   color: #acb2b8;
   font-size: 1.4rem;
   line-height: 2rem;
+}
+
+.reviewBox {
+  display: flex;
+  background-color: rgba(0, 0, 0, 0.2);
+  padding: 1rem;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+@media screen and (min-width: 768px) {
+  .reviewBox {
+    flex-direction: row;
+  }
+}
+
+.reviewerInfoWrap {
+  padding: 1.25rem 0.5rem;
+  display: flex;
+  width: 100%;
+}
+.reviewerInfoWrap .reviewerAvatarWrap {
+  width: 6.5rem;
+  height: 6.5rem;
+  margin-right: 1rem;
+}
+@media screen and (min-width: 768px) {
+  .reviewerInfoWrap .reviewerAvatarWrap {
+    min-width: 3.5rem;
+    height: 3.5rem;
+    max-width: 4rem;
+  }
+}
+.reviewerInfoWrap .reviewerAvatarWrap img {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+@media screen and (min-width: 768px) {
+  .reviewerInfoWrap {
+    width: 25%;
+  }
+}
+
+.reviewerUsername {
+  font-weight: bold;
+  color: #c6d4df;
+  font-size: 1.2rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0;
+}
+
+.reviewerReviewWrap {
+  padding: 0 1rem;
+  padding-right: 0rem;
+  width: 100%;
+}
+
+.reviewerVerdictWrap {
+  display: flex;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.2);
+  color: #d6d7d8;
+}
+@media screen and (min-width: 768px) {
+  .reviewerVerdictWrap {
+    padding: 0 1rem;
+  }
+}
+
+.reviewerThumbIcon {
+  font-size: 1.5rem;
+  margin-right: 1rem;
+}
+
+.reviewerVerdict {
+  font-size: 1.5rem;
+}
+
+.reviewerDesc {
+  font-size: 1.3rem;
+  color: #acb2b8;
+}
+@media screen and (min-width: 768px) {
+  .reviewerDesc {
+    padding: 0 1rem;
+  }
 }
 
 /*# sourceMappingURL=main.css.map */

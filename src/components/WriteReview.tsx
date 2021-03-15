@@ -10,11 +10,11 @@ import {
 //compose is used to make it easier to "organize" mapStateToProps and redux form
 import { StoreState } from "../reducers";
 import { connect } from "react-redux";
-import { RegisterFormProps } from "./GameInfo";
+import { WriteReviewFormProps } from "./GameInfo";
 import { FiThumbsUp, FiThumbsDown } from "react-icons/fi";
 
 //Re-usable component
-export interface EmailAndPasswordFormValues {
+export interface WriteReviewFormValues {
     review: string;
 }
 
@@ -52,7 +52,7 @@ const renderTextArea = ({ input, label, meta, placeHolder }: any) => {
 };
 
 const RegisterForm: React.FC<
-    RegisterFormProps & InjectedFormProps<{}, RegisterFormProps>
+    WriteReviewFormProps & InjectedFormProps<{}, WriteReviewFormProps>
 > = (props) => {
     const onSubmit = (formValues: any, dispatch: any) => {
         //onSubmit's default param is any
@@ -149,10 +149,10 @@ const RegisterForm: React.FC<
 };
 
 const validate = (
-    formValues: EmailAndPasswordFormValues
-): FormErrors<EmailAndPasswordFormValues> => {
+    formValues: WriteReviewFormValues
+): FormErrors<WriteReviewFormValues> => {
     //MUST BE NAMED VALIDATE! Other names would be ignored by reduxForm(..)
-    const errors: FormErrors<EmailAndPasswordFormValues> = {};
+    const errors: FormErrors<WriteReviewFormValues> = {};
     //If you return an empty object, redux form will assume everything is ok
     if (!formValues.review) {
         //user did not enter title, so undefined
@@ -171,7 +171,7 @@ const mapStateToProps = (state: StoreState) => {
 };
 
 export default connect(mapStateToProps)(
-    reduxForm<{}, RegisterFormProps>({
+    reduxForm<{}, WriteReviewFormProps>({
         form: "registerForm",
         validate,
     })(RegisterForm)
