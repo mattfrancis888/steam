@@ -1,7 +1,7 @@
 import { combineReducers } from "redux";
 import { reducer as formReducer, FormStateMap } from "redux-form";
 
-// import authReducer, { AuthStateResponse } from "./authReducer";
+import authReducer, { AuthStateResponse } from "./authReducer";
 // import mediasReducer, { MediaStateResponse } from "./mediasReducer";
 // import errorReducer, { ErrorStateResponse } from "./errorReducer";
 // import mediaGenreAndCastReducer, {
@@ -10,7 +10,7 @@ import { reducer as formReducer, FormStateMap } from "redux-form";
 // import watchingReducer, { WatchingStateResponse } from "./watchingReducer";
 // import searchReducer, { SearchStateResponse } from "./searchReducer";
 export interface StoreState {
-    // authStatus: AuthStateResponse;
+    authStatus: AuthStateResponse;
     // medias: MediaStateResponse;
     // mediaGenreAndCast: MediaGenreAndCastStateResponse;
     // watching: WatchingStateResponse;
@@ -19,7 +19,7 @@ export interface StoreState {
     form: FormStateMap;
 }
 export default combineReducers<StoreState>({
-    // authStatus: authReducer,
+    authStatus: authReducer,
     // medias: mediasReducer,
     // watching: watchingReducer,
     // errors: errorReducer,
