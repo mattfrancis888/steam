@@ -390,6 +390,8 @@ body {
 }
 
 .headerAuthText {
+  cursor: pointer;
+  display: block;
   font-weight: normal;
   font-size: 1.3rem;
 }

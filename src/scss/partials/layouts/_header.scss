@@ -12,6 +12,8 @@
     }
 }
 .headerAuthText {
+    cursor: pointer;
+    display: block;
     font-weight: normal;
     font-size: 1.3rem;
     @media screen and (min-width: $sm_breakpoint) {
