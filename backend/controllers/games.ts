@@ -8,7 +8,7 @@ export const getGamesBaseInfo = async (req: Request, res: Response) => {
     try {
         await pool.query("BEGIN");
         const response = await pool.query(
-            `select * from game NATURAL join game_price`
+            `select * from game NATURAL join game_price ORDER BY game_id`
         );
 
         res.send({ games: response.rows });
@@ -21,7 +21,7 @@ export const getGamesBaseInfo = async (req: Request, res: Response) => {
 export const getGamesGenres = async (req: Request, res: Response) => {
     try {
         const response = await pool.query(
-            `select * from lookup_game_genre NATURAL JOIN genre`
+            `select * from lookup_game_genre NATURAL JOIN genre ORDER BY game_id`
         );
         res.send({ games: response.rows });
         // res.send({...response.rows})
@@ -33,7 +33,7 @@ export const getGamesGenres = async (req: Request, res: Response) => {
 export const getGamesScreenshots = async (req: Request, res: Response) => {
     try {
         const response = await pool.query(
-            `select * from lookup_game_screenshot NATURAL JOIN screenshot`
+            `select * from lookup_game_screenshot NATURAL JOIN screenshot ORDER BY game_id`
         );
 
         res.send({ games: response.rows });

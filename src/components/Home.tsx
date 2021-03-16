@@ -170,23 +170,25 @@ const Home: React.FC<HomeProps> = (props) => {
                     </div>
 
                     <div className="chart">
-                        {props.gamesBaseInfo.data.games.map(
-                            (content, index) => {
-                                return (
-                                    <React.Fragment>
-                                        <div className="chartGamesColumn">
+                        <div className="chartGamesColumn">
+                            {props.gamesBaseInfo.data.games.map(
+                                (content, index) => {
+                                    return (
+                                        <React.Fragment>
                                             <div
                                                 key={index}
                                                 className={`chartGameContainer ${
-                                                    hoverData === index + 1
+                                                    hoverData ===
+                                                    content.game_id
                                                         ? "chartGameContainerToggled"
                                                         : ""
                                                 }`}
-                                                onMouseOver={() =>
+                                                onMouseOver={() => {
+                                                    console.log("OnMouseoVer");
                                                     setHoverData(
                                                         content.game_id
-                                                    )
-                                                }
+                                                    );
+                                                }}
                                                 onClick={(event) => {}}
                                             >
                                                 <div className="chartGameImage">
@@ -214,12 +216,12 @@ const Home: React.FC<HomeProps> = (props) => {
                                                     </p>
                                                 </div>
                                             </div>
-                                        </div>
-                                        {renderChartGamePreview(content)}
-                                    </React.Fragment>
-                                );
-                            }
-                        )}
+                                        </React.Fragment>
+                                    );
+                                }
+                            )}
+                        </div>
+                        {renderChartGamePreview(hoverData)}
                     </div>
                 </div>
             );
@@ -227,16 +229,26 @@ const Home: React.FC<HomeProps> = (props) => {
             return <Loading />;
         }
     };
-    const renderChartGamePreview = (content: GameBaseInfo) => {
+
+    const renderChartGamePreview = (game_id: number) => {
         // if (hoverData === index && width > LG_SCREEN_SIZE) {
+
+        let baseInfo = _.filter(props.gamesBaseInfo.data?.games, {
+            game_id: game_id,
+        });
+
         return (
             <div className="chartGamePreviewHover">
-                <p className="chartGamePreviewTitle">{content.title}</p>
+                <p className="chartGamePreviewTitle">
+                    {baseInfo.map((content, index) => {
+                        return content.title;
+                    })}
+                </p>
                 <div className="chartGamePreviewGenresWrap">
-                    {renderGenresForGameTag(content.game_id)}
+                    {renderGenresForGameTag(game_id)}
                 </div>
                 <div className="chartGamePreviewScreenshots">
-                    {renderScreenshotsForGame(content.game_id)}
+                    {renderScreenshotsForGame(game_id)}
                 </div>
             </div>
         );

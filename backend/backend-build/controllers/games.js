@@ -51,7 +51,7 @@ var getGamesBaseInfo = function (req, res) { return __awaiter(void 0, void 0, vo
                 return [4 /*yield*/, databasePool_1.default.query("BEGIN")];
             case 1:
                 _a.sent();
-                return [4 /*yield*/, databasePool_1.default.query("select * from game NATURAL join game_price")];
+                return [4 /*yield*/, databasePool_1.default.query("select * from game NATURAL join game_price ORDER BY game_id")];
             case 2:
                 response_1 = _a.sent();
                 res.send({ games: response_1.rows });
@@ -70,7 +70,7 @@ var getGamesGenres = function (req, res) { return __awaiter(void 0, void 0, void
         switch (_a.label) {
             case 0:
                 _a.trys.push([0, 2, , 3]);
-                return [4 /*yield*/, databasePool_1.default.query("select * from lookup_game_genre NATURAL JOIN genre")];
+                return [4 /*yield*/, databasePool_1.default.query("select * from lookup_game_genre NATURAL JOIN genre ORDER BY game_id")];
             case 1:
                 response_2 = _a.sent();
                 res.send({ games: response_2.rows });
@@ -89,7 +89,7 @@ var getGamesScreenshots = function (req, res) { return __awaiter(void 0, void 0,
         switch (_a.label) {
             case 0:
                 _a.trys.push([0, 2, , 3]);
-                return [4 /*yield*/, databasePool_1.default.query("select * from lookup_game_screenshot NATURAL JOIN screenshot")];
+                return [4 /*yield*/, databasePool_1.default.query("select * from lookup_game_screenshot NATURAL JOIN screenshot ORDER BY game_id")];
             case 1:
                 response_3 = _a.sent();
                 res.send({ games: response_3.rows });
