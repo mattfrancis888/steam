@@ -1,6 +1,8 @@
 import React from "react";
 import RegisterForm, { RegisterFormValues } from "./RegisterForm";
-
+import { StoreState } from "../reducers";
+import { connect } from "react-redux";
+import { signUp } from "../actions";
 export interface RegisterFormProps {
     onSubmit(formValues: any): void;
     authStatus?: string | null;
@@ -11,9 +13,9 @@ export interface RegisterPlanProps {
     authStatus?: string | null;
 }
 
-const Register: React.FC<RegisterPlanProps> = () => {
+const Register: React.FC<RegisterPlanProps> = (props) => {
     const onSubmitRegister = async (formValues: RegisterFormValues) => {
-        // props.signUp(formValues);
+        props.signUp(formValues);
     };
 
     return (
@@ -28,4 +30,9 @@ const Register: React.FC<RegisterPlanProps> = () => {
     );
 };
 
-export default Register;
+const mapStateToProps = (state: StoreState) => {
+    return {
+        authStatus: state.authStatus.authenticated,
+    };
+};
+export default connect(mapStateToProps, { signUp })(Register);

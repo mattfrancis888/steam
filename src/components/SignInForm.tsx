@@ -137,7 +137,7 @@ const validate = (
 
 const mapStateToProps = (state: StoreState) => {
     return {
-        // authStatus: state.authStatus.errorMessage,
+        authStatus: state.authStatus.errorMessage,
     };
 };
 

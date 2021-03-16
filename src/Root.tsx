@@ -9,7 +9,7 @@ import Cookies from "js-cookie";
 
 export const store = createStore(
     reducers,
-    // { authStatus: { authenticated: Cookies.get("ACCESS_TOKEN") } },
+    { authStatus: { authenticated: Cookies.get("ACCESS_TOKEN") } },
     //if our inital state (authStauts) has a token from local storage, keep them logged in
     composeWithDevTools(applyMiddleware(reduxThunk))
 );

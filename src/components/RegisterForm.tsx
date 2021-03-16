@@ -118,9 +118,6 @@ const RegisterForm: React.FC<
                 <div className="authFieldSection">
                     <div className="authFormFieldTitleWrap">
                         <h1>Username (Will be shown to other users)</h1>
-                        <h3 className="authFormFieldTitleEmailInUse">
-                            {props.authStatus}
-                        </h3>
                     </div>
                     <Field
                         name="username"
@@ -130,10 +127,7 @@ const RegisterForm: React.FC<
                     />
                 </div>
 
-                <button
-                    className="authButton"
-                    data-testid="emailAndPasswordContinueButton"
-                >
+                <button className="authButton" data-testid="registerButton">
                     Continue
                 </button>
             </form>
@@ -166,7 +160,7 @@ const validate = (
 
 const mapStateToProps = (state: StoreState) => {
     return {
-        // authStatus: state.authStatus.errorMessage,
+        authStatus: state.authStatus.errorMessage,
     };
 };
 

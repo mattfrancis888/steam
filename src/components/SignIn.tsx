@@ -1,7 +1,9 @@
 import React from "react";
 import history from "../browserHistory";
 import SignInForm, { SignInFormValues } from "./SignInForm";
-
+import { signIn } from "../actions";
+import { StoreState } from "../reducers";
+import { connect } from "react-redux";
 export interface SignInFormProps {
     onSubmit(formValues: any): void;
     authStatus?: string | null;
@@ -12,9 +14,9 @@ export interface SignInProps {
     authStatus?: string | null;
 }
 
-const SignIn: React.FC<{}> = () => {
+const SignIn: React.FC<SignInProps> = (props) => {
     const onSubmitSignIn = async (formValues: SignInFormValues) => {
-        // props.signIn(formValues);
+        props.signIn(formValues);
     };
 
     return (
@@ -46,5 +48,10 @@ const SignIn: React.FC<{}> = () => {
         </div>
     );
 };
+const mapStateToProps = (state: StoreState) => {
+    return {
+        authStatus: state.authStatus.authenticated,
+    };
+};
 
-export default SignIn;
+export default connect(mapStateToProps, { signIn })(SignIn);

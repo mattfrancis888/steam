@@ -40,15 +40,6 @@ beforeEach(async () => {
     pushSpy = jest.spyOn(history, "push");
 });
 
-test("Steam logo clicked", async () => {
-    act(() => {
-        fireEvent.click(app.getByTestId("steamHeaderLogo"));
-    });
-    history.push("/");
-    expect(pushSpy).toBeCalledWith("/");
-    pushSpy.mockRestore();
-});
-
 test("Sections exist", async () => {
-    expect(app.getByText("Your Shopping Cart")).toBeInTheDocument();
+    expect(app.getByText(/your shopping cart/i)).toBeInTheDocument();
 });

@@ -12,10 +12,12 @@ import {
     fireEvent,
 } from "@testing-library/react";
 import { act } from "react-dom/test-utils";
-
+import MockAdapter from "axios-mock-adapter";
+import axios from "axios";
 import history from "browserHistory";
 let pushSpy: jest.SpyInstance;
 let app: RenderResult;
+
 afterEach(() => {
     cleanup();
 });
@@ -40,17 +42,41 @@ beforeEach(async () => {
     pushSpy = jest.spyOn(history, "push");
 });
 
-test("Steam logo clicked", async () => {
-    act(() => {
-        fireEvent.click(app.getByTestId("steamHeaderLogo"));
-    });
-    history.push("/");
-    expect(pushSpy).toBeCalledWith("/");
-    pushSpy.mockRestore();
-});
-
 test("Sections exist", async () => {
     expect(app.getByText(/email/i)).toBeInTheDocument();
     expect(app.getByText(/password/i)).toBeInTheDocument();
     expect(app.getByText(/username/i)).toBeInTheDocument();
+});
+
+test("Register form on submit", async () => {
+    const mockResponse = {
+        token: "asdfsadf12",
+        refreshToken: "asdufahsfd",
+    };
+
+    const expectedMockFormValues = {
+        email: "hi@gmail.com",
+        password: "123",
+    };
+
+    fireEvent.change(app.getByTestId("email"), {
+        target: { value: expectedMockFormValues.email },
+    });
+    fireEvent.change(app.getByTestId("password"), {
+        target: { value: expectedMockFormValues.password },
+    });
+    fireEvent.change(app.getByTestId("username"), {
+        target: { value: expectedMockFormValues.password },
+    });
+
+    act(() => {
+        fireEvent.click(app.getByTestId("registerButton"));
+    });
+
+    let mock = new MockAdapter(axios);
+    mock.onPost("/api/signup").reply(200, mockResponse);
+
+    return axios.post("/api/signup").then((response) => {
+        console.log(response.data);
+    });
 });

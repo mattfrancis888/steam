@@ -1,8 +1,15 @@
 import React, { useEffect } from "react";
 import history from "../browserHistory";
-const Header: React.FC<{}> = (props) => {
+import { connect } from "react-redux";
+import { signOut } from "../actions";
+import { StoreState } from "../reducers";
+interface HeaderProps {
+    authStatus?: string | null;
+    signOut(): void;
+}
+const Header: React.FC<HeaderProps> = (props) => {
     return (
-        <div className="headerContainer" data-testid="steamHeaderLogo">
+        <nav className="headerContainer" data-testid="steamHeaderLogo">
             <div
                 className="headerLogoImageWrap"
                 onClick={() => {
@@ -14,9 +21,26 @@ const Header: React.FC<{}> = (props) => {
                     alt="logo"
                 />
             </div>
-            <h3 className="headerAuthText">Sign in</h3>
-        </div>
+            <h3
+                className="headerAuthText"
+                data-testid="signInOrSignOut"
+                onClick={() => {
+                    if (props.authStatus) props.signOut();
+                    else {
+                        history.push("/signin");
+                    }
+                }}
+            >
+                {props.authStatus ? "Sign Out" : "Sign In"}
+            </h3>
+        </nav>
     );
 };
 
-export default Header;
+const mapStateToProps = (state: StoreState) => {
+    return {
+        authStatus: state.authStatus.authenticated,
+    };
+};
+
+export default connect(mapStateToProps, { signOut })(Header);
