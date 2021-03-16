@@ -1194,6 +1194,94 @@ body {
   transition: all 0.2s ease;
 }
 
+.signInForm {
+  display: flex;
+  flex-direction: column;
+}
+
+.signInFormContainer {
+  background-color: black;
+  border-radius: 0.4rem;
+  padding: 2rem;
+  color: #b8b6b4;
+  width: 90%;
+  margin-top: 5rem;
+  z-index: 2;
+}
+@media screen and (min-width: 768px) {
+  .signInFormContainer {
+    width: 50%;
+    padding: 2rem 5rem;
+  }
+}
+
+.signInFormTitle {
+  font-style: "Netflix Sans Bold";
+  margin-bottom: 4rem;
+}
+
+.signInFormFieldTitleWrap {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 0;
+}
+.signInFormFieldTitleWrap h1 {
+  font-weight: normal;
+  font-size: 1.4rem;
+  margin: 0;
+  margin-bottom: 0.3rem;
+}
+@media screen and (min-width: 768px) {
+  .signInFormFieldTitleWrap h1 {
+    font-size: 1.7rem;
+  }
+}
+
+.signInTextInput {
+  padding: 1.4rem;
+  font-size: 1.4rem;
+  border-radius: 0.4rem;
+  width: 100%;
+  margin-bottom: 0.5rem;
+  background-color: #32353c;
+  color: white;
+  outline: none !important;
+  box-shadow: none !important;
+  border: none;
+}
+@media screen and (min-width: 992px) {
+  .signInTextInput {
+    padding: 1.7rem;
+    font-size: 1.7rem;
+  }
+}
+
+.signInButton {
+  margin: 1.4rem auto 4rem auto;
+  color: #c3e1f8;
+  font-size: 1.4rem;
+  padding: 1.1rem 1rem;
+  background-image: linear-gradient(to right, #47bfff 5%, #1a44c2 60%);
+  cursor: pointer;
+  padding: 1rem 4rem;
+  outline: none !important;
+  box-shadow: none !important;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.signInButton:hover {
+  color: white;
+  background-image: linear-gradient(to right, #47bfff 25%, #1a44c2 100%);
+  transition: all 0.2s ease;
+}
+@media screen and (min-width: 992px) {
+  .signInButton {
+    margin-left: auto;
+    margin-right: 0;
+  }
+}
+
 .bannerTitle {
   text-transform: uppercase;
   font-weight: 500;
@@ -1908,6 +1996,94 @@ body {
   color: white;
   background-color: #769605;
   transition: all 0.3s ease;
+}
+
+.signInContainer {
+  background-image: url(https://store.akamai.steamstatic.com/public/shared/images/joinsteam/acct_creation_bg.jpg);
+  background-color: #212429;
+  color: #e9e9e9;
+  min-height: 100vh;
+}
+
+.signInTitle {
+  text-transform: uppercase;
+  font-weight: normal;
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  font-size: 3.4rem;
+  letter-spacing: 0.2rem;
+  color: #ffffff;
+  margin: 0;
+  margin-bottom: 3rem;
+  text-align: center;
+}
+@media screen and (min-width: 992px) {
+  .signInTitle {
+    margin-bottom: 5rem;
+    text-align: left;
+  }
+}
+
+.signInSectionsWrap {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0 auto;
+  padding: 5rem;
+}
+@media screen and (min-width: 992px) {
+  .signInSectionsWrap {
+    flex-direction: row;
+    width: 80%;
+  }
+}
+
+.signInFormSection {
+  width: 100%;
+}
+@media screen and (min-width: 992px) {
+  .signInFormSection {
+    width: 50%;
+  }
+}
+
+.joinSection {
+  width: 100%;
+  color: #b8b6b4;
+  text-align: center;
+  font-size: 1.4rem;
+}
+@media screen and (min-width: 992px) {
+  .joinSection {
+    width: 30%;
+  }
+}
+
+.joinSteamText {
+  width: 100%;
+  margin: 0 auto;
+}
+@media screen and (min-width: 992px) {
+  .joinSteamText {
+    width: 70%;
+  }
+}
+
+.joinImageWrap {
+  max-width: 32rem;
+  margin: 0 auto;
+}
+.joinImageWrap .joinImage {
+  width: 100%;
+  object-fit: cover;
+}
+
+.joinSteamButton {
+  background: transparent;
+  color: white;
+  border: 1px solid white;
+  padding: 1rem;
+  margin-left: auto;
 }
 
 /*# sourceMappingURL=main.css.map */
