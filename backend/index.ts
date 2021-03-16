@@ -6,7 +6,7 @@ import bodyParser from "body-parser";
 if (process.env.NODE_ENV !== "production") {
     dotenv.config();
 }
-// import route from "./routes";
+import route from "./routes";
 // import mediaRouter from "./routes/media";
 // import protectedRouter from "./routes/protected";
 const app = express();
@@ -26,7 +26,7 @@ console.log("NODE ENV", process.env.NODE_ENV);
 app.use("/api/test", (req, res) => {
     res.send("hi");
 });
-// app.use("/api", route);
+app.use("/api", route);
 // app.use("/api", mediaRouter);
 // app.use("/", protectedRouter);
 

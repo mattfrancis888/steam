@@ -11,7 +11,7 @@ var body_parser_1 = __importDefault(require("body-parser"));
 if (process.env.NODE_ENV !== "production") {
     dotenv_1.default.config();
 }
-// import route from "./routes";
+var routes_1 = __importDefault(require("./routes"));
 // import mediaRouter from "./routes/media";
 // import protectedRouter from "./routes/protected";
 var app = express_1.default();
@@ -29,7 +29,7 @@ console.log("NODE ENV", process.env.NODE_ENV);
 app.use("/api/test", function (req, res) {
     res.send("hi");
 });
-// app.use("/api", route);
+app.use("/api", routes_1.default);
 // app.use("/api", mediaRouter);
 // app.use("/", protectedRouter);
 var port = 5000;
