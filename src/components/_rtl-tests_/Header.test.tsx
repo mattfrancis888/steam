@@ -14,11 +14,9 @@ import {
 import { act } from "react-dom/test-utils";
 import MockAdapter from "axios-mock-adapter";
 import axios from "axios";
-
 import history from "browserHistory";
 let pushSpy: jest.SpyInstance;
 let app: RenderResult;
-
 afterEach(() => {
     cleanup();
 });
@@ -32,7 +30,7 @@ Object.defineProperty(HTMLMediaElement.prototype, "muted", {
 beforeEach(async () => {
     app = render(
         <Root>
-            <MemoryRouter initialEntries={["/signin"]} initialIndex={0}>
+            <MemoryRouter initialEntries={["/"]} initialIndex={0}>
                 <Routes />
             </MemoryRouter>
         </Root>
@@ -43,37 +41,43 @@ beforeEach(async () => {
     pushSpy = jest.spyOn(history, "push");
 });
 
-test("Sections exist", async () => {
-    expect(app.getByText(/email/i)).toBeInTheDocument();
-    expect(app.getByText(/password/i)).toBeInTheDocument();
+test("Steam logo clicked", async () => {
+    act(() => {
+        fireEvent.click(app.getByTestId("steamHeaderLogo"));
+    });
+    history.push("/");
+    expect(pushSpy).toBeCalledWith("/");
+    pushSpy.mockRestore();
 });
 
-test("Sign in form on submit", async () => {
-    const mockResponse = {
-        token: "asdfsadf12",
-        refreshToken: "asdufahsfd",
-    };
-
-    const expectedMockFormValues = {
-        email: "hi@gmail.com",
-        password: "123",
-    };
-
-    fireEvent.change(app.getByTestId("email"), {
-        target: { value: expectedMockFormValues.email },
-    });
-    fireEvent.change(app.getByTestId("password"), {
-        target: { value: expectedMockFormValues.password },
-    });
+test("Sign in clicked", async () => {
+    //Mock cookie
 
     act(() => {
-        fireEvent.click(app.getByTestId("signInButton"));
+        fireEvent.click(app.getByTestId("signInOrSignOut"));
     });
+    history.push("/signin");
+    expect(pushSpy).toBeCalledWith("/signin");
+});
 
+test("Sign out clicked", async () => {
+    //Mock cookie
+    jest.mock("js-cookie", () => ({ get: () => "ACCESS_TOKEN" }), {
+        virtual: true,
+    });
+    act(() => {
+        fireEvent.click(app.getByTestId("signInOrSignOut"));
+    });
     let mock = new MockAdapter(axios);
-    mock.onPost("/api/signin").reply(200, mockResponse);
+    let mockResponse = {
+        token: "",
+    };
+    mock.onPost("/api/signout").reply(200, mockResponse);
 
-    return axios.post("/api/signin").then((response) => {
+    return axios.post("/api/signout").then((response) => {
         console.log(response.data);
+        history.push("/");
+        expect(pushSpy).toBeCalledWith("/");
+        pushSpy.mockRestore();
     });
 });

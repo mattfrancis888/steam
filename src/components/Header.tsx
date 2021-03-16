@@ -23,6 +23,7 @@ const Header: React.FC<HeaderProps> = (props) => {
             </div>
             <h3
                 className="headerAuthText"
+                data-testid="signInOrSignOut"
                 onClick={() => {
                     if (props.authStatus) props.signOut();
                     else {

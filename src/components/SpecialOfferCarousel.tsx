@@ -20,7 +20,7 @@ import _ from "lodash";
 const SpecialOfferCarousel: React.FC<SpecialOfferCarouselProps> = (props) => {
     const { width } = useWindowDimensions();
     const specialofferContent = _.chunk(props.content, 6);
-    console.log(specialofferContent);
+    // console.log(specialofferContent);
     const renderSlides = () => {
         return specialofferContent.map((contents, index) => {
             return (

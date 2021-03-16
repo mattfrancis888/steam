@@ -127,10 +127,7 @@ const RegisterForm: React.FC<
                     />
                 </div>
 
-                <button
-                    className="authButton"
-                    data-testid="emailAndPasswordContinueButton"
-                >
+                <button className="authButton" data-testid="registerButton">
                     Continue
                 </button>
             </form>
