@@ -8,7 +8,7 @@ export interface GamesBaseInfoStateResponse {
     data?: FetchGamesBaseInfoResponse;
 }
 
-const gamesReducer = (
+const gamesBaseInfoReducer = (
     state: GamesBaseInfoStateResponse = {},
     action: FetchGamesBaseInfoAction
 ) => {
@@ -20,4 +20,4 @@ const gamesReducer = (
     }
 };
 
-export default gamesReducer;
+export default gamesBaseInfoReducer;

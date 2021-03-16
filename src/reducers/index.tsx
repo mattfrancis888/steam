@@ -2,28 +2,25 @@ import { combineReducers } from "redux";
 import { reducer as formReducer, FormStateMap } from "redux-form";
 
 import authReducer, { AuthStateResponse } from "./authReducer";
-import gamesReducer, { GamesBaseInfoStateResponse } from "./gamesReducer";
+import gamesBaseInfoReducer, {
+    GamesBaseInfoStateResponse,
+} from "./gamesBaseInfoReducer";
+import gamesGenreReducer, {
+    GamesGenreStateResponse,
+} from "./gamesGenreReducer";
 import errorReducer, { ErrorStateResponse } from "./errorReducer";
-// import mediaGenreAndCastReducer, {
-//     MediaGenreAndCastStateResponse,
-// } from "./mediaGenreAndCastReducer";
-// import watchingReducer, { WatchingStateResponse } from "./watchingReducer";
-// import searchReducer, { SearchStateResponse } from "./searchReducer";
+
 export interface StoreState {
     authStatus: AuthStateResponse;
     gamesBaseInfo: GamesBaseInfoStateResponse;
-    // mediaGenreAndCast: MediaGenreAndCastStateResponse;
-    // watching: WatchingStateResponse;
+    gamesGenre: GamesGenreStateResponse;
     errors: ErrorStateResponse;
-    // search: SearchStateResponse;
     form: FormStateMap;
 }
 export default combineReducers<StoreState>({
     authStatus: authReducer,
-    gamesBaseInfo: gamesReducer,
-    // watching: watchingReducer,
+    gamesBaseInfo: gamesBaseInfoReducer,
+    gamesGenre: gamesGenreReducer,
     errors: errorReducer,
-    // mediaGenreAndCast: mediaGenreAndCastReducer,
-    // search: searchReducer,
     form: formReducer,
 });

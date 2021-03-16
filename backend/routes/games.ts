@@ -7,8 +7,8 @@ import {
 const gameRouter = Router();
 
 gameRouter.get("/games", getGamesBaseInfo);
-gameRouter.get("/games-genres", getGamesGenres);
-gameRouter.get("/games-screenshots", getGamesScreenshots);
+gameRouter.get("/games-genre", getGamesGenres);
+gameRouter.get("/games-screenshot", getGamesScreenshots);
 // mediasRouter.get("/genre-cast/:mediaId", getMediaGenreAndCast);
 // mediasRouter.get("/watching", getMediaWatchingByUser);
 // mediasRouter.post("/add-to-watching/:mediaId", addToWatchingByUser);

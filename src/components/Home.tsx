@@ -7,13 +7,14 @@ import SpecialOfferCarousel from "./SpecialOfferCarousel";
 import CommunityCarousel from "./CommunityCarousel";
 import _ from "lodash";
 import { connect } from "react-redux";
-import { fetchGamesBaseInfo } from "../actions";
+import { fetchGamesBaseInfo, fetchGamesGenres, GameBaseInfo } from "../actions";
 import { StoreState } from "../reducers";
-import { GamesBaseInfoStateResponse } from "../reducers/gamesReducer";
+import { GamesBaseInfoStateResponse } from "../reducers/gamesBaseInfoReducer";
 import { ErrorStateResponse } from "reducers/errorReducer";
 import { LG_SCREEN_SIZE, MED_SCREEN_SIZE } from "../constants";
 import Loading from "./Loading";
 import useWindowDimensions from "../windowDimensions";
+import { GamesGenreStateResponse } from "reducers/gamesGenreReducer";
 export const games = [
     {
         image:
@@ -70,17 +71,48 @@ export interface SpecialOfferCarouselProps {
 
 interface HomeProps {
     gamesBaseInfo: GamesBaseInfoStateResponse;
+    gamesGenre: GamesGenreStateResponse;
     errors: ErrorStateResponse;
     fetchGamesBaseInfo(): void;
+    fetchGamesGenres(): void;
 }
 
 const Home: React.FC<HomeProps> = (props) => {
     useEffect(() => {
         props.fetchGamesBaseInfo();
+        props.fetchGamesGenres();
     }, []);
 
     const [hoverData, setHoverData] = useState(1);
     const { width } = useWindowDimensions();
+
+    const getGenresForGameText = (gameId: number) => {
+        let genres = _.filter(props.gamesGenre.data?.games, {
+            game_id: gameId,
+        });
+
+        return genres.map((genre, index) => {
+            if (genres.length === index + 1) {
+                return ` ${genre.genre_type}`;
+            }
+            return ` ${genre.genre_type},`;
+        });
+    };
+
+    const getGenresForGameTag = (gameId: number) => {
+        let genres = _.filter(props.gamesGenre.data?.games, {
+            game_id: gameId,
+        });
+
+        return genres.map((genre, index) => {
+            return (
+                <p key={index} className="chartGamePreviewGenres">
+                    {genre.genre_type}
+                </p>
+            );
+        });
+    };
+
     const renderContent = () => {
         if (props.errors.data?.error) {
             return (
@@ -90,7 +122,7 @@ const Home: React.FC<HomeProps> = (props) => {
                     </h3>
                 </div>
             );
-        } else if (props.gamesBaseInfo.data) {
+        } else if (props.gamesBaseInfo.data && props.gamesGenre.data) {
             return (
                 <div className="homeContainer">
                     <div className="homeFirstSection">
@@ -111,45 +143,56 @@ const Home: React.FC<HomeProps> = (props) => {
                     </div>
 
                     <div className="chart">
-                        <div className="chartGamesColumn">
-                            {specialOfferGames.map((content, index) => {
+                        {props.gamesBaseInfo.data.games.map(
+                            (content, index) => {
                                 return (
-                                    <div
-                                        key={index}
-                                        className={`chartGameContainer ${
-                                            hoverData === index + 1
-                                                ? "chartGameContainerToggled"
-                                                : ""
-                                        }`}
-                                        onMouseOver={() =>
-                                            setHoverData(content.id)
-                                        }
-                                        onClick={(event) => {}}
-                                    >
-                                        <div className="chartGameImage">
-                                            <img
-                                                src="https://cdn.cloudflare.steamstatic.com/steam/apps/412020/capsule_184x69.jpg?t=1614093928"
-                                                alt="game"
-                                            ></img>
-                                        </div>
-                                        <div className="chartGameInfo">
-                                            <div className="chartGameGenreAndTitle">
-                                                <p className="chartGameTitle">
-                                                    Game Title
-                                                </p>
-                                                <p className="chartGameGenres">
-                                                    Genres
-                                                </p>
+                                    <React.Fragment>
+                                        <div className="chartGamesColumn">
+                                            <div
+                                                key={index}
+                                                className={`chartGameContainer ${
+                                                    hoverData === index + 1
+                                                        ? "chartGameContainerToggled"
+                                                        : ""
+                                                }`}
+                                                onMouseOver={() =>
+                                                    setHoverData(
+                                                        content.game_id
+                                                    )
+                                                }
+                                                onClick={(event) => {}}
+                                            >
+                                                <div className="chartGameImage">
+                                                    <img
+                                                        src="https://cdn.cloudflare.steamstatic.com/steam/apps/412020/capsule_184x69.jpg?t=1614093928"
+                                                        alt="game"
+                                                    ></img>
+                                                </div>
+                                                <div className="chartGameInfo">
+                                                    <div className="chartGameGenreAndTitle">
+                                                        <p className="chartGameTitle">
+                                                            {content.title}
+                                                        </p>
+                                                        <p className="chartGameGenres">
+                                                            {getGenresForGameText(
+                                                                content.game_id
+                                                            )}
+                                                        </p>
+                                                    </div>
+                                                    <p className="chartGamePrice">
+                                                        $
+                                                        {parseFloat(
+                                                            content.price
+                                                        ).toFixed(2)}
+                                                    </p>
+                                                </div>
                                             </div>
-                                            <p className="chartGamePrice">
-                                                $49.99
-                                            </p>
                                         </div>
-                                    </div>
+                                        {renderChartGamePreview(content)}
+                                    </React.Fragment>
                                 );
-                            })}
-                        </div>
-                        {renderChartGamePreview()}
+                            }
+                        )}
                     </div>
                 </div>
             );
@@ -157,13 +200,13 @@ const Home: React.FC<HomeProps> = (props) => {
             return <Loading />;
         }
     };
-    const renderChartGamePreview = () => {
+    const renderChartGamePreview = (content: GameBaseInfo) => {
         // if (hoverData === index && width > LG_SCREEN_SIZE) {
         return (
             <div className="chartGamePreviewHover">
-                <p className="chartGamePreviewTitle">Game Title</p>
+                <p className="chartGamePreviewTitle">{content.title}</p>
                 <div className="chartGamePreviewGenresWrap">
-                    <p className="chartGamePreviewGenres">Genres</p>
+                    {getGenresForGameTag(content.game_id)}
                 </div>
                 <div className="chartGamePreviewScreenshots">
                     <img
@@ -183,8 +226,12 @@ const Home: React.FC<HomeProps> = (props) => {
 const mapStateToProps = (state: StoreState) => {
     return {
         gamesBaseInfo: state.gamesBaseInfo,
+        gamesGenre: state.gamesGenre,
         errors: state.errors,
     };
 };
 
-export default connect(mapStateToProps, { fetchGamesBaseInfo })(Home);
+export default connect(mapStateToProps, {
+    fetchGamesBaseInfo,
+    fetchGamesGenres,
+})(Home);
