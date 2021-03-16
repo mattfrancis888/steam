@@ -16,7 +16,7 @@ import { FeaturedCarouselProps } from "./Home";
 import anime from "animejs/lib/anime.es.js";
 import { LG_SCREEN_SIZE, XL_SCREEN_SIZE, MED_SCREEN_SIZE } from "../constants";
 
-const FeaturedCarousel: React.FC<FeaturedCarouselProps> = (props) => {
+const CommunityCarousel: React.FC<FeaturedCarouselProps> = (props) => {
     const { width } = useWindowDimensions();
     const [style, setStyle] = useState({ opacity: "1" });
 
@@ -54,7 +54,10 @@ const FeaturedCarousel: React.FC<FeaturedCarouselProps> = (props) => {
                                         setStyle({ opacity: "0" });
                                     }}
                                 >
-                                    <img src={content.image} alt="game"></img>
+                                    <img
+                                        src={content.cover_url}
+                                        alt="game"
+                                    ></img>
 
                                     <video
                                         className="communityCarouselVid"
@@ -186,4 +189,4 @@ const FeaturedCarousel: React.FC<FeaturedCarouselProps> = (props) => {
     return <div>{renderCarousel()}</div>;
 };
 
-export default FeaturedCarousel;
+export default CommunityCarousel;

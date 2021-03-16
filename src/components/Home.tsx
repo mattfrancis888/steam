@@ -69,7 +69,10 @@ export interface Game {
     image: string;
 }
 export interface FeaturedCarouselProps {
-    content: Game[];
+    content: GameBaseInfo[];
+    gamesBaseInfo: GamesBaseInfoStateResponse;
+    gamesGenre: GamesGenreStateResponse;
+    gamesScreenshot: GamesScreenshotStateResponse;
 }
 export interface SpecialOfferCarouselProps {
     content: Game[];
@@ -95,7 +98,7 @@ const Home: React.FC<HomeProps> = (props) => {
     const [hoverData, setHoverData] = useState(1);
     const { width } = useWindowDimensions();
 
-    const getGenresForGameText = (gameId: number) => {
+    const renderGenresForGameText = (gameId: number) => {
         let genres = _.filter(props.gamesGenre.data?.games, {
             game_id: gameId,
         });
@@ -108,7 +111,7 @@ const Home: React.FC<HomeProps> = (props) => {
         });
     };
 
-    const getGenresForGameTag = (gameId: number) => {
+    const renderGenresForGameTag = (gameId: number) => {
         let genres = _.filter(props.gamesGenre.data?.games, {
             game_id: gameId,
         });
@@ -122,12 +125,12 @@ const Home: React.FC<HomeProps> = (props) => {
         });
     };
 
-    const getScreenshotsForGame = (gameId: number) => {
+    const renderScreenshotsForGame = (gameId: number) => {
         let screenshots = _.filter(props.gamesScreenshot.data?.games, {
             game_id: gameId,
         });
-
-        return screenshots.map((screenshot, index) => {
+        const screenshotsSplit = _.chunk(screenshots, 4);
+        return screenshotsSplit[0].map((screenshot, index) => {
             return <img src={screenshot.screenshot_url} alt="preview"></img>;
         });
     };
@@ -146,19 +149,20 @@ const Home: React.FC<HomeProps> = (props) => {
             props.gamesGenre.data &&
             props.gamesScreenshot.data
         ) {
+            const gamesBaseInfo = _.chunk(props.gamesBaseInfo.data.games, 4);
             return (
                 <div className="homeContainer">
                     <div className="homeFirstSection">
                         <h1 className="bannerTitle">
                             Featured And Recommended
                         </h1>
-                        <FeaturedCarousel content={games} />
+                        <FeaturedCarousel content={gamesBaseInfo[0]} />
                         <h1 className="bannerTitle">Special Offers</h1>
                         <SpecialOfferCarousel content={specialOfferGames} />
                         <h1 className="bannerTitle">
                             The Community Recommends
                         </h1>
-                        <CommunityCarousel content={games} />
+                        {/* <CommunityCarousel content={games} /> */}
                     </div>
                     <div className="chartTabsWrap">
                         <div className="chartTab">Top Sellers</div>
@@ -197,7 +201,7 @@ const Home: React.FC<HomeProps> = (props) => {
                                                             {content.title}
                                                         </p>
                                                         <p className="chartGameGenres">
-                                                            {getGenresForGameText(
+                                                            {renderGenresForGameText(
                                                                 content.game_id
                                                             )}
                                                         </p>
@@ -229,10 +233,10 @@ const Home: React.FC<HomeProps> = (props) => {
             <div className="chartGamePreviewHover">
                 <p className="chartGamePreviewTitle">{content.title}</p>
                 <div className="chartGamePreviewGenresWrap">
-                    {getGenresForGameTag(content.game_id)}
+                    {renderGenresForGameTag(content.game_id)}
                 </div>
                 <div className="chartGamePreviewScreenshots">
-                    {getScreenshotsForGame(content.game_id)}
+                    {renderScreenshotsForGame(content.game_id)}
                 </div>
             </div>
         );

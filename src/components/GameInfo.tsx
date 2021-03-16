@@ -40,7 +40,7 @@ const GameInfo: React.FC<{}> = (props) => {
                     </div>
                 </div>
                 <div className="gameInfoShowcaseCarouselWrap">
-                    <GameInfoCarousel content={games} />
+                    {/* <GameInfoCarousel content={games} /> */}
                 </div>
             </div>
             <WriteReview
