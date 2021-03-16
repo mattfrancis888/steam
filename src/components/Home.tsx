@@ -6,7 +6,13 @@ import FeaturedCarousel from "./FeaturedCarousel";
 import SpecialOfferCarousel from "./SpecialOfferCarousel";
 import CommunityCarousel from "./CommunityCarousel";
 import _ from "lodash";
+import { connect } from "react-redux";
+import { fetchGamesBaseInfo } from "../actions";
+import { StoreState } from "../reducers";
+import { GamesBaseInfoStateResponse } from "../reducers/gamesReducer";
+import { ErrorStateResponse } from "reducers/errorReducer";
 import { LG_SCREEN_SIZE, MED_SCREEN_SIZE } from "../constants";
+import Loading from "./Loading";
 import useWindowDimensions from "../windowDimensions";
 export const games = [
     {
@@ -62,9 +68,95 @@ export interface SpecialOfferCarouselProps {
     content: Game[];
 }
 
-const Home: React.FC<{}> = (props) => {
+interface HomeProps {
+    gamesBaseInfo: GamesBaseInfoStateResponse;
+    errors: ErrorStateResponse;
+    fetchGamesBaseInfo(): void;
+}
+
+const Home: React.FC<HomeProps> = (props) => {
+    useEffect(() => {
+        props.fetchGamesBaseInfo();
+    }, []);
+
     const [hoverData, setHoverData] = useState(1);
     const { width } = useWindowDimensions();
+    const renderContent = () => {
+        if (props.errors.data?.error) {
+            return (
+                <div className="serverErrorContainer">
+                    <h3 className="serverErrorText">
+                        {props.errors.data?.error}
+                    </h3>
+                </div>
+            );
+        } else if (props.gamesBaseInfo.data) {
+            return (
+                <div className="homeContainer">
+                    <div className="homeFirstSection">
+                        <h1 className="bannerTitle">
+                            Featured And Recommended
+                        </h1>
+                        <FeaturedCarousel content={games} />
+                        <h1 className="bannerTitle">Special Offers</h1>
+                        <SpecialOfferCarousel content={specialOfferGames} />
+                        <h1 className="bannerTitle">
+                            The Community Recommends
+                        </h1>
+                        <CommunityCarousel content={games} />
+                    </div>
+                    <div className="chartTabsWrap">
+                        <div className="chartTab">Top Sellers</div>
+                        <div className="chartTab">Specials</div>
+                    </div>
+
+                    <div className="chart">
+                        <div className="chartGamesColumn">
+                            {specialOfferGames.map((content, index) => {
+                                return (
+                                    <div
+                                        key={index}
+                                        className={`chartGameContainer ${
+                                            hoverData === index + 1
+                                                ? "chartGameContainerToggled"
+                                                : ""
+                                        }`}
+                                        onMouseOver={() =>
+                                            setHoverData(content.id)
+                                        }
+                                        onClick={(event) => {}}
+                                    >
+                                        <div className="chartGameImage">
+                                            <img
+                                                src="https://cdn.cloudflare.steamstatic.com/steam/apps/412020/capsule_184x69.jpg?t=1614093928"
+                                                alt="game"
+                                            ></img>
+                                        </div>
+                                        <div className="chartGameInfo">
+                                            <div className="chartGameGenreAndTitle">
+                                                <p className="chartGameTitle">
+                                                    Game Title
+                                                </p>
+                                                <p className="chartGameGenres">
+                                                    Genres
+                                                </p>
+                                            </div>
+                                            <p className="chartGamePrice">
+                                                $49.99
+                                            </p>
+                                        </div>
+                                    </div>
+                                );
+                            })}
+                        </div>
+                        {renderChartGamePreview()}
+                    </div>
+                </div>
+            );
+        } else {
+            return <Loading />;
+        }
+    };
     const renderChartGamePreview = () => {
         // if (hoverData === index && width > LG_SCREEN_SIZE) {
         return (
@@ -85,60 +177,14 @@ const Home: React.FC<{}> = (props) => {
         //     return null;
         // }
     };
-    return (
-        <div className="homeContainer">
-            <div className="homeFirstSection">
-                <h1 className="bannerTitle">Featured And Recommended</h1>
-                <FeaturedCarousel content={games} />
-                <h1 className="bannerTitle">Special Offers</h1>
-                <SpecialOfferCarousel content={specialOfferGames} />
-                <h1 className="bannerTitle">The Community Recommends</h1>
-                <CommunityCarousel content={games} />
-            </div>
-            <div className="chartTabsWrap">
-                <div className="chartTab">Top Sellers</div>
-                <div className="chartTab">Specials</div>
-            </div>
-
-            <div className="chart">
-                <div className="chartGamesColumn">
-                    {specialOfferGames.map((content, index) => {
-                        return (
-                            <div
-                                key={index}
-                                className={`chartGameContainer ${
-                                    hoverData === index + 1
-                                        ? "chartGameContainerToggled"
-                                        : ""
-                                }`}
-                                onMouseOver={() => setHoverData(content.id)}
-                                onClick={(event) => {}}
-                            >
-                                <div className="chartGameImage">
-                                    <img
-                                        src="https://cdn.cloudflare.steamstatic.com/steam/apps/412020/capsule_184x69.jpg?t=1614093928"
-                                        alt="game"
-                                    ></img>
-                                </div>
-                                <div className="chartGameInfo">
-                                    <div className="chartGameGenreAndTitle">
-                                        <p className="chartGameTitle">
-                                            Game Title
-                                        </p>
-                                        <p className="chartGameGenres">
-                                            Genres
-                                        </p>
-                                    </div>
-                                    <p className="chartGamePrice">$49.99</p>
-                                </div>
-                            </div>
-                        );
-                    })}
-                </div>
-                {renderChartGamePreview()}
-            </div>
-        </div>
-    );
+    return <React.Fragment>{renderContent()}</React.Fragment>;
 };
 
-export default Home;
+const mapStateToProps = (state: StoreState) => {
+    return {
+        gamesBaseInfo: state.gamesBaseInfo,
+        errors: state.errors,
+    };
+};
+
+export default connect(mapStateToProps, { fetchGamesBaseInfo })(Home);

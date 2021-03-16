@@ -7,7 +7,7 @@ if (process.env.NODE_ENV !== "production") {
     dotenv.config();
 }
 import route from "./routes";
-// import mediaRouter from "./routes/media";
+import gameRouter from "./routes/games";
 // import protectedRouter from "./routes/protected";
 const app = express();
 // middleware for parsing bodies from URL
@@ -27,7 +27,7 @@ app.use("/api/test", (req, res) => {
     res.send("hi");
 });
 app.use("/api", route);
-// app.use("/api", mediaRouter);
+app.use("/api", gameRouter);
 // app.use("/", protectedRouter);
 
 const port = 5000;

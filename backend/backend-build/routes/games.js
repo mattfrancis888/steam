@@ -1,0 +1,14 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var express_1 = require("express");
+var games_1 = require("../controllers/games");
+var gameRouter = express_1.Router();
+gameRouter.get("/games", games_1.getGamesBaseInfo);
+gameRouter.get("/games-genres", games_1.getGamesGenres);
+gameRouter.get("/games-screenshots", games_1.getGamesScreenshots);
+// mediasRouter.get("/genre-cast/:mediaId", getMediaGenreAndCast);
+// mediasRouter.get("/watching", getMediaWatchingByUser);
+// mediasRouter.post("/add-to-watching/:mediaId", addToWatchingByUser);
+// mediasRouter.delete("/remove-from-watching/:mediaId", removeFromWatchingByUser);
+// mediasRouter.get("/search", getMediasBySearch);
+exports.default = gameRouter;

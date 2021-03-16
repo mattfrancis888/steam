@@ -1,3 +1,3 @@
 export * from "./types";
 export * from "./auth";
-// export * from "./media";
+export * from "./games";
