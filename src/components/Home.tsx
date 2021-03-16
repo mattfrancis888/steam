@@ -7,7 +7,12 @@ import SpecialOfferCarousel from "./SpecialOfferCarousel";
 import CommunityCarousel from "./CommunityCarousel";
 import _ from "lodash";
 import { connect } from "react-redux";
-import { fetchGamesBaseInfo, fetchGamesGenres, GameBaseInfo } from "../actions";
+import {
+    fetchGamesBaseInfo,
+    fetchGamesGenres,
+    fetchGamesScreenshot,
+    GameBaseInfo,
+} from "../actions";
 import { StoreState } from "../reducers";
 import { GamesBaseInfoStateResponse } from "../reducers/gamesBaseInfoReducer";
 import { ErrorStateResponse } from "reducers/errorReducer";
@@ -15,6 +20,7 @@ import { LG_SCREEN_SIZE, MED_SCREEN_SIZE } from "../constants";
 import Loading from "./Loading";
 import useWindowDimensions from "../windowDimensions";
 import { GamesGenreStateResponse } from "reducers/gamesGenreReducer";
+import { GamesScreenshotStateResponse } from "reducers/gamesScreenshotReducer";
 export const games = [
     {
         image:
@@ -72,15 +78,18 @@ export interface SpecialOfferCarouselProps {
 interface HomeProps {
     gamesBaseInfo: GamesBaseInfoStateResponse;
     gamesGenre: GamesGenreStateResponse;
+    gamesScreenshot: GamesScreenshotStateResponse;
     errors: ErrorStateResponse;
     fetchGamesBaseInfo(): void;
     fetchGamesGenres(): void;
+    fetchGamesScreenshot(): void;
 }
 
 const Home: React.FC<HomeProps> = (props) => {
     useEffect(() => {
         props.fetchGamesBaseInfo();
         props.fetchGamesGenres();
+        props.fetchGamesScreenshot();
     }, []);
 
     const [hoverData, setHoverData] = useState(1);
@@ -113,6 +122,16 @@ const Home: React.FC<HomeProps> = (props) => {
         });
     };
 
+    const getScreenshotsForGame = (gameId: number) => {
+        let screenshots = _.filter(props.gamesScreenshot.data?.games, {
+            game_id: gameId,
+        });
+
+        return screenshots.map((screenshot, index) => {
+            return <img src={screenshot.screenshot_url} alt="preview"></img>;
+        });
+    };
+
     const renderContent = () => {
         if (props.errors.data?.error) {
             return (
@@ -122,7 +141,11 @@ const Home: React.FC<HomeProps> = (props) => {
                     </h3>
                 </div>
             );
-        } else if (props.gamesBaseInfo.data && props.gamesGenre.data) {
+        } else if (
+            props.gamesBaseInfo.data &&
+            props.gamesGenre.data &&
+            props.gamesScreenshot.data
+        ) {
             return (
                 <div className="homeContainer">
                     <div className="homeFirstSection">
@@ -164,7 +187,7 @@ const Home: React.FC<HomeProps> = (props) => {
                                             >
                                                 <div className="chartGameImage">
                                                     <img
-                                                        src="https://cdn.cloudflare.steamstatic.com/steam/apps/412020/capsule_184x69.jpg?t=1614093928"
+                                                        src={content.cover_url}
                                                         alt="game"
                                                     ></img>
                                                 </div>
@@ -209,10 +232,7 @@ const Home: React.FC<HomeProps> = (props) => {
                     {getGenresForGameTag(content.game_id)}
                 </div>
                 <div className="chartGamePreviewScreenshots">
-                    <img
-                        src="https://cdn.cloudflare.steamstatic.com/steam/apps/1282730/ss_455789884ed94fd20410ac5a139e8c3bb8f6f369.600x338.jpg"
-                        alt="preview"
-                    ></img>
+                    {getScreenshotsForGame(content.game_id)}
                 </div>
             </div>
         );
@@ -227,6 +247,7 @@ const mapStateToProps = (state: StoreState) => {
     return {
         gamesBaseInfo: state.gamesBaseInfo,
         gamesGenre: state.gamesGenre,
+        gamesScreenshot: state.gamesScreenshot,
         errors: state.errors,
     };
 };
@@ -234,4 +255,5 @@ const mapStateToProps = (state: StoreState) => {
 export default connect(mapStateToProps, {
     fetchGamesBaseInfo,
     fetchGamesGenres,
+    fetchGamesScreenshot,
 })(Home);
