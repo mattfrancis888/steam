@@ -103,10 +103,9 @@ const CommunityCarousel: React.FC<CommunityCarouelProps> = (props) => {
                                             type="video/mp4"
                                         />
                                     </video>
-                                    <p className="communityPrice">
-                                        {/* ${parseFloat(content.price).toFixed(2)} */}
+                                    <div className="communityPrice">
                                         {renderPrice(content)}
-                                    </p>
+                                    </div>
                                 </div>
                                 <div className="communityCarouselReviewSection">
                                     <p className="communityCarouselGameReview">

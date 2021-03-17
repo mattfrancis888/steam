@@ -92,9 +92,9 @@ const FeaturedCarousel: React.FC<FeaturedCarouselProps> = (props) => {
                                         src={content.cover_url}
                                         alt="game cover"
                                     ></img>
-                                    <p className="featuredCarouselGamePrice">
+                                    <div className="featuredCarouselGamePrice">
                                         {renderPrice(content)}
-                                    </p>
+                                    </div>
                                 </div>
                                 <div className="featuredCarouselScreenshotSection">
                                     <h1 className="featuredCarouselGameTitle">
