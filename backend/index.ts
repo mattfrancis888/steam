@@ -6,6 +6,7 @@ import bodyParser from "body-parser";
 if (process.env.NODE_ENV !== "production") {
     dotenv.config();
 }
+import protectedRouter from "./routes/protected";
 import route from "./routes";
 import gameRouter from "./routes/games";
 // import protectedRouter from "./routes/protected";
@@ -26,6 +27,7 @@ console.log("NODE ENV", process.env.NODE_ENV);
 app.use("/api/test", (req, res) => {
     res.send("hi");
 });
+app.use("/api", protectedRouter);
 app.use("/api", route);
 app.use("/api", gameRouter);
 // app.use("/", protectedRouter);

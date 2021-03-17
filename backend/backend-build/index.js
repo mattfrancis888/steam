@@ -11,6 +11,7 @@ var body_parser_1 = __importDefault(require("body-parser"));
 if (process.env.NODE_ENV !== "production") {
     dotenv_1.default.config();
 }
+var protected_1 = __importDefault(require("./routes/protected"));
 var routes_1 = __importDefault(require("./routes"));
 var games_1 = __importDefault(require("./routes/games"));
 // import protectedRouter from "./routes/protected";
@@ -29,6 +30,7 @@ console.log("NODE ENV", process.env.NODE_ENV);
 app.use("/api/test", function (req, res) {
     res.send("hi");
 });
+app.use("/api", protected_1.default);
 app.use("/api", routes_1.default);
 app.use("/api", games_1.default);
 // app.use("/", protectedRouter);

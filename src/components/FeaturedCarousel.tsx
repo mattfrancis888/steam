@@ -59,7 +59,7 @@ const FeaturedCarousel: React.FC<FeaturedCarouselProps> = (props) => {
         let maxScreenshotToShow = 4;
         return gameForSlide[0].screenshots.map((screenshot, index) => {
             if (index < maxScreenshotToShow)
-                return <img src={screenshot} alt="preview"></img>;
+                return <img key={index} src={screenshot} alt="preview"></img>;
         });
     };
 

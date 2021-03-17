@@ -41,10 +41,6 @@ const Home: React.FC<HomeProps> = (props) => {
         props.fetchDiscountedGames();
     }, []);
 
-    // useEffect(() => {
-    //     props.fetchGamesDiscountedBaseInfo();
-    // }, [specialsTabClicked]);
-
     const { width } = useWindowDimensions();
 
     const renderGenresForGameText = (gameId: number) => {
@@ -85,7 +81,7 @@ const Home: React.FC<HomeProps> = (props) => {
         let maxScreenshotToShow = 4;
         return game[0].screenshots.map((screenshot, index) => {
             if (index < maxScreenshotToShow)
-                return <img src={screenshot} alt="preview"></img>;
+                return <img key={index} src={screenshot} alt="preview"></img>;
         });
     };
 
@@ -127,37 +123,33 @@ const Home: React.FC<HomeProps> = (props) => {
         if (contentToRender)
             return contentToRender.map((content, index) => {
                 return (
-                    <React.Fragment>
-                        <div
-                            key={index}
-                            className={`chartGameContainer ${
-                                hoverData === content.game_id
-                                    ? "chartGameContainerToggled"
-                                    : ""
-                            }`}
-                            onMouseOver={() => {
-                                setHoverData(content.game_id);
-                            }}
-                            onClick={(event) => {}}
-                        >
-                            <div className="chartGameImage">
-                                <img src={content.cover_url} alt="game"></img>
-                            </div>
-                            <div className="chartGameInfo">
-                                <div className="chartGameGenreAndTitle">
-                                    <p className="chartGameTitle">
-                                        {content.title}
-                                    </p>
-                                    <p className="chartGameGenres">
-                                        {renderGenresForGameText(
-                                            content.game_id
-                                        )}
-                                    </p>
-                                </div>
-                                {renderPrice(content)}
-                            </div>
+                    <div
+                        key={index}
+                        className={`chartGameContainer ${
+                            hoverData === content.game_id
+                                ? "chartGameContainerToggled"
+                                : ""
+                        }`}
+                        onMouseOver={() => {
+                            setHoverData(content.game_id);
+                        }}
+                        onClick={(event) => {}}
+                    >
+                        <div className="chartGameImage">
+                            <img src={content.cover_url} alt="game"></img>
                         </div>
-                    </React.Fragment>
+                        <div className="chartGameInfo">
+                            <div className="chartGameGenreAndTitle">
+                                <p className="chartGameTitle">
+                                    {content.title}
+                                </p>
+                                <p className="chartGameGenres">
+                                    {renderGenresForGameText(content.game_id)}
+                                </p>
+                            </div>
+                            {renderPrice(content)}
+                        </div>
+                    </div>
                 );
             });
     };
@@ -221,14 +213,14 @@ const Home: React.FC<HomeProps> = (props) => {
     };
 
     const renderChartGamePreview = (gameId: number) => {
-        let baseInfo = _.filter(props.games.data?.games, {
+        let filteredContent = _.filter(props.games.data?.games, {
             game_id: gameId,
         });
 
         return (
             <div className="chartGamePreviewHover">
                 <p className="chartGamePreviewTitle">
-                    {baseInfo.map((content, index) => {
+                    {filteredContent.map((content, index) => {
                         return content.title;
                     })}
                 </p>
