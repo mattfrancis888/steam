@@ -14,21 +14,6 @@
     @media screen and (min-width: $lg_breakpoint) {
         width: 70%;
     }
-    .communityPrice {
-        position: absolute;
-        background: black;
-        color: white;
-        bottom: 2rem;
-        right: 0;
-        padding: 1rem;
-        font-size: 1rem;
-        @media screen and (min-width: $sm_breakpoint) {
-            bottom: 5rem;
-            right: 0;
-            padding: 1rem 2rem;
-            font-size: 1.4rem;
-        }
-    }
 
     .communityCarouselVid {
         position: absolute;
@@ -111,4 +96,46 @@
 .hideCommunityCarouselButton,
 .hideCommunityCarouselButtonsWrap {
     display: none !important;
+}
+
+.communityAdjustedPriceWrap {
+    display: flex;
+    align-items: center;
+}
+.communityOrigPriceStriked {
+    text-decoration: line-through;
+    font-size: 1.2rem;
+    margin: 0;
+    margin-bottom: 0.25rem;
+    color: #626366;
+}
+.communityGamePrice {
+    font-size: 1.2rem;
+    margin: 0;
+
+    @media screen and (min-width: $md_breakpoint) {
+        font-size: 1.4rem;
+    }
+}
+.communityPrice {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: #acdbf5;
+    bottom: 2rem;
+    right: 0;
+    padding: 0.75rem;
+    font-size: 1rem;
+    @media screen and (min-width: $sm_breakpoint) {
+        bottom: 5rem;
+        right: 0;
+        padding: 1rem;
+        font-size: 1.4rem;
+    }
+}
+
+.communityDiscount {
+    @include discountPriceColor;
+    margin-right: 1rem;
+    padding: 0.5rem;
+    font-size: 1.4rem;
 }

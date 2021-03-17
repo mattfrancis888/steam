@@ -15,12 +15,41 @@ import useWindowDimensions from "../windowDimensions";
 import { FeaturedCarouselProps } from "./Home";
 import anime from "animejs/lib/anime.es.js";
 import { LG_SCREEN_SIZE, MED_SCREEN_SIZE } from "../constants";
-import { StoreState } from "../reducers";
-import { connect } from "react-redux";
+import { Game } from "../actions";
 import _ from "lodash";
 
 const FeaturedCarousel: React.FC<FeaturedCarouselProps> = (props) => {
     const { width } = useWindowDimensions();
+
+    const renderPrice = (content: Game) => {
+        if (content.discount_percentage) {
+            return (
+                <div className="featuredAdjustedPriceWrap">
+                    <div className="featuredDiscount">
+                        -{parseFloat(content.discount_percentage) * 100}%
+                    </div>
+                    <div>
+                        <p className="featuredOrigPriceStriked">
+                            ${parseFloat(content.price).toFixed(2)}
+                        </p>
+                        <p className="featuredGamePrice">
+                            $
+                            {parseFloat(content.price_after_discount).toFixed(
+                                2
+                            )}
+                        </p>
+                    </div>
+                </div>
+            );
+        } else {
+            //no discount
+            return (
+                <p className="chartGamePrice">
+                    ${parseFloat(content.price).toFixed(2)}
+                </p>
+            );
+        }
+    };
 
     //Duplicate of the one in Home, just in case we want to customize it
     const renderScreenshotsForGame = (gameId: number) => {
@@ -63,6 +92,9 @@ const FeaturedCarousel: React.FC<FeaturedCarouselProps> = (props) => {
                                         src={content.cover_url}
                                         alt="game cover"
                                     ></img>
+                                    <p className="featuredCarouselGamePrice">
+                                        {renderPrice(content)}
+                                    </p>
                                 </div>
                                 <div className="featuredCarouselScreenshotSection">
                                     <h1 className="featuredCarouselGameTitle">
@@ -73,9 +105,6 @@ const FeaturedCarousel: React.FC<FeaturedCarouselProps> = (props) => {
                                             content.game_id
                                         )}
                                     </div>
-                                    <p className="featuredCarouselGamePrice">
-                                        ${parseFloat(content.price).toFixed(2)}
-                                    </p>
                                 </div>
                             </div>
                         </div>
@@ -97,7 +126,7 @@ const FeaturedCarousel: React.FC<FeaturedCarouselProps> = (props) => {
             >
                 <CarouselProvider
                     naturalSlideWidth={100}
-                    naturalSlideHeight={width < LG_SCREEN_SIZE ? 55 : 33}
+                    naturalSlideHeight={width < LG_SCREEN_SIZE ? 45 : 31}
                     totalSlides={props.content.length}
                     className="gameCarouselWrap"
                     visibleSlides={1}
@@ -157,11 +186,5 @@ const FeaturedCarousel: React.FC<FeaturedCarouselProps> = (props) => {
 
     return <div>{renderCarousel()}</div>;
 };
-// const mapStateToProps = (state: StoreState) => {
-//     return {
 
-//     };
-// };
-
-// export default connect(mapStateToProps)(FeaturedCarousel);
 export default FeaturedCarousel;

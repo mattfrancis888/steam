@@ -15,10 +15,41 @@ import useWindowDimensions from "../windowDimensions";
 import { CommunityCarouelProps } from "./Home";
 import anime from "animejs/lib/anime.es.js";
 import { LG_SCREEN_SIZE, XL_SCREEN_SIZE, MED_SCREEN_SIZE } from "../constants";
+import { Game } from "../actions";
 
 const CommunityCarousel: React.FC<CommunityCarouelProps> = (props) => {
     const { width } = useWindowDimensions();
     const [style, setStyle] = useState({ opacity: "1" });
+
+    const renderPrice = (content: Game) => {
+        if (content.discount_percentage) {
+            return (
+                <div className="communityAdjustedPriceWrap">
+                    <div className="communityDiscount">
+                        -{parseFloat(content.discount_percentage) * 100}%
+                    </div>
+                    <div>
+                        <p className="communityOrigPriceStriked">
+                            ${parseFloat(content.price).toFixed(2)}
+                        </p>
+                        <p className="communityGamePrice">
+                            $
+                            {parseFloat(content.price_after_discount).toFixed(
+                                2
+                            )}
+                        </p>
+                    </div>
+                </div>
+            );
+        } else {
+            //no discount
+            return (
+                <p className="chartGamePrice">
+                    ${parseFloat(content.price).toFixed(2)}
+                </p>
+            );
+        }
+    };
 
     const renderSlides = () => {
         return props.content.map((content, index) => {
@@ -72,7 +103,10 @@ const CommunityCarousel: React.FC<CommunityCarouelProps> = (props) => {
                                             type="video/mp4"
                                         />
                                     </video>
-                                    <p className="communityPrice">$18.88</p>
+                                    <p className="communityPrice">
+                                        {/* ${parseFloat(content.price).toFixed(2)} */}
+                                        {renderPrice(content)}
+                                    </p>
                                 </div>
                                 <div className="communityCarouselReviewSection">
                                     <p className="communityCarouselGameReview">
@@ -111,7 +145,7 @@ const CommunityCarousel: React.FC<CommunityCarouelProps> = (props) => {
         } else if (width < XL_SCREEN_SIZE) {
             return 37;
         } else if (width >= XL_SCREEN_SIZE) {
-            return 37;
+            return 31;
         }
         return 1;
     };

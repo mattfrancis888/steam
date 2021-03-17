@@ -60,7 +60,7 @@
             font-size: 1rem;
         }
         @media screen and (min-width: $xl_breakpoint) {
-            font-size: 1.4rem;
+            font-size: 1.2rem;
         }
     }
     .gameAdjustedPrice {
@@ -74,7 +74,7 @@
             font-size: 1rem;
         }
         @media screen and (min-width: $xl_breakpoint) {
-            font-size: 1.4rem;
+            font-size: 1.3rem;
         }
     }
     @media screen and (min-width: $sm_breakpoint) {
@@ -97,6 +97,6 @@
         font-size: 1.7rem;
     }
     @media screen and (min-width: $xl_breakpoint) {
-        font-size: 2rem;
+        font-size: 1.7rem;
     }
 }

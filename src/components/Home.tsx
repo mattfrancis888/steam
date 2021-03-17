@@ -221,8 +221,6 @@ const Home: React.FC<HomeProps> = (props) => {
     };
 
     const renderChartGamePreview = (gameId: number) => {
-        // if (hoverData === index && width > LG_SCREEN_SIZE) {
-
         let baseInfo = _.filter(props.games.data?.games, {
             game_id: gameId,
         });
@@ -243,9 +241,6 @@ const Home: React.FC<HomeProps> = (props) => {
                 </div>
             </div>
         );
-        // } else {
-        //     return null;
-        // }
     };
     return <React.Fragment>{renderContent()}</React.Fragment>;
 };
