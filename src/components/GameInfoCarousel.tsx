@@ -17,9 +17,11 @@ import Home, { FeaturedCarouselProps } from "./Home";
 import anime from "animejs/lib/anime.es.js";
 import { LG_SCREEN_SIZE, MED_SCREEN_SIZE } from "../constants";
 
-const FeaturedCarousel: React.FC<FeaturedCarouselProps> = (props) => {
+const GameInfoCarousel: React.FC<FeaturedCarouselProps> = (props) => {
     const { width } = useWindowDimensions();
-    const [displayImage, setDisplayImage] = useState(props.content[0].image);
+    const [displayImage, setDisplayImage] = useState(
+        props.content[0].cover_url
+    );
 
     const renderSlides = () => {
         return props.content.map((content, index) => {
@@ -44,12 +46,12 @@ const FeaturedCarousel: React.FC<FeaturedCarouselProps> = (props) => {
                                 });
                             }}
                             onClick={(event) => {
-                                console.log(content.image);
-                                setDisplayImage(content.image);
+                                console.log(content.cover_url);
+                                setDisplayImage(content.cover_url);
                             }}
                         >
                             <div className="gameInfoCarouselScreenshots">
-                                <img src={content.image} alt="screenshot" />
+                                <img src={content.cover_url} alt="screenshot" />
                                 {/* <img
                                     src="https://cdn.akamai.steamstatic.com/steam/apps/489830/ss_921ccea650df936a0b14ebd5dd4ecc73c1d2a12d.600x338.jpg?t=1590515887"
                                     alt="screenshot"
@@ -111,4 +113,4 @@ const FeaturedCarousel: React.FC<FeaturedCarouselProps> = (props) => {
     );
 };
 
-export default FeaturedCarousel;
+export default GameInfoCarousel;

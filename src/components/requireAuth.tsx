@@ -37,7 +37,10 @@ const hoc = (ChildComponent: any) => {
                 //When user enter a page,
                 //validate access token, if it's not valid, redux's authStatus would be empty
 
-                this.props.validateToken(history.location.pathname, false);
+                this.props.validateToken(
+                    `/api/${history.location.pathname}`,
+                    false
+                );
             }
         }
 

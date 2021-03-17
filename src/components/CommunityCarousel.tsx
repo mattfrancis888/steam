@@ -12,13 +12,44 @@ import { RiArrowRightSLine, RiArrowLeftSLine } from "react-icons/ri";
 import LazyLoad from "react-lazyload";
 import { useHistory } from "react-router-dom";
 import useWindowDimensions from "../windowDimensions";
-import { FeaturedCarouselProps } from "./Home";
+import { CommunityCarouelProps } from "./Home";
 import anime from "animejs/lib/anime.es.js";
 import { LG_SCREEN_SIZE, XL_SCREEN_SIZE, MED_SCREEN_SIZE } from "../constants";
+import { Game } from "../actions";
 
-const FeaturedCarousel: React.FC<FeaturedCarouselProps> = (props) => {
+const CommunityCarousel: React.FC<CommunityCarouelProps> = (props) => {
     const { width } = useWindowDimensions();
     const [style, setStyle] = useState({ opacity: "1" });
+
+    const renderPrice = (content: Game) => {
+        if (content.discount_percentage) {
+            return (
+                <div className="communityAdjustedPriceWrap">
+                    <div className="communityDiscount">
+                        -{parseFloat(content.discount_percentage) * 100}%
+                    </div>
+                    <div>
+                        <p className="communityOrigPriceStriked">
+                            ${parseFloat(content.price).toFixed(2)}
+                        </p>
+                        <p className="communityGamePrice">
+                            $
+                            {parseFloat(content.price_after_discount).toFixed(
+                                2
+                            )}
+                        </p>
+                    </div>
+                </div>
+            );
+        } else {
+            //no discount
+            return (
+                <p className="chartGamePrice">
+                    ${parseFloat(content.price).toFixed(2)}
+                </p>
+            );
+        }
+    };
 
     const renderSlides = () => {
         return props.content.map((content, index) => {
@@ -54,7 +85,10 @@ const FeaturedCarousel: React.FC<FeaturedCarouselProps> = (props) => {
                                         setStyle({ opacity: "0" });
                                     }}
                                 >
-                                    <img src={content.image} alt="game"></img>
+                                    <img
+                                        src={content.cover_url}
+                                        alt="game"
+                                    ></img>
 
                                     <video
                                         className="communityCarouselVid"
@@ -69,7 +103,9 @@ const FeaturedCarousel: React.FC<FeaturedCarouselProps> = (props) => {
                                             type="video/mp4"
                                         />
                                     </video>
-                                    <p className="communityPrice">$18.88</p>
+                                    <div className="communityPrice">
+                                        {renderPrice(content)}
+                                    </div>
                                 </div>
                                 <div className="communityCarouselReviewSection">
                                     <p className="communityCarouselGameReview">
@@ -108,7 +144,7 @@ const FeaturedCarousel: React.FC<FeaturedCarouselProps> = (props) => {
         } else if (width < XL_SCREEN_SIZE) {
             return 37;
         } else if (width >= XL_SCREEN_SIZE) {
-            return 37;
+            return 31;
         }
         return 1;
     };
@@ -126,7 +162,7 @@ const FeaturedCarousel: React.FC<FeaturedCarouselProps> = (props) => {
                 <CarouselProvider
                     naturalSlideWidth={100}
                     naturalSlideHeight={renderHeight()}
-                    totalSlides={props.content.length}
+                    totalSlides={2}
                     className="gameCarouselWrap"
                     visibleSlides={1}
                     infinite={true}
@@ -186,4 +222,4 @@ const FeaturedCarousel: React.FC<FeaturedCarouselProps> = (props) => {
     return <div>{renderCarousel()}</div>;
 };
 
-export default FeaturedCarousel;
+export default CommunityCarousel;

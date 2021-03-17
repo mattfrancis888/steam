@@ -12,7 +12,7 @@ import { RiArrowRightSLine, RiArrowLeftSLine } from "react-icons/ri";
 import LazyLoad from "react-lazyload";
 import { useHistory } from "react-router-dom";
 import useWindowDimensions from "../windowDimensions";
-import { Game, SpecialOfferCarouselProps } from "./Home";
+import { SpecialOfferCarouselProps } from "./Home";
 import anime from "animejs/lib/anime.es.js";
 import { LG_SCREEN_SIZE, SM_SCREEN_SIZE, MED_SCREEN_SIZE } from "../constants";
 import _ from "lodash";
@@ -45,27 +45,37 @@ const SpecialOfferCarousel: React.FC<SpecialOfferCarouselProps> = (props) => {
                             }}
                         >
                             <div className="specialOfferCarouselSectionContainer">
-                                {contents.map((content: Game, index) => {
+                                {contents.map((content, index) => {
                                     return (
                                         <div
                                             className="specialOfferGameContainer"
                                             key={index}
                                         >
                                             <img
-                                                src={content.image}
+                                                src={content.cover_url}
                                                 alt="game"
                                             ></img>
                                             <div className="specialOfferGameTextWrap">
                                                 <div className="highlightedGamePriceWrap">
                                                     <div className="discountGamePrice">
-                                                        -50%
+                                                        -
+                                                        {parseFloat(
+                                                            content.discount_percentage
+                                                        ) * 100}
+                                                        %
                                                     </div>
                                                     <div className="adjustedPriceWrap">
                                                         <p className="gameOrigPrice">
-                                                            28.00
+                                                            $
+                                                            {parseFloat(
+                                                                content.price
+                                                            ).toFixed(2)}
                                                         </p>
                                                         <p className="gameAdjustedPrice">
-                                                            $20.00
+                                                            $
+                                                            {parseFloat(
+                                                                content.price_after_discount
+                                                            ).toFixed(2)}
                                                         </p>
                                                     </div>
                                                 </div>
