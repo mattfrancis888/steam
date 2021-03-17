@@ -182,10 +182,25 @@ export const getGamesBaseInfo = async (req: Request, res: Response) => {
 
 export const getDiscountedGames = async (req: Request, res: Response) => {
     try {
-        const response = await pool.query(
-            `SELECT * FROM game NATURAL join game_price
-            WHERE discount_percentage IS NOT NULL ORDER BY game_id`
-        );
+        let sql = `SELECT ga.game_id, ga.title, ga.cover_url, ga.release_date,
+        ga.about, g.genres, sc.screenshots, gp.price, gp.discount_percentage, gp.price_after_discount
+        FROM game ga
+            JOIN (
+              select lg.game_id, ARRAY_AGG(gr.genre_type) as genres
+              from lookup_game_genre lg 
+                  JOIN genre gr on gr.genre_id = lg.genre_id
+              group by lg.game_id
+           ) g on g.game_id = ga.game_id
+            JOIN ( 
+              select ls.game_id, ARRAY_AGG(s.screenshot_url) as screenshots
+              from lookup_game_screenshot ls 
+                join screenshot s on s.screenshot_id = ls.screenshot_id
+              group by ls.game_id
+           ) sc on sc.game_id = ga.game_id
+           INNER JOIN game_price gp on ga.price_id = gp.price_id 
+           WHERE gp.discount_percentage IS NOT NULL ;`;
+
+        const response = await pool.query(sql);
 
         res.send({ games: response.rows });
         // res.send({...response.rows})

@@ -7,33 +7,18 @@ import SpecialOfferCarousel from "./SpecialOfferCarousel";
 import CommunityCarousel from "./CommunityCarousel";
 import _ from "lodash";
 import { connect } from "react-redux";
-import { fetchGames, FetchGamesResponse, Game } from "../actions";
+import { fetchGames, fetchDiscountedGames, Game } from "../actions";
 import { StoreState } from "../reducers";
 import { GamesStateResponse } from "../reducers/gamesReducer";
 import { ErrorStateResponse } from "reducers/errorReducer";
 import { LG_SCREEN_SIZE, MED_SCREEN_SIZE } from "../constants";
 import Loading from "./Loading";
 import useWindowDimensions from "../windowDimensions";
-export const games = [
-    {
-        image:
-            "https://cdn.akamai.steamstatic.com/steam/apps/489830/ss_921ccea650df936a0b14ebd5dd4ecc73c1d2a12d.600x338.jpg?t=1590515887",
-    },
-    {
-        image:
-            "https://cdn.akamai.steamstatic.com/steam/apps/1086940/capsule_616x353.jpg?t=1614870777",
-    },
-];
 
-// export interface Game {
-//     image: string;
-// }
 export interface FeaturedCarouselProps {
     content: Game[];
 }
 export interface SpecialOfferCarouselProps {
-    // content: GameBaseInfo[];
-    //GameBaseInfo[] type won't work; its because of lodash' reject using FlatArray
     content: Game[];
 }
 export interface CommunityCarouelProps {
@@ -42,8 +27,10 @@ export interface CommunityCarouelProps {
 
 interface HomeProps {
     games: GamesStateResponse;
+    discountedGames: GamesStateResponse;
     errors: ErrorStateResponse;
     fetchGames(): void;
+    fetchDiscountedGames(): void;
 }
 
 const Home: React.FC<HomeProps> = (props) => {
@@ -51,6 +38,7 @@ const Home: React.FC<HomeProps> = (props) => {
     const [specialsTabClicked, setSpecialsTabClicked] = useState(false);
     useEffect(() => {
         props.fetchGames();
+        props.fetchDiscountedGames();
     }, []);
 
     // useEffect(() => {
@@ -131,6 +119,49 @@ const Home: React.FC<HomeProps> = (props) => {
         }
     };
 
+    const renderChartGames = () => {
+        let contentToRender = props.games.data?.games;
+        if (specialsTabClicked === true) {
+            contentToRender = props.discountedGames.data?.games;
+        }
+        if (contentToRender)
+            return contentToRender.map((content, index) => {
+                return (
+                    <React.Fragment>
+                        <div
+                            key={index}
+                            className={`chartGameContainer ${
+                                hoverData === content.game_id
+                                    ? "chartGameContainerToggled"
+                                    : ""
+                            }`}
+                            onMouseOver={() => {
+                                setHoverData(content.game_id);
+                            }}
+                            onClick={(event) => {}}
+                        >
+                            <div className="chartGameImage">
+                                <img src={content.cover_url} alt="game"></img>
+                            </div>
+                            <div className="chartGameInfo">
+                                <div className="chartGameGenreAndTitle">
+                                    <p className="chartGameTitle">
+                                        {content.title}
+                                    </p>
+                                    <p className="chartGameGenres">
+                                        {renderGenresForGameText(
+                                            content.game_id
+                                        )}
+                                    </p>
+                                </div>
+                                {renderPrice(content)}
+                            </div>
+                        </div>
+                    </React.Fragment>
+                );
+            });
+    };
+
     const renderContent = () => {
         if (props.errors.data?.error) {
             return (
@@ -140,16 +171,7 @@ const Home: React.FC<HomeProps> = (props) => {
                     </h3>
                 </div>
             );
-        } else if (props.games.data) {
-            // const gamesBaseInfo = _.chunk(props.games.data.games, 4);
-
-            // const specialOfferContent = _.reject(
-            //     props.games.data?.games,
-            //     {
-            //         discount_percentage: null,
-            //     }
-            // );
-            // console.log("SPECIAL_OFFER", specialOfferContent);
+        } else if (props.games.data && props.discountedGames.data) {
             return (
                 <div className="homeContainer">
                     <div className="homeFirstSection">
@@ -159,7 +181,7 @@ const Home: React.FC<HomeProps> = (props) => {
                         <FeaturedCarousel content={props.games.data.games} />
                         <h1 className="bannerTitle">Special Offers</h1>
                         <SpecialOfferCarousel
-                            content={props.games.data.games}
+                            content={props.discountedGames.data.games}
                         />
                         <h1 className="bannerTitle">
                             The Community Recommends
@@ -187,44 +209,7 @@ const Home: React.FC<HomeProps> = (props) => {
 
                     <div className="chart">
                         <div className="chartGamesColumn">
-                            {props.games.data.games.map((content, index) => {
-                                return (
-                                    <React.Fragment>
-                                        <div
-                                            key={index}
-                                            className={`chartGameContainer ${
-                                                hoverData === content.game_id
-                                                    ? "chartGameContainerToggled"
-                                                    : ""
-                                            }`}
-                                            onMouseOver={() => {
-                                                setHoverData(content.game_id);
-                                            }}
-                                            onClick={(event) => {}}
-                                        >
-                                            <div className="chartGameImage">
-                                                <img
-                                                    src={content.cover_url}
-                                                    alt="game"
-                                                ></img>
-                                            </div>
-                                            <div className="chartGameInfo">
-                                                <div className="chartGameGenreAndTitle">
-                                                    <p className="chartGameTitle">
-                                                        {content.title}
-                                                    </p>
-                                                    <p className="chartGameGenres">
-                                                        {renderGenresForGameText(
-                                                            content.game_id
-                                                        )}
-                                                    </p>
-                                                </div>
-                                                {renderPrice(content)}
-                                            </div>
-                                        </div>
-                                    </React.Fragment>
-                                );
-                            })}
+                            {renderChartGames()}
                         </div>
                         {renderChartGamePreview(hoverData)}
                     </div>
@@ -268,10 +253,12 @@ const Home: React.FC<HomeProps> = (props) => {
 const mapStateToProps = (state: StoreState) => {
     return {
         games: state.games,
+        discountedGames: state.discountedGames,
         errors: state.errors,
     };
 };
 
 export default connect(mapStateToProps, {
     fetchGames,
+    fetchDiscountedGames,
 })(Home);

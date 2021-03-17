@@ -1,10 +1,5 @@
 import { Router } from "express";
-import {
-    getGamesBaseInfo,
-    getGamesScreenshots,
-    getGamesGenres,
-    getDiscountedGames,
-} from "../controllers/games";
+import { getGamesBaseInfo, getDiscountedGames } from "../controllers/games";
 const gameRouter = Router();
 
 gameRouter.get("/games", getGamesBaseInfo);

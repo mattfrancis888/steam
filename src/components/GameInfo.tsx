@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import history from "../browserHistory";
 import GameInfoCarousel from "./GameInfoCarousel";
-import { games } from "./Home";
 import WriteReview, { WriteReviewFormValues } from "./WriteReview";
 import { FiThumbsUp, FiThumbsDown } from "react-icons/fi";
 export interface WriteReviewFormProps {

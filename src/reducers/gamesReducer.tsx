@@ -9,7 +9,7 @@ const gamesReducer = (
     action: FetchGamesAction
 ) => {
     switch (action.type) {
-        case ActionTypes.FETCH_GAMES_BASE_INFO:
+        case ActionTypes.FETCH_GAMES:
             return { ...state, data: action.payload };
 
         default:
