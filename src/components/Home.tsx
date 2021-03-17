@@ -32,36 +32,20 @@ export const games = [
     },
 ];
 
-const specialOfferGames = [
+const specialOfferGamesMock: GameBaseInfo[] = [
     {
-        id: 1,
-        image:
-            "https://cdn.cloudflare.steamstatic.com/steam/apps/1222730/header.jpg?t=1614938362",
-    },
-    {
-        id: 2,
-        image:
-            "https://cdn.cloudflare.steamstatic.com/steam/apps/1222730/header.jpg?t=1614938362",
-    },
-    {
-        id: 3,
-        image:
-            "https://cdn.cloudflare.steamstatic.com/steam/apps/1222730/header.jpg?t=1614938362",
-    },
-    {
-        id: 4,
-        image:
-            "https://cdn.cloudflare.steamstatic.com/steam/apps/1222730/header.jpg?t=1614938362",
-    },
-    {
-        id: 5,
-        image:
-            "https://cdn.cloudflare.steamstatic.com/steam/apps/1222730/header.jpg?t=1614938362",
-    },
-    {
-        id: 6,
-        image:
-            "https://cdn.cloudflare.steamstatic.com/steam/apps/1222730/header.jpg?t=1614938362",
+        about:
+            "The next chapter in the highly anticipated Elder Scrolls saga arrives from the makers of the 2006 and 2008 Games of the Year, Bethesda Game Studios. Skyrim reimagines and revolutionizes the open-world fantasy epic, bringing to life a complete virtual world open for you to explore any way you choose.",
+        cover_url:
+            "https://res.cloudinary.com/du8n2aa4p/image/upload/v1615912360/steam/skyrim.jpg",
+        discount_percentage: "0.1000",
+        game_id: 1,
+        name_tokens: "ee",
+        price: "100.0000",
+        price_after_discount: "10.0000",
+        price_id: 1,
+        release_date: "2011-11-10T05:00:00.000Z",
+        title: "The Elder Scrolls V: Skyrim",
     },
 ];
 
@@ -75,7 +59,9 @@ export interface FeaturedCarouselProps {
     gamesScreenshot: GamesScreenshotStateResponse;
 }
 export interface SpecialOfferCarouselProps {
-    content: Game[];
+    // content: GameBaseInfo[];
+    //GameBaseInfo[] type won't work; its because of lodash' reject using FlatArray
+    content: any;
 }
 
 interface HomeProps {
@@ -150,6 +136,14 @@ const Home: React.FC<HomeProps> = (props) => {
             props.gamesScreenshot.data
         ) {
             const gamesBaseInfo = _.chunk(props.gamesBaseInfo.data.games, 4);
+
+            const specialOfferContent = _.reject(
+                props.gamesBaseInfo.data?.games,
+                {
+                    discount_percentage: null,
+                }
+            );
+
             return (
                 <div className="homeContainer">
                     <div className="homeFirstSection">
@@ -158,7 +152,7 @@ const Home: React.FC<HomeProps> = (props) => {
                         </h1>
                         <FeaturedCarousel content={gamesBaseInfo[0]} />
                         <h1 className="bannerTitle">Special Offers</h1>
-                        <SpecialOfferCarousel content={specialOfferGames} />
+                        <SpecialOfferCarousel content={specialOfferContent} />
                         <h1 className="bannerTitle">
                             The Community Recommends
                         </h1>
@@ -184,7 +178,6 @@ const Home: React.FC<HomeProps> = (props) => {
                                                         : ""
                                                 }`}
                                                 onMouseOver={() => {
-                                                    console.log("OnMouseoVer");
                                                     setHoverData(
                                                         content.game_id
                                                     );
