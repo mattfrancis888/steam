@@ -3,12 +3,12 @@ import {
     getGamesBaseInfo,
     getGamesScreenshots,
     getGamesGenres,
+    getDiscountedGames,
 } from "../controllers/games";
 const gameRouter = Router();
 
 gameRouter.get("/games", getGamesBaseInfo);
-gameRouter.get("/games-genre", getGamesGenres);
-gameRouter.get("/games-screenshot", getGamesScreenshots);
+gameRouter.get("/games-discounted", getDiscountedGames);
 // mediasRouter.get("/genre-cast/:mediaId", getMediaGenreAndCast);
 // mediasRouter.get("/watching", getMediaWatchingByUser);
 // mediasRouter.post("/add-to-watching/:mediaId", addToWatchingByUser);

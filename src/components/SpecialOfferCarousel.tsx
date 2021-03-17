@@ -12,11 +12,10 @@ import { RiArrowRightSLine, RiArrowLeftSLine } from "react-icons/ri";
 import LazyLoad from "react-lazyload";
 import { useHistory } from "react-router-dom";
 import useWindowDimensions from "../windowDimensions";
-import { Game, SpecialOfferCarouselProps } from "./Home";
+import { SpecialOfferCarouselProps } from "./Home";
 import anime from "animejs/lib/anime.es.js";
 import { LG_SCREEN_SIZE, SM_SCREEN_SIZE, MED_SCREEN_SIZE } from "../constants";
 import _ from "lodash";
-import { GameBaseInfo } from "actions";
 
 const SpecialOfferCarousel: React.FC<SpecialOfferCarouselProps> = (props) => {
     const { width } = useWindowDimensions();

@@ -7,20 +7,13 @@ import SpecialOfferCarousel from "./SpecialOfferCarousel";
 import CommunityCarousel from "./CommunityCarousel";
 import _ from "lodash";
 import { connect } from "react-redux";
-import {
-    fetchGamesBaseInfo,
-    fetchGamesGenres,
-    fetchGamesScreenshot,
-    GameBaseInfo,
-} from "../actions";
+import { fetchGames, FetchGamesResponse, Game } from "../actions";
 import { StoreState } from "../reducers";
-import { GamesBaseInfoStateResponse } from "../reducers/gamesBaseInfoReducer";
+import { GamesStateResponse } from "../reducers/gamesReducer";
 import { ErrorStateResponse } from "reducers/errorReducer";
 import { LG_SCREEN_SIZE, MED_SCREEN_SIZE } from "../constants";
 import Loading from "./Loading";
 import useWindowDimensions from "../windowDimensions";
-import { GamesGenreStateResponse } from "reducers/gamesGenreReducer";
-import { GamesScreenshotStateResponse } from "reducers/gamesScreenshotReducer";
 export const games = [
     {
         image:
@@ -32,31 +25,11 @@ export const games = [
     },
 ];
 
-const specialOfferGamesMock: GameBaseInfo[] = [
-    {
-        about:
-            "The next chapter in the highly anticipated Elder Scrolls saga arrives from the makers of the 2006 and 2008 Games of the Year, Bethesda Game Studios. Skyrim reimagines and revolutionizes the open-world fantasy epic, bringing to life a complete virtual world open for you to explore any way you choose.",
-        cover_url:
-            "https://res.cloudinary.com/du8n2aa4p/image/upload/v1615912360/steam/skyrim.jpg",
-        discount_percentage: "0.1000",
-        game_id: 1,
-        name_tokens: "ee",
-        price: "100.0000",
-        price_after_discount: "10.0000",
-        price_id: 1,
-        release_date: "2011-11-10T05:00:00.000Z",
-        title: "The Elder Scrolls V: Skyrim",
-    },
-];
-
-export interface Game {
-    image: string;
-}
+// export interface Game {
+//     image: string;
+// }
 export interface FeaturedCarouselProps {
-    content: GameBaseInfo[];
-    gamesBaseInfo: GamesBaseInfoStateResponse;
-    gamesGenre: GamesGenreStateResponse;
-    gamesScreenshot: GamesScreenshotStateResponse;
+    content: Game[];
 }
 export interface SpecialOfferCarouselProps {
     // content: GameBaseInfo[];
@@ -64,67 +37,70 @@ export interface SpecialOfferCarouselProps {
     content: any;
 }
 export interface CommunityCarouelProps {
-    content: GameBaseInfo[];
+    content: Game[];
 }
 
 interface HomeProps {
-    gamesBaseInfo: GamesBaseInfoStateResponse;
-    gamesGenre: GamesGenreStateResponse;
-    gamesScreenshot: GamesScreenshotStateResponse;
+    games: GamesStateResponse;
     errors: ErrorStateResponse;
-    fetchGamesBaseInfo(): void;
-    fetchGamesGenres(): void;
-    fetchGamesScreenshot(): void;
+    fetchGames(): void;
 }
 
 const Home: React.FC<HomeProps> = (props) => {
+    const [hoverData, setHoverData] = useState(1);
+    const [specialsTabClicked, setSpecialsTabClicked] = useState(false);
     useEffect(() => {
-        props.fetchGamesBaseInfo();
-        props.fetchGamesGenres();
-        props.fetchGamesScreenshot();
+        props.fetchGames();
     }, []);
 
-    const [hoverData, setHoverData] = useState(1);
+    // useEffect(() => {
+    //     props.fetchGamesDiscountedBaseInfo();
+    // }, [specialsTabClicked]);
+
     const { width } = useWindowDimensions();
 
     const renderGenresForGameText = (gameId: number) => {
-        let genres = _.filter(props.gamesGenre.data?.games, {
+        let filteredContent = _.filter(props.games.data?.games, {
             game_id: gameId,
         });
 
-        return genres.map((genre, index) => {
-            if (genres.length === index + 1) {
-                return ` ${genre.genre_type}`;
-            }
-            return ` ${genre.genre_type},`;
+        return filteredContent.map((content, index) => {
+            return content.genres.map((genre, index) => {
+                if (content.genres.length === index + 1) {
+                    return ` ${genre}`;
+                }
+                return ` ${genre},`;
+            });
         });
     };
 
     const renderGenresForGameTag = (gameId: number) => {
-        let genres = _.filter(props.gamesGenre.data?.games, {
+        let filteredContent = _.filter(props.games.data?.games, {
             game_id: gameId,
         });
 
-        return genres.map((genre, index) => {
-            return (
-                <p key={index} className="chartGamePreviewGenres">
-                    {genre.genre_type}
-                </p>
-            );
+        return filteredContent.map((content, index) => {
+            return content.genres.map((genre, index) => {
+                return (
+                    <p key={index} className="chartGamePreviewGenres">
+                        {genre}
+                    </p>
+                );
+            });
         });
     };
 
     const renderScreenshotsForGame = (gameId: number) => {
-        let screenshots = _.filter(props.gamesScreenshot.data?.games, {
+        let screenshots = _.filter(props.games.data?.games, {
             game_id: gameId,
         });
         const screenshotsSplit = _.chunk(screenshots, 4);
-        return screenshotsSplit[0].map((screenshot, index) => {
-            return <img src={screenshot.screenshot_url} alt="preview"></img>;
+        return screenshotsSplit[0][0].screenshots.map((screenshot, index) => {
+            return <img src={screenshot} alt="preview"></img>;
         });
     };
 
-    const renderPrice = (content: GameBaseInfo) => {
+    const renderPrice = (content: Game) => {
         if (content.discount_percentage) {
             return (
                 <div className="chartAdjustedPriceWrap">
@@ -163,84 +139,89 @@ const Home: React.FC<HomeProps> = (props) => {
                     </h3>
                 </div>
             );
-        } else if (
-            props.gamesBaseInfo.data &&
-            props.gamesGenre.data &&
-            props.gamesScreenshot.data
-        ) {
-            const gamesBaseInfo = _.chunk(props.gamesBaseInfo.data.games, 4);
+        } else if (props.games.data) {
+            // const gamesBaseInfo = _.chunk(props.games.data.games, 4);
 
-            const specialOfferContent = _.reject(
-                props.gamesBaseInfo.data?.games,
-                {
-                    discount_percentage: null,
-                }
-            );
-
+            // const specialOfferContent = _.reject(
+            //     props.games.data?.games,
+            //     {
+            //         discount_percentage: null,
+            //     }
+            // );
+            // console.log("SPECIAL_OFFER", specialOfferContent);
             return (
                 <div className="homeContainer">
                     <div className="homeFirstSection">
                         <h1 className="bannerTitle">
                             Featured And Recommended
                         </h1>
-                        <FeaturedCarousel content={gamesBaseInfo[0]} />
+                        {/* <FeaturedCarousel content={gamesBaseInfo[0]} /> */}
                         <h1 className="bannerTitle">Special Offers</h1>
-                        <SpecialOfferCarousel content={specialOfferContent} />
+                        {/* <SpecialOfferCarousel content={specialOfferContent} /> */}
                         <h1 className="bannerTitle">
                             The Community Recommends
                         </h1>
-                        <CommunityCarousel content={gamesBaseInfo[0]} />
+                        {/* <CommunityCarousel content={gamesBaseInfo[0]} /> */}
                     </div>
                     <div className="chartTabsWrap">
-                        <div className="chartTab">Top Sellers</div>
-                        <div className="chartTab">Specials</div>
+                        <div
+                            className={`chartTab ${
+                                specialsTabClicked ? "" : " chartTabToggled"
+                            }`}
+                            onClick={() => setSpecialsTabClicked(false)}
+                        >
+                            Top Sellers
+                        </div>
+                        <div
+                            className={`chartTab ${
+                                specialsTabClicked ? "chartTabToggled" : ""
+                            }`}
+                            onClick={() => setSpecialsTabClicked(true)}
+                        >
+                            Specials
+                        </div>
                     </div>
 
                     <div className="chart">
                         <div className="chartGamesColumn">
-                            {props.gamesBaseInfo.data.games.map(
-                                (content, index) => {
-                                    return (
-                                        <React.Fragment>
-                                            <div
-                                                key={index}
-                                                className={`chartGameContainer ${
-                                                    hoverData ===
-                                                    content.game_id
-                                                        ? "chartGameContainerToggled"
-                                                        : ""
-                                                }`}
-                                                onMouseOver={() => {
-                                                    setHoverData(
-                                                        content.game_id
-                                                    );
-                                                }}
-                                                onClick={(event) => {}}
-                                            >
-                                                <div className="chartGameImage">
-                                                    <img
-                                                        src={content.cover_url}
-                                                        alt="game"
-                                                    ></img>
-                                                </div>
-                                                <div className="chartGameInfo">
-                                                    <div className="chartGameGenreAndTitle">
-                                                        <p className="chartGameTitle">
-                                                            {content.title}
-                                                        </p>
-                                                        <p className="chartGameGenres">
-                                                            {renderGenresForGameText(
-                                                                content.game_id
-                                                            )}
-                                                        </p>
-                                                    </div>
-                                                    {renderPrice(content)}
-                                                </div>
+                            {props.games.data.games.map((content, index) => {
+                                return (
+                                    <React.Fragment>
+                                        <div
+                                            key={index}
+                                            className={`chartGameContainer ${
+                                                hoverData === content.game_id
+                                                    ? "chartGameContainerToggled"
+                                                    : ""
+                                            }`}
+                                            onMouseOver={() => {
+                                                setHoverData(content.game_id);
+                                            }}
+                                            onClick={(event) => {}}
+                                        >
+                                            <div className="chartGameImage">
+                                                <img
+                                                    src={content.cover_url}
+                                                    alt="game"
+                                                ></img>
                                             </div>
-                                        </React.Fragment>
-                                    );
-                                }
-                            )}
+                                            <div className="chartGameInfo">
+                                                <div className="chartGameGenreAndTitle">
+                                                    <p className="chartGameTitle">
+                                                        {content.title}
+                                                    </p>
+                                                    <p className="chartGameGenres">
+                                                        {renderGenresForGameText(
+                                                            content.game_id
+                                                        )}
+                                                    </p>
+                                                </div>
+                                                {renderPrice(content)}
+                                            </div>
+                                        </div>
+                                    </React.Fragment>
+                                );
+                            })}
                         </div>
                         {renderChartGamePreview(hoverData)}
                     </div>
@@ -254,7 +235,7 @@ const Home: React.FC<HomeProps> = (props) => {
     const renderChartGamePreview = (game_id: number) => {
         // if (hoverData === index && width > LG_SCREEN_SIZE) {
 
-        let baseInfo = _.filter(props.gamesBaseInfo.data?.games, {
+        let baseInfo = _.filter(props.games.data?.games, {
             game_id: game_id,
         });
 
@@ -265,6 +246,7 @@ const Home: React.FC<HomeProps> = (props) => {
                         return content.title;
                     })}
                 </p>
+
                 <div className="chartGamePreviewGenresWrap">
                     {renderGenresForGameTag(game_id)}
                 </div>
@@ -282,15 +264,11 @@ const Home: React.FC<HomeProps> = (props) => {
 
 const mapStateToProps = (state: StoreState) => {
     return {
-        gamesBaseInfo: state.gamesBaseInfo,
-        gamesGenre: state.gamesGenre,
-        gamesScreenshot: state.gamesScreenshot,
+        games: state.games,
         errors: state.errors,
     };
 };
 
 export default connect(mapStateToProps, {
-    fetchGamesBaseInfo,
-    fetchGamesGenres,
-    fetchGamesScreenshot,
+    fetchGames,
 })(Home);

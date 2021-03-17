@@ -9,18 +9,9 @@ export interface ServerError {
     error: string;
 }
 
-export interface FetchGamesBaseInfoAction {
+export interface FetchGamesAction {
     type: ActionTypes.FETCH_GAMES_BASE_INFO;
-    payload: FetchGamesBaseInfoResponse;
-}
-export interface FetchGamesGenreAction {
-    type: ActionTypes.FETCH_GAMES_GENRE;
-    payload: FetchGamesGenreResponse;
-}
-
-export interface FetchGamesScreenshotAction {
-    type: ActionTypes.FETCH_GAMES_SCREENSHOT;
-    payload: FetchGamesScreenshotResponse;
+    payload: FetchGamesResponse;
 }
 
 export interface GamesErrorAction {
@@ -28,46 +19,27 @@ export interface GamesErrorAction {
     payload: ServerError;
 }
 
-export interface GameBaseInfo {
-    price_id: number;
+export interface Game {
     game_id: number;
     title: string;
     cover_url: string;
     release_date: string;
     about: string;
-    name_tokens: string;
+    genres: string[];
+    screenshots: string[];
     price: string;
     discount_percentage: string;
     price_after_discount: string;
 }
 
-export interface GameGenre {
-    genre_id: number;
-    game_id: number;
-    genre_type: string;
-}
-export interface GameScreenshot {
-    screenshot_id: number;
-    game_id: number;
-    screenshot_url: string;
+export interface FetchGamesResponse {
+    games: Game[];
 }
 
-export interface FetchGamesBaseInfoResponse {
-    games: GameBaseInfo[];
-}
-export interface FetchGamesGenreResponse {
-    games: GameGenre[];
-}
-export interface FetchGamesScreenshotResponse {
-    games: GameScreenshot[];
-}
-
-export const fetchGamesBaseInfo = () => async (dispatch: Dispatch) => {
+export const fetchGames = () => async (dispatch: Dispatch) => {
     try {
-        const response = await axios.get<FetchGamesBaseInfoResponse>(
-            `/api/games`
-        );
-        dispatch<FetchGamesBaseInfoAction>({
+        const response = await axios.get<FetchGamesResponse>(`/api/games`);
+        dispatch<FetchGamesAction>({
             type: ActionTypes.FETCH_GAMES_BASE_INFO,
             payload: response.data,
         });
@@ -79,36 +51,21 @@ export const fetchGamesBaseInfo = () => async (dispatch: Dispatch) => {
     }
 };
 
-export const fetchGamesGenres = () => async (dispatch: Dispatch) => {
-    try {
-        const response = await axios.get<FetchGamesGenreResponse>(
-            `/api/games-genre`
-        );
-        dispatch<FetchGamesGenreAction>({
-            type: ActionTypes.FETCH_GAMES_GENRE,
-            payload: response.data,
-        });
-    } catch (error) {
-        dispatch<GamesErrorAction>({
-            type: ActionTypes.GAME_ERROR,
-            payload: { error: SERVER_ERROR_MESSAGE },
-        });
-    }
-};
-
-export const fetchGamesScreenshot = () => async (dispatch: Dispatch) => {
-    try {
-        const response = await axios.get<FetchGamesScreenshotResponse>(
-            `/api/games-screenshot`
-        );
-        dispatch<FetchGamesScreenshotAction>({
-            type: ActionTypes.FETCH_GAMES_SCREENSHOT,
-            payload: response.data,
-        });
-    } catch (error) {
-        dispatch<GamesErrorAction>({
-            type: ActionTypes.GAME_ERROR,
-            payload: { error: SERVER_ERROR_MESSAGE },
-        });
-    }
-};
+// export const fetchGamesDiscountedBaseInfo = () => async (
+//     dispatch: Dispatch
+// ) => {
+//     try {
+//         const response = await axios.get<FetchGamesDiscountedBaseInfoResponse>(
+//             `/api/games-discounted`
+//         );
+//         dispatch<FetchGamesDiscountedBaseInfoAction>({
+//             type: ActionTypes.FETCH_GAMES_DISCOUNTED,
+//             payload: response.data,
+//         });
+//     } catch (error) {
+//         dispatch<GamesErrorAction>({
+//             type: ActionTypes.GAME_ERROR,
+//             payload: { error: SERVER_ERROR_MESSAGE },
+//         });
+//     }
+// };

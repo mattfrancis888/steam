@@ -24,16 +24,17 @@ const FeaturedCarousel: React.FC<FeaturedCarouselProps> = (props) => {
 
     //Duplicate of the one in Home, just in case we want to customize it
     const renderScreenshotsForGame = (gameId: number) => {
-        let screenshots = _.filter(props.gamesScreenshot.data?.games, {
+        let screenshots = _.filter(props.content, {
             game_id: gameId,
         });
         const screenshotsSplit = _.chunk(screenshots, 4);
-        return screenshotsSplit[0].map((screenshot, index) => {
-            return <img src={screenshot.screenshot_url} alt="preview"></img>;
+        return screenshotsSplit[0][0].screenshots.map((screenshot, index) => {
+            return <img src={screenshot} alt="preview"></img>;
         });
     };
 
     const renderSlides = () => {
+        //@ts-ignore
         return props.content.map((content, index) => {
             return (
                 <Slide index={index} key={index}>
@@ -156,12 +157,11 @@ const FeaturedCarousel: React.FC<FeaturedCarouselProps> = (props) => {
 
     return <div>{renderCarousel()}</div>;
 };
-const mapStateToProps = (state: StoreState) => {
-    return {
-        gamesBaseInfo: state.gamesBaseInfo,
-        gamesGenre: state.gamesGenre,
-        gamesScreenshot: state.gamesScreenshot,
-    };
-};
+// const mapStateToProps = (state: StoreState) => {
+//     return {
 
-export default connect(mapStateToProps)(FeaturedCarousel);
+//     };
+// };
+
+// export default connect(mapStateToProps)(FeaturedCarousel);
+export default FeaturedCarousel;

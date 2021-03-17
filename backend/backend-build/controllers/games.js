@@ -39,38 +39,131 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getGamesScreenshots = exports.getGamesGenres = exports.getGamesBaseInfo = void 0;
+exports.getDiscountedGames = exports.getGamesBaseInfo = void 0;
 var databasePool_1 = __importDefault(require("../databasePool"));
 var constants_1 = require("../constants");
+//Thre are 2 ways to turn handle;
+// {
+//     "games": {
+//         "base_info": [
+//             {
+//                 "game_id": 1,
+//                 "title": "Monsters Inc Game"
+//             },
+//            {
+//                 "game_id": 2,
+//                 "title": "Dora Game"
+//             },
+//         ],
+//         "genres": [
+//             {
+//                 "genre_id": 1,
+//                 "game_id": 1,
+//                 "genre_type": "Action"
+//             },
+//             {
+//                 "genre_id": 2,
+//                 "game_id": 2,
+//                 "genre_type": "Fantasy"
+//             }
+//         ],
+// }
+//TO:
+// {
+//     "games": {
+//             {
+//                 "game_id": 1,
+//                 "title": "Monsters Inc Game"
+//                 "genres": [
+//                     {
+//                          "genre_id": 1,
+//                           "game_id": 1,
+//                           "genre_type": "Action"
+//                      }....
+//                  ]
+//             {
+//             {
+//                 "game_id": 2,
+//                 "title": "Dora"
+//                 "genres": [
+//                     {
+//                          "genre_id": 2,
+//                           "game_id": 2,
+//                           "genre_type": "Action"
+//                      },
+//                  ]
+//             {
+//            ....
+//         ],
+// }
+//Check Reddit's saved post to get a clearer detail, but...
+//Option 1: 'Injecting it in node' after a SELECT * Query
+// export const getGamesBaseInfo = async (req: Request, res: Response) => {
+//     try {
+//         const response = await pool.query(
+//             `select * from game NATURAL join game_price ORDER BY game_id`
+//         );
+//         const genreResponse = await pool.query(
+//             `select * from lookup_game_genre NATURAL JOIN genre ORDER BY game_id`
+//         );
+//         let results: Games = {};
+//         // results.base_info = response.rows;
+//         // results.genres = genreResponse.rows;
+//         // results.screenshots = screenshotResponse.rows;
+//         // This will make an Object where each key is game_id and value are the genres for that game
+//         let genresByGames = genreResponse.rows.reduce((acc, r) => {
+//             console.log(acc, r);
+//             return {
+//                 ...acc,
+//                 [r.game_id]: [
+//                     ...(typeof acc[r.game_id] === "undefined"
+//                         ? []
+//                         : acc[r.game_id]),
+//                     r,
+//                 ],
+//             };
+//         }, {}); //Start with Empty Object
+//         results.base_info = response.rows.map((row) => ({
+//             ...row,
+//             genres:
+//                 typeof genresByGames[row.game_id] !== "undefined"
+//                     ? genresByGames[row.game_id]
+//                     : [],
+//         }));
+//         res.send({ games: results });
+//         // res.send({...response.rows})
+//     } catch (error) {
+//         return res.sendStatus(INTERNAL_SERVER_ERROR_STATUS);
+//     }
+// };
+//Option 2: Array_AGG
 var getGamesBaseInfo = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var response_1, error_1;
+    var sql, response_1, error_1;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
-                _a.trys.push([0, 3, , 4]);
-                return [4 /*yield*/, databasePool_1.default.query("BEGIN")];
+                _a.trys.push([0, 2, , 3]);
+                sql = "SELECT ga.game_id, ga.title, ga.cover_url, ga.release_date,\n        ga.about, g.genres, sc.screenshots, gp.price, gp.discount_percentage, gp.price_after_discount\n        FROM game ga\n            JOIN (\n              select lg.game_id, ARRAY_AGG(gr.genre_type) as genres\n              from lookup_game_genre lg \n                  JOIN genre gr on gr.genre_id = lg.genre_id\n              group by lg.game_id\n           ) g on g.game_id = ga.game_id\n            JOIN ( \n              select ls.game_id, ARRAY_AGG(s.screenshot_url) as screenshots\n              from lookup_game_screenshot ls \n                join screenshot s on s.screenshot_id = ls.screenshot_id\n              group by ls.game_id\n           ) sc on sc.game_id = ga.game_id\n           INNER JOIN game_price gp on ga.price_id = gp.price_id ;";
+                return [4 /*yield*/, databasePool_1.default.query(sql)];
             case 1:
-                _a.sent();
-                return [4 /*yield*/, databasePool_1.default.query("select * from game NATURAL join game_price ORDER BY game_id")];
-            case 2:
                 response_1 = _a.sent();
                 res.send({ games: response_1.rows });
-                return [3 /*break*/, 4];
-            case 3:
+                return [3 /*break*/, 3];
+            case 2:
                 error_1 = _a.sent();
                 return [2 /*return*/, res.sendStatus(constants_1.INTERNAL_SERVER_ERROR_STATUS)];
-            case 4: return [2 /*return*/];
+            case 3: return [2 /*return*/];
         }
     });
 }); };
 exports.getGamesBaseInfo = getGamesBaseInfo;
-var getGamesGenres = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+var getDiscountedGames = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
     var response_2, error_2;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 _a.trys.push([0, 2, , 3]);
-                return [4 /*yield*/, databasePool_1.default.query("select * from lookup_game_genre NATURAL JOIN genre ORDER BY game_id")];
+                return [4 /*yield*/, databasePool_1.default.query("SELECT * FROM game NATURAL join game_price\n            WHERE discount_percentage IS NOT NULL ORDER BY game_id")];
             case 1:
                 response_2 = _a.sent();
                 res.send({ games: response_2.rows });
@@ -82,23 +175,4 @@ var getGamesGenres = function (req, res) { return __awaiter(void 0, void 0, void
         }
     });
 }); };
-exports.getGamesGenres = getGamesGenres;
-var getGamesScreenshots = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var response_3, error_3;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0:
-                _a.trys.push([0, 2, , 3]);
-                return [4 /*yield*/, databasePool_1.default.query("select * from lookup_game_screenshot NATURAL JOIN screenshot ORDER BY game_id")];
-            case 1:
-                response_3 = _a.sent();
-                res.send({ games: response_3.rows });
-                return [3 /*break*/, 3];
-            case 2:
-                error_3 = _a.sent();
-                return [2 /*return*/, res.sendStatus(constants_1.INTERNAL_SERVER_ERROR_STATUS)];
-            case 3: return [2 /*return*/];
-        }
-    });
-}); };
-exports.getGamesScreenshots = getGamesScreenshots;
+exports.getDiscountedGames = getDiscountedGames;

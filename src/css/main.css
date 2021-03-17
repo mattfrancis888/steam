@@ -1486,7 +1486,7 @@ body {
 
 .chartOrigPriceStriked {
   text-decoration: line-through;
-  font-size: 1rem;
+  font-size: 1.2rem;
   margin: 0;
   margin-bottom: 0.25rem;
   color: #626366;
@@ -1534,6 +1534,11 @@ body {
   }
 }
 .chartTab:hover {
+  background-color: #2a475e;
+  color: white;
+}
+
+.chartTabToggled {
   background-color: #2a475e;
   color: white;
 }
