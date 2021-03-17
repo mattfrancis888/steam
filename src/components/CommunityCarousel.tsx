@@ -21,7 +21,6 @@ const CommunityCarousel: React.FC<CommunityCarouelProps> = (props) => {
     const [style, setStyle] = useState({ opacity: "1" });
 
     const renderSlides = () => {
-        //@ts-ignore
         return props.content.map((content, index) => {
             return (
                 <Slide index={index} key={index}>
@@ -130,8 +129,7 @@ const CommunityCarousel: React.FC<CommunityCarouelProps> = (props) => {
                 <CarouselProvider
                     naturalSlideWidth={100}
                     naturalSlideHeight={renderHeight()}
-                    //@ts-ignore
-                    totalSlides={props.content.length}
+                    totalSlides={2}
                     className="gameCarouselWrap"
                     visibleSlides={1}
                     infinite={true}

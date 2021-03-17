@@ -45,47 +45,44 @@ const SpecialOfferCarousel: React.FC<SpecialOfferCarouselProps> = (props) => {
                             }}
                         >
                             <div className="specialOfferCarouselSectionContainer">
-                                {contents.map(
-                                    //@ts-ignore
-                                    (content: GameBaseInfo, index) => {
-                                        return (
-                                            <div
-                                                className="specialOfferGameContainer"
-                                                key={index}
-                                            >
-                                                <img
-                                                    src={content.cover_url}
-                                                    alt="game"
-                                                ></img>
-                                                <div className="specialOfferGameTextWrap">
-                                                    <div className="highlightedGamePriceWrap">
-                                                        <div className="discountGamePrice">
-                                                            -
+                                {contents.map((content, index) => {
+                                    return (
+                                        <div
+                                            className="specialOfferGameContainer"
+                                            key={index}
+                                        >
+                                            <img
+                                                src={content.cover_url}
+                                                alt="game"
+                                            ></img>
+                                            <div className="specialOfferGameTextWrap">
+                                                <div className="highlightedGamePriceWrap">
+                                                    <div className="discountGamePrice">
+                                                        -
+                                                        {parseFloat(
+                                                            content.discount_percentage
+                                                        ) * 100}
+                                                        %
+                                                    </div>
+                                                    <div className="adjustedPriceWrap">
+                                                        <p className="gameOrigPrice">
+                                                            $
                                                             {parseFloat(
-                                                                content.discount_percentage
-                                                            ) * 100}
-                                                            %
-                                                        </div>
-                                                        <div className="adjustedPriceWrap">
-                                                            <p className="gameOrigPrice">
-                                                                $
-                                                                {parseFloat(
-                                                                    content.price
-                                                                ).toFixed(2)}
-                                                            </p>
-                                                            <p className="gameAdjustedPrice">
-                                                                $
-                                                                {parseFloat(
-                                                                    content.price_after_discount
-                                                                ).toFixed(2)}
-                                                            </p>
-                                                        </div>
+                                                                content.price
+                                                            ).toFixed(2)}
+                                                        </p>
+                                                        <p className="gameAdjustedPrice">
+                                                            $
+                                                            {parseFloat(
+                                                                content.price_after_discount
+                                                            ).toFixed(2)}
+                                                        </p>
                                                     </div>
                                                 </div>
                                             </div>
-                                        );
-                                    }
-                                )}
+                                        </div>
+                                    );
+                                })}
                             </div>
                         </div>
                     </LazyLoad>

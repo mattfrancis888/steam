@@ -34,7 +34,7 @@ export interface FeaturedCarouselProps {
 export interface SpecialOfferCarouselProps {
     // content: GameBaseInfo[];
     //GameBaseInfo[] type won't work; its because of lodash' reject using FlatArray
-    content: any;
+    content: Game[];
 }
 export interface CommunityCarouelProps {
     content: Game[];
@@ -91,12 +91,13 @@ const Home: React.FC<HomeProps> = (props) => {
     };
 
     const renderScreenshotsForGame = (gameId: number) => {
-        let screenshots = _.filter(props.games.data?.games, {
+        let game = _.filter(props.games.data?.games, {
             game_id: gameId,
         });
-        const screenshotsSplit = _.chunk(screenshots, 4);
-        return screenshotsSplit[0][0].screenshots.map((screenshot, index) => {
-            return <img src={screenshot} alt="preview"></img>;
+        let maxScreenshotToShow = 4;
+        return game[0].screenshots.map((screenshot, index) => {
+            if (index < maxScreenshotToShow)
+                return <img src={screenshot} alt="preview"></img>;
         });
     };
 
@@ -155,13 +156,15 @@ const Home: React.FC<HomeProps> = (props) => {
                         <h1 className="bannerTitle">
                             Featured And Recommended
                         </h1>
-                        {/* <FeaturedCarousel content={gamesBaseInfo[0]} /> */}
+                        <FeaturedCarousel content={props.games.data.games} />
                         <h1 className="bannerTitle">Special Offers</h1>
-                        {/* <SpecialOfferCarousel content={specialOfferContent} /> */}
+                        <SpecialOfferCarousel
+                            content={props.games.data.games}
+                        />
                         <h1 className="bannerTitle">
                             The Community Recommends
                         </h1>
-                        {/* <CommunityCarousel content={gamesBaseInfo[0]} /> */}
+                        <CommunityCarousel content={props.games.data.games} />
                     </div>
                     <div className="chartTabsWrap">
                         <div
@@ -232,11 +235,11 @@ const Home: React.FC<HomeProps> = (props) => {
         }
     };
 
-    const renderChartGamePreview = (game_id: number) => {
+    const renderChartGamePreview = (gameId: number) => {
         // if (hoverData === index && width > LG_SCREEN_SIZE) {
 
         let baseInfo = _.filter(props.games.data?.games, {
-            game_id: game_id,
+            game_id: gameId,
         });
 
         return (
@@ -248,10 +251,10 @@ const Home: React.FC<HomeProps> = (props) => {
                 </p>
 
                 <div className="chartGamePreviewGenresWrap">
-                    {renderGenresForGameTag(game_id)}
+                    {renderGenresForGameTag(gameId)}
                 </div>
                 <div className="chartGamePreviewScreenshots">
-                    {renderScreenshotsForGame(game_id)}
+                    {renderScreenshotsForGame(gameId)}
                 </div>
             </div>
         );

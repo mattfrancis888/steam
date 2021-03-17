@@ -24,17 +24,17 @@ const FeaturedCarousel: React.FC<FeaturedCarouselProps> = (props) => {
 
     //Duplicate of the one in Home, just in case we want to customize it
     const renderScreenshotsForGame = (gameId: number) => {
-        let screenshots = _.filter(props.content, {
+        let gameForSlide = _.filter(props.content, {
             game_id: gameId,
         });
-        const screenshotsSplit = _.chunk(screenshots, 4);
-        return screenshotsSplit[0][0].screenshots.map((screenshot, index) => {
-            return <img src={screenshot} alt="preview"></img>;
+        let maxScreenshotToShow = 4;
+        return gameForSlide[0].screenshots.map((screenshot, index) => {
+            if (index < maxScreenshotToShow)
+                return <img src={screenshot} alt="preview"></img>;
         });
     };
 
     const renderSlides = () => {
-        //@ts-ignore
         return props.content.map((content, index) => {
             return (
                 <Slide index={index} key={index}>
