@@ -86,8 +86,7 @@
     padding: 0 0.5rem;
     font-size: 0.8rem;
     align-items: center;
-    background: #4c6b22;
-    color: #a4d007;
+    @include discountPriceColor;
     @media screen and (min-width: $sm_breakpoint) {
         font-size: 1.3rem;
     }

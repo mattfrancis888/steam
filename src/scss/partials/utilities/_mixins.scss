@@ -28,19 +28,7 @@
     }
 }
 
-// @mixin sidePaddingForCarouselAndTitle {
-//     padding-left: 3rem;
-//     padding-right: 3rem;
-//     @media screen and (min-width: $sm_breakpoint) {
-//         padding-left: 4rem;
-//         padding-right: 4rem;
-//     }
-//     @media screen and (min-width: $md_breakpoint) {
-//         padding-left: 4.5rem;
-//         padding-right: 4.5rem;
-//     }
-//     @media screen and (min-width: $lg_breakpoint) {
-//         padding-left: 5rem;
-//         padding-right: 5rem;
-//     }
-// }
+@mixin discountPriceColor {
+    background: #4c6b22;
+    color: #a4d007;
+}

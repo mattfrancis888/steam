@@ -12,11 +12,11 @@ import { RiArrowRightSLine, RiArrowLeftSLine } from "react-icons/ri";
 import LazyLoad from "react-lazyload";
 import { useHistory } from "react-router-dom";
 import useWindowDimensions from "../windowDimensions";
-import { FeaturedCarouselProps } from "./Home";
+import { CommunityCarouelProps } from "./Home";
 import anime from "animejs/lib/anime.es.js";
 import { LG_SCREEN_SIZE, XL_SCREEN_SIZE, MED_SCREEN_SIZE } from "../constants";
 
-const CommunityCarousel: React.FC<FeaturedCarouselProps> = (props) => {
+const CommunityCarousel: React.FC<CommunityCarouelProps> = (props) => {
     const { width } = useWindowDimensions();
     const [style, setStyle] = useState({ opacity: "1" });
 

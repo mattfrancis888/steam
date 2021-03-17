@@ -63,6 +63,9 @@ export interface SpecialOfferCarouselProps {
     //GameBaseInfo[] type won't work; its because of lodash' reject using FlatArray
     content: any;
 }
+export interface CommunityCarouelProps {
+    content: GameBaseInfo[];
+}
 
 interface HomeProps {
     gamesBaseInfo: GamesBaseInfoStateResponse;
@@ -121,6 +124,36 @@ const Home: React.FC<HomeProps> = (props) => {
         });
     };
 
+    const renderPrice = (content: GameBaseInfo) => {
+        if (content.discount_percentage) {
+            return (
+                <div className="chartAdjustedPriceWrap">
+                    <div className="chartDiscount">
+                        -{parseFloat(content.discount_percentage) * 100}%
+                    </div>
+                    <div>
+                        <p className="chartOrigPriceStriked">
+                            ${parseFloat(content.price).toFixed(2)}
+                        </p>
+                        <p className="chartGamePrice">
+                            $
+                            {parseFloat(content.price_after_discount).toFixed(
+                                2
+                            )}
+                        </p>
+                    </div>
+                </div>
+            );
+        } else {
+            //no discount
+            return (
+                <p className="chartGamePrice">
+                    ${parseFloat(content.price).toFixed(2)}
+                </p>
+            );
+        }
+    };
+
     const renderContent = () => {
         if (props.errors.data?.error) {
             return (
@@ -156,7 +189,7 @@ const Home: React.FC<HomeProps> = (props) => {
                         <h1 className="bannerTitle">
                             The Community Recommends
                         </h1>
-                        {/* <CommunityCarousel content={games} /> */}
+                        <CommunityCarousel content={gamesBaseInfo[0]} />
                     </div>
                     <div className="chartTabsWrap">
                         <div className="chartTab">Top Sellers</div>
@@ -201,12 +234,7 @@ const Home: React.FC<HomeProps> = (props) => {
                                                             )}
                                                         </p>
                                                     </div>
-                                                    <p className="chartGamePrice">
-                                                        $
-                                                        {parseFloat(
-                                                            content.price
-                                                        ).toFixed(2)}
-                                                    </p>
+                                                    {renderPrice(content)}
                                                 </div>
                                             </div>
                                         </React.Fragment>

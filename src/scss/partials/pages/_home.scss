@@ -160,6 +160,24 @@
         font-size: 1.6rem;
     }
 }
+
+.chartDiscount {
+    @include discountPriceColor;
+    margin-right: 1rem;
+    padding: 0.5rem;
+    font-size: 1.4rem;
+}
+.chartAdjustedPriceWrap {
+    display: flex;
+    align-items: center;
+}
+.chartOrigPriceStriked {
+    text-decoration: line-through;
+    font-size: 1.2rem;
+    margin: 0;
+    margin-bottom: 0.25rem;
+    color: #626366;
+}
 .chartGamePrice {
     font-size: 1.2rem;
     margin: 0;
