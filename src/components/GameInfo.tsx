@@ -19,6 +19,10 @@ import defaultAvatar from "../img/defaultAvatar.png";
 import anime from "animejs/lib/anime.es.js";
 import moment from "moment";
 import { GameInfoReviewsStateResponse } from "reducers/gameInfoReviewsReducer";
+import _ from "lodash";
+import EditReview from "./EditReview";
+import jwt_decode from "jwt-decode";
+import Cookies from "js-cookie";
 export interface WriteReviewFormProps {
     onSubmit(formValues: any): void;
     authStatus?: string | null;
@@ -49,6 +53,62 @@ const GameInfo: React.FC<GameInfoProps> = (props) => {
         props.fetchGameInfoReviews(props.match.params.gameId);
     }, []);
     useEffect(() => {}, [props.gameInfoReviews.data]);
+
+    const renderWriteReview = () => {
+        if (Cookies.get("ACCESS_TOKEN")) {
+            //If user is signed in
+            //@ts-ignore
+            const email = jwt_decode(Cookies.get("ACCESS_TOKEN")).subject;
+            console.log(email);
+            const filteredContent = _.filter(
+                props.gameInfoReviews.data?.reviews,
+                {
+                    email: email,
+                }
+            );
+            //If user already wrote a review
+            if (filteredContent.length > 0) {
+                return null;
+            }
+        } else {
+            //If user is not signed in
+            return (
+                <WriteReview
+                    recommend={recommend}
+                    onRecommendorNot={onRecommendorNot}
+                    onSubmit={(formValues: any) => onSubmitRegister(formValues)}
+                />
+            );
+        }
+    };
+
+    const renderEditReview = () => {
+        if (Cookies.get("ACCESS_TOKEN")) {
+            //If user is signed in
+            //@ts-ignore
+            const email = jwt_decode(Cookies.get("ACCESS_TOKEN")).subject;
+            const filteredContent = _.filter(
+                props.gameInfoReviews.data?.reviews,
+                {
+                    email: email,
+                }
+            );
+            //If user already wrote a review
+            if (filteredContent.length > 0) {
+                return (
+                    <EditReview
+                        recommend={recommend}
+                        onRecommendorNot={onRecommendorNot}
+                        onSubmit={(formValues: any) =>
+                            onSubmitRegister(formValues)
+                        }
+                    />
+                );
+            }
+        } else {
+            return null;
+        }
+    };
 
     const renderPrice = (game: Game) => {
         if (game.discount_percentage) {
@@ -214,13 +274,8 @@ const GameInfo: React.FC<GameInfoProps> = (props) => {
                             />
                         </div>
                     </div>
-                    <WriteReview
-                        recommend={recommend}
-                        onRecommendorNot={onRecommendorNot}
-                        onSubmit={(formValues: any) =>
-                            onSubmitRegister(formValues)
-                        }
-                    />
+
+                    {renderWriteReview()}
                     <div className="gameInfoBuyContainer">
                         <h1>Buy {props.gameInfo.data.games[0].title}</h1>
                         <div className="gameInfoAddToCartWrap">
@@ -232,13 +287,12 @@ const GameInfo: React.FC<GameInfoProps> = (props) => {
                             </button>
                         </div>
                     </div>
-
                     <h1 className="gameInfoSectionTitle">About This Game</h1>
                     <p className="gameDescription">
                         {props.gameInfo.data.games[0].about}
                     </p>
-
                     <h1 className="gameInfoSectionTitle">Recent Reviews</h1>
+                    {renderEditReview()}
                     <div className="reviewsContainer">
                         {renderReviews(props.gameInfoReviews.data.reviews)}
                     </div>

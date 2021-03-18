@@ -335,12 +335,12 @@ export const getGameInfo = async (req: Request, res: Response) => {
 
 export const getReviews = async (req: any, res: Response) => {
     try {
-        let sql = `   select ui.username, ui.avatar_url,
+        let sql = `   select ui.username, ui.email, ui.avatar_url,
         r.recommend, r.opinion
        from lookup_game_review lr 
          join review r on lr.review_id = r.review_id
         full outer join user_info ui on lr.user_id = ui.user_id
-        WHERE lr.game_id = $1; `;
+        WHERE lr.game_id = $1 ORDER BY lr.game_id ASC; `;
 
         const reviewersResponse = await pool.query(sql, [req.params.gameId]);
         res.send({ reviews: reviewersResponse.rows });
@@ -393,6 +393,56 @@ export const postReview = async (
                 [gameId, reviewId, null]
             );
         }
+
+        pool.query("COMMIT");
+        next();
+    } catch (error) {
+        pool.query("ROLLBACK");
+        console.log("ROLLBACK TRIGGERED", error);
+        return res.sendStatus(INTERNAL_SERVER_ERROR_STATUS);
+    }
+};
+
+export const editReview = async (
+    req: any,
+    res: Response,
+    next: NextFunction
+) => {
+    //Only signed in users can edit their review
+    const decodedJwt = jwt_decode(req.cookies.ACCESS_TOKEN);
+    //@ts-ignore
+    const email = decodedJwt.subject;
+    const gameId = req.params.gameId;
+    const recommend = req.body.recommend;
+    const opinion = req.body.opinion;
+    try {
+        //Transaction
+        await pool.query("BEGIN");
+        //Insert if it does not exist on table
+
+        //get Review id
+        const reviewIdResponse = await pool.query(
+            `SELECT review_id from lookup_game_user WHERE email = $1 
+            AND game_id = $2`,
+            [email, gameId]
+        );
+        const reviewId = reviewIdResponse.rows[0].review_id;
+        await pool.query(
+            `UPDATE review SET recommend = $1 AND opinion = $2  WHERE
+            review_id = $3`,
+            [recommend, opinion, reviewId]
+        );
+
+        const userInfoResponse = await pool.query(
+            `SELECT user_id from user_info WHERE email = $1`,
+            [email]
+        );
+        const userId = userInfoResponse.rows[0].user_id;
+        await pool.query(
+            `UPDATE lookup_game_review SET review_id WHERE game_id = $1
+            AND review_id = $2 AND user_id = 3`,
+            [gameId, reviewId, userId]
+        );
 
         pool.query("COMMIT");
         next();

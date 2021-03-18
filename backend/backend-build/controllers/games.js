@@ -55,7 +55,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.postReview = exports.getReviews = exports.getGameInfo = exports.getDiscountedGames = exports.getGames = exports.getGameInfoTest = exports.getGamesTest = void 0;
+exports.editReview = exports.postReview = exports.getReviews = exports.getGameInfo = exports.getDiscountedGames = exports.getGames = exports.getGameInfoTest = exports.getGamesTest = void 0;
 var databasePool_1 = __importDefault(require("../databasePool"));
 var constants_1 = require("../constants");
 var jwt_decode_1 = __importDefault(require("jwt-decode"));
@@ -272,7 +272,7 @@ var getReviews = function (req, res) { return __awaiter(void 0, void 0, void 0, 
         switch (_a.label) {
             case 0:
                 _a.trys.push([0, 2, , 3]);
-                sql = "   select ui.username, ui.avatar_url,\n        r.recommend, r.opinion\n       from lookup_game_review lr \n         join review r on lr.review_id = r.review_id\n        full outer join user_info ui on lr.user_id = ui.user_id\n        WHERE lr.game_id = $1; ";
+                sql = "   select ui.username, ui.email, ui.avatar_url,\n        r.recommend, r.opinion\n       from lookup_game_review lr \n         join review r on lr.review_id = r.review_id\n        full outer join user_info ui on lr.user_id = ui.user_id\n        WHERE lr.game_id = $1 ORDER BY lr.game_id ASC; ";
                 return [4 /*yield*/, databasePool_1.default.query(sql, [req.params.gameId])];
             case 1:
                 reviewersResponse = _a.sent();
@@ -343,3 +343,48 @@ var postReview = function (req, res, next) { return __awaiter(void 0, void 0, vo
     });
 }); };
 exports.postReview = postReview;
+var editReview = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
+    var decodedJwt, email, gameId, recommend, opinion, reviewIdResponse, reviewId, userInfoResponse, userId, error_8;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                decodedJwt = jwt_decode_1.default(req.cookies.ACCESS_TOKEN);
+                email = decodedJwt.subject;
+                gameId = req.params.gameId;
+                recommend = req.body.recommend;
+                opinion = req.body.opinion;
+                _a.label = 1;
+            case 1:
+                _a.trys.push([1, 7, , 8]);
+                //Transaction
+                return [4 /*yield*/, databasePool_1.default.query("BEGIN")];
+            case 2:
+                //Transaction
+                _a.sent();
+                return [4 /*yield*/, databasePool_1.default.query("SELECT review_id from lookup_game_user WHERE email = $1 \n            AND game_id = $2", [email, gameId])];
+            case 3:
+                reviewIdResponse = _a.sent();
+                reviewId = reviewIdResponse.rows[0].review_id;
+                return [4 /*yield*/, databasePool_1.default.query("UPDATE review SET recommend = $1 AND opinion = $2  WHERE\n            review_id = $3", [recommend, opinion, reviewId])];
+            case 4:
+                _a.sent();
+                return [4 /*yield*/, databasePool_1.default.query("SELECT user_id from user_info WHERE email = $1", [email])];
+            case 5:
+                userInfoResponse = _a.sent();
+                userId = userInfoResponse.rows[0].user_id;
+                return [4 /*yield*/, databasePool_1.default.query("UPDATE lookup_game_review SET review_id WHERE game_id = $1\n            AND review_id = $2 AND user_id = 3", [gameId, reviewId, userId])];
+            case 6:
+                _a.sent();
+                databasePool_1.default.query("COMMIT");
+                next();
+                return [3 /*break*/, 8];
+            case 7:
+                error_8 = _a.sent();
+                databasePool_1.default.query("ROLLBACK");
+                console.log("ROLLBACK TRIGGERED", error_8);
+                return [2 /*return*/, res.sendStatus(constants_1.INTERNAL_SERVER_ERROR_STATUS)];
+            case 8: return [2 /*return*/];
+        }
+    });
+}); };
+exports.editReview = editReview;
