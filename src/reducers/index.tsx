@@ -6,12 +6,14 @@ import gamesBaseInfoReducer, { GamesStateResponse } from "./gamesReducer";
 import discountedGamesReducer, {
     DiscountedGamesStateResponse,
 } from "./discountedGamesReducer";
+import gameInfoReducer, { GameInfoStateResponse } from "./gameInfoReducer";
 import errorReducer, { ErrorStateResponse } from "./errorReducer";
 
 export interface StoreState {
     authStatus: AuthStateResponse;
     games: GamesStateResponse;
     discountedGames: DiscountedGamesStateResponse;
+    gameInfo: GameInfoStateResponse;
     errors: ErrorStateResponse;
     form: FormStateMap;
 }
@@ -19,6 +21,7 @@ export default combineReducers<StoreState>({
     authStatus: authReducer,
     games: gamesBaseInfoReducer,
     discountedGames: discountedGamesReducer,
+    gameInfo: gameInfoReducer,
     errors: errorReducer,
     form: formReducer,
 });

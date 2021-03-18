@@ -39,7 +39,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getDiscountedGames = exports.getGamesBaseInfo = void 0;
+exports.getGameInfo = exports.getDiscountedGames = exports.getGamesBaseInfo = void 0;
 var databasePool_1 = __importDefault(require("../databasePool"));
 var constants_1 = require("../constants");
 //Thre are 2 ways to turn handle;
@@ -177,3 +177,24 @@ var getDiscountedGames = function (req, res) { return __awaiter(void 0, void 0, 
     });
 }); };
 exports.getDiscountedGames = getDiscountedGames;
+var getGameInfo = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var gameId, sql, response_3, error_3;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 2, , 3]);
+                gameId = req.params.gameId;
+                sql = "SELECT ga.game_id, ga.title, ga.cover_url, ga.release_date,\n        ga.about, g.genres, sc.screenshots, gp.price, gp.discount_percentage, gp.price_after_discount\n        FROM game ga\n            JOIN (\n              select lg.game_id, ARRAY_AGG(gr.genre_type) as genres\n              from lookup_game_genre lg \n                  JOIN genre gr on gr.genre_id = lg.genre_id\n              group by lg.game_id\n           ) g on g.game_id = ga.game_id\n            JOIN ( \n              select ls.game_id, ARRAY_AGG(s.screenshot_url) as screenshots\n              from lookup_game_screenshot ls \n                join screenshot s on s.screenshot_id = ls.screenshot_id\n              group by ls.game_id\n           ) sc on sc.game_id = ga.game_id\n           INNER JOIN game_price gp on ga.price_id = gp.price_id \n           WHERE ga.game_id = $1 ;";
+                return [4 /*yield*/, databasePool_1.default.query(sql, [gameId])];
+            case 1:
+                response_3 = _a.sent();
+                res.send({ games: response_3.rows });
+                return [3 /*break*/, 3];
+            case 2:
+                error_3 = _a.sent();
+                return [2 /*return*/, res.sendStatus(constants_1.INTERNAL_SERVER_ERROR_STATUS)];
+            case 3: return [2 /*return*/];
+        }
+    });
+}); };
+exports.getGameInfo = getGameInfo;

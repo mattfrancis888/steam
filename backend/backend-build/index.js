@@ -34,7 +34,7 @@ app.use("/api", protected_1.default);
 app.use("/api", routes_1.default);
 app.use("/api", games_1.default);
 // app.use("/", protectedRouter);
-var port = 5000;
+var port = process.env.PORT || 5000;
 app.listen(port, function () {
     console.log("App running on port " + port + ".");
 });

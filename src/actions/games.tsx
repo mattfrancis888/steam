@@ -19,6 +19,11 @@ export interface FetchDiscountedGamesAction {
     payload: FetchGamesResponse;
 }
 
+export interface FetchGameInfoAction {
+    type: ActionTypes.FETCH_GAME_INFO;
+    payload: FetchGamesResponse;
+}
+
 export interface GamesErrorAction {
     type: ActionTypes.GAME_ERROR;
     payload: ServerError;
@@ -38,6 +43,10 @@ export interface Game {
 }
 
 export interface FetchGamesResponse {
+    games: Game[];
+}
+
+export interface FetchGameInfoResponse {
     games: Game[];
 }
 
@@ -63,6 +72,23 @@ export const fetchDiscountedGames = () => async (dispatch: Dispatch) => {
         );
         dispatch<FetchDiscountedGamesAction>({
             type: ActionTypes.FETCH_GAMES_DISCOUNTED,
+            payload: response.data,
+        });
+    } catch (error) {
+        dispatch<GamesErrorAction>({
+            type: ActionTypes.GAME_ERROR,
+            payload: { error: SERVER_ERROR_MESSAGE },
+        });
+    }
+};
+
+export const fetchGameInfo = (gameId: number) => async (dispatch: Dispatch) => {
+    try {
+        const response = await axios.get<FetchGameInfoResponse>(
+            `/api/game-info/${gameId}`
+        );
+        dispatch<FetchGameInfoAction>({
+            type: ActionTypes.FETCH_GAME_INFO,
             payload: response.data,
         });
     } catch (error) {

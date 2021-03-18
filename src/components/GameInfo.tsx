@@ -3,6 +3,12 @@ import history from "../browserHistory";
 import GameInfoCarousel from "./GameInfoCarousel";
 import WriteReview, { WriteReviewFormValues } from "./WriteReview";
 import { FiThumbsUp, FiThumbsDown } from "react-icons/fi";
+import { fetchGameInfo } from "../actions";
+import { connect } from "react-redux";
+import { StoreState } from "../reducers";
+import Loading from "./Loading";
+import { ErrorStateResponse } from "reducers/errorReducer";
+import { GameInfoStateResponse } from "reducers/gameInfoReducer";
 export interface WriteReviewFormProps {
     onSubmit(formValues: any): void;
     authStatus?: string | null;
@@ -10,7 +16,18 @@ export interface WriteReviewFormProps {
     recommend: boolean;
 }
 
-const GameInfo: React.FC<{}> = (props) => {
+interface GameInfoProps {
+    fetchGameInfo(gameId: number): void;
+    errors: ErrorStateResponse;
+    gameInfo: GameInfoStateResponse;
+    match: any;
+}
+
+const GameInfo: React.FC<GameInfoProps> = (props) => {
+    useEffect(() => {
+        props.fetchGameInfo(props.match.params.gameId);
+    }, []);
+
     const onSubmitRegister = async (formValues: WriteReviewFormValues) => {
         // props.signUp(formValues);
         console.log(formValues);
@@ -21,86 +38,118 @@ const GameInfo: React.FC<{}> = (props) => {
         else setRecommend(false);
     };
 
-    return (
-        <div className="gameInfoContainer">
-            <h1 className="gameInfoTitle">
-                The Elder Scrolls V: Skyrim Special Edition
-            </h1>
-            <div className="gameInfoShowcaseContainer">
-                <div className="gameInfoShowcasePreviewWrap">
-                    <img
-                        className="gameInfoShowcaseTitleImage"
-                        src="https://cdn.akamai.steamstatic.com/steam/apps/489830/header.jpg?t=1590515887"
-                        alt=""
-                    ></img>
-                    <div className="gameInfoShowcaseTextWrap">
-                        <p>Release Date</p>
-                        <p>Genres</p>
-                    </div>
+    const renderContent = () => {
+        if (props.errors.data?.error) {
+            return (
+                <div className="serverErrorContainer">
+                    <h3 className="serverErrorText">
+                        {props.errors.data?.error}
+                    </h3>
                 </div>
-                <div className="gameInfoShowcaseCarouselWrap">
-                    {/* <GameInfoCarousel content={games} /> */}
-                </div>
-            </div>
-            <WriteReview
-                recommend={recommend}
-                onRecommendorNot={onRecommendorNot}
-                onSubmit={(formValues: any) => onSubmitRegister(formValues)}
-            />
-            <div className="gameInfoBuyContainer">
-                <h1>Buy The Elder Scrolls V: Skyrim Special Edition </h1>
-                <div className="gameInfoAddToCartWrap">
-                    <div className="gameInfoPriceWrap">
-                        <p className="gameInfoOrigPrice">18.99</p>
-                        <p className="gameInfoadjustedPrice">16.99</p>
-                    </div>
-                    <button className="gameInfoAddToCartButton">
-                        Add To Cart
-                    </button>
-                </div>
-            </div>
-
-            <h1 className="gameInfoSectionTitle">About This Game</h1>
-            <p className="gameDescription">
-                Winner of more than 200 Game of the Year Awards, Skyrim Special
-                Edition brings the epic fantasy to life in stunning detail. The
-                Special Edition includes the critically acclaimed game and
-                add-ons with all-new features like remastered art and effects,
-                volumetric god rays, dynamic depth of field, screen-space
-                reflections, and more. Skyrim Special Edition also brings the
-                full power of mods to the PC and consoles. New quests,
-                environments, characters, dialogue, armor, weapons and more –
-                with Mods, there are no limits to what you can experience.{" "}
-            </p>
-
-            <h1 className="gameInfoSectionTitle">Recent Reviews</h1>
-            <div className="reviewsContainer">
-                <div className="reviewBox">
-                    <div className="reviewerInfoWrap">
-                        <div className="reviewerAvatarWrap">
+            );
+        } else if (props.gameInfo.data) {
+            return (
+                <div className="gameInfoContainer">
+                    <h1 className="gameInfoTitle">
+                        {props.gameInfo.data.games[0].title}
+                    </h1>
+                    <div className="gameInfoShowcaseContainer">
+                        <div className="gameInfoShowcasePreviewWrap">
                             <img
-                                src="https://cdn.akamai.steamstatic.com/steamcommunity/public/images/avatars/f3/f3388a39be4329071367722dbf2754b83b05aab4_medium.jpg"
-                                alt="avatar"
+                                className="gameInfoShowcaseTitleImage"
+                                src="https://cdn.akamai.steamstatic.com/steam/apps/489830/header.jpg?t=1590515887"
+                                alt=""
                             ></img>
+                            <div className="gameInfoShowcaseTextWrap">
+                                <p>Release Date</p>
+                                <p>Genres</p>
+                            </div>
                         </div>
-                        <p className="reviewerUsername">
-                            usernameusernameusernameusername
-                        </p>
+                        <div className="gameInfoShowcaseCarouselWrap">
+                            <GameInfoCarousel
+                                content={props.gameInfo.data.games}
+                            />
+                        </div>
                     </div>
-                    <div className="reviewerReviewWrap">
-                        <div className="reviewerVerdictWrap">
-                            <FiThumbsUp className="reviewerThumbIcon" />
-                            <p className="reviewerVerdict">Recommended</p>
+                    <WriteReview
+                        recommend={recommend}
+                        onRecommendorNot={onRecommendorNot}
+                        onSubmit={(formValues: any) =>
+                            onSubmitRegister(formValues)
+                        }
+                    />
+                    <div className="gameInfoBuyContainer">
+                        <h1>Buy {props.gameInfo.data.games[0].title}</h1>
+                        <div className="gameInfoAddToCartWrap">
+                            <div className="gameInfoPriceWrap">
+                                {props.gameInfo.data.games[0].price && (
+                                    <p className="gameInfoOrigPrice">
+                                        {props.gameInfo.data.games[0].price}
+                                    </p>
+                                )}
+                                <p className="gameInfoadjustedPrice">
+                                    {
+                                        props.gameInfo.data.games[0]
+                                            .price_after_discount
+                                    }
+                                </p>
+                            </div>
+                            <button className="gameInfoAddToCartButton">
+                                Add To Cart
+                            </button>
                         </div>
-                        <p className="reviewerDesc">
-                            With zero cost to play and one of the highest skill
-                            ceilings of any game I've ever encountered.
-                        </p>
+                    </div>
+
+                    <h1 className="gameInfoSectionTitle">About This Game</h1>
+                    <p className="gameDescription">
+                        {props.gameInfo.data.games[0].about}
+                    </p>
+
+                    <h1 className="gameInfoSectionTitle">Recent Reviews</h1>
+                    <div className="reviewsContainer">
+                        <div className="reviewBox">
+                            <div className="reviewerInfoWrap">
+                                <div className="reviewerAvatarWrap">
+                                    <img
+                                        src="https://cdn.akamai.steamstatic.com/steamcommunity/public/images/avatars/f3/f3388a39be4329071367722dbf2754b83b05aab4_medium.jpg"
+                                        alt="avatar"
+                                    ></img>
+                                </div>
+                                <p className="reviewerUsername">
+                                    usernameusernameusernameusername
+                                </p>
+                            </div>
+                            <div className="reviewerReviewWrap">
+                                <div className="reviewerVerdictWrap">
+                                    <FiThumbsUp className="reviewerThumbIcon" />
+                                    <p className="reviewerVerdict">
+                                        Recommended
+                                    </p>
+                                </div>
+                                <p className="reviewerDesc">
+                                    With zero cost to play and one of the
+                                    highest skill ceilings of any game I've ever
+                                    encountered.
+                                </p>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    );
+            );
+        } else {
+            return <Loading />;
+        }
+    };
+    return <React.Fragment>{renderContent()}</React.Fragment>;
 };
 
-export default GameInfo;
+const mapStateToProps = (state: StoreState) => {
+    return {
+        gameInfo: state.gameInfo,
+        errors: state.errors,
+    };
+};
+
+export default connect(mapStateToProps, {
+    fetchGameInfo,
+})(GameInfo);
