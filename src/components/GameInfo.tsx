@@ -3,7 +3,12 @@ import history from "../browserHistory";
 import GameInfoCarousel from "./GameInfoCarousel";
 import WriteReview, { WriteReviewFormValues } from "./WriteReview";
 import { FiThumbsUp, FiThumbsDown } from "react-icons/fi";
-import { fetchGameInfo, Game, Reviewer } from "../actions";
+import {
+    fetchGameInfo,
+    Game,
+    Reviewer,
+    fetchGameInfoReviews,
+} from "../actions";
 import { connect } from "react-redux";
 import { StoreState } from "../reducers";
 import Loading from "./Loading";
@@ -12,6 +17,7 @@ import { GameInfoStateResponse } from "reducers/gameInfoReducer";
 import defaultAvatar from "../img/defaultAvatar.png";
 import anime from "animejs/lib/anime.es.js";
 import moment from "moment";
+import { GameInfoReviewsStateResponse } from "reducers/gameInfoReviewsReducer";
 export interface WriteReviewFormProps {
     onSubmit(formValues: any): void;
     authStatus?: string | null;
@@ -24,14 +30,17 @@ export interface GameInfoCarouselProps {
 }
 interface GameInfoProps {
     fetchGameInfo(gameId: number): void;
+    fetchGameInfoReviews(gameId: number): void;
     errors: ErrorStateResponse;
     gameInfo: GameInfoStateResponse;
+    gameInfoReviews: GameInfoReviewsStateResponse;
     match: any;
 }
 
 const GameInfo: React.FC<GameInfoProps> = (props) => {
     useEffect(() => {
         props.fetchGameInfo(props.match.params.gameId);
+        props.fetchGameInfoReviews(props.match.params.gameId);
     }, []);
 
     const renderPrice = (game: Game) => {
@@ -130,7 +139,7 @@ const GameInfo: React.FC<GameInfoProps> = (props) => {
                     </h3>
                 </div>
             );
-        } else if (props.gameInfo.data) {
+        } else if (props.gameInfo.data && props.gameInfoReviews.data) {
             return (
                 <div className="gameInfoContainer">
                     <h1 className="gameInfoTitle">
@@ -218,36 +227,7 @@ const GameInfo: React.FC<GameInfoProps> = (props) => {
 
                     <h1 className="gameInfoSectionTitle">Recent Reviews</h1>
                     <div className="reviewsContainer">
-                        {/* <div className="reviewBox">
-                            <div className="reviewerInfoWrap">
-                                <div className="reviewerAvatarWrap">
-                                    <img
-                                        src="https://cdn.akamai.steamstatic.com/steamcommunity/public/images/avatars/f3/f3388a39be4329071367722dbf2754b83b05aab4_medium.jpg"
-                                        alt="avatar"
-                                    ></img>
-                                </div>
-                                <p className="reviewerUsername">
-                                    {
-                                        props.gameInfo.data.games[0].reviews[0]
-                                            .username
-                                    }
-                                </p>
-                            </div>
-                            <div className="reviewerReviewWrap">
-                                <div className="reviewerVerdictWrap">
-                                    <FiThumbsUp className="reviewerThumbIcon" />
-                                    <p className="reviewerVerdict">
-                                        Recommended
-                                    </p>
-                                </div>
-                                <p className="reviewerDesc">
-                                    With zero cost to play and one of the
-                                    highest skill ceilings of any game I've ever
-                                    encountered.
-                                </p>
-                            </div>
-                        </div> */}
-                        {renderReviews(props.gameInfo.data.games[0].reviews)}
+                        {renderReviews(props.gameInfoReviews.data.reviews)}
                     </div>
                 </div>
             );
@@ -261,10 +241,12 @@ const GameInfo: React.FC<GameInfoProps> = (props) => {
 const mapStateToProps = (state: StoreState) => {
     return {
         gameInfo: state.gameInfo,
+        gameInfoReviews: state.gameInfoReviews,
         errors: state.errors,
     };
 };
 
 export default connect(mapStateToProps, {
     fetchGameInfo,
+    fetchGameInfoReviews,
 })(GameInfo);

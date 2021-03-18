@@ -55,7 +55,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getGameInfo = exports.getDiscountedGames = exports.getGames = exports.getGameInfoTest = exports.getGamesTest = void 0;
+exports.getReviews = exports.getGameInfo = exports.getDiscountedGames = exports.getGames = exports.getGameInfoTest = exports.getGamesTest = void 0;
 var databasePool_1 = __importDefault(require("../databasePool"));
 var constants_1 = require("../constants");
 //Thre are 2 ways to turn handle;
@@ -265,35 +265,56 @@ var getGameInfo = function (req, res) { return __awaiter(void 0, void 0, void 0,
     });
 }); };
 exports.getGameInfo = getGameInfo;
+var getReviews = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var sql, reviewersResponse, error_6;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 2, , 3]);
+                sql = " select ui.username, ui.avatar_url,\n         r.recommend, r.opinion\n        from lookup_game_review lr \n          join review r on lr.review_id = r.review_id\n         join user_info ui on lr.user_id = ui.user_id\n         WHERE lr.game_id = $1 ";
+                return [4 /*yield*/, databasePool_1.default.query(sql, [req.params.gameId])];
+            case 1:
+                reviewersResponse = _a.sent();
+                res.send({ reviews: reviewersResponse.rows });
+                return [3 /*break*/, 3];
+            case 2:
+                error_6 = _a.sent();
+                return [2 /*return*/, res.sendStatus(constants_1.INTERNAL_SERVER_ERROR_STATUS)];
+            case 3: return [2 /*return*/];
+        }
+    });
+}); };
+exports.getReviews = getReviews;
 // export const postReview = async (req: any, res: Response) => {
 //     const decodedJwt = jwt_decode(req.cookies.ACCESS_TOKEN);
 //     //@ts-ignore
 //     const email = decodedJwt.subject;
-//     const mediaId = req.params.mediaId;
+//     const gameId = req.params.gameId;
+//     const recommend = req.body.recommend;
+//     const opinion = req.body.opinion;
 //     try {
 //         //Transaction
 //         await pool.query("BEGIN");
 //         //Insert if it does not exist on table
-//         await pool.query(
-//             `INSERT INTO lookup_(email, media_id)
-//                 SELECT $1, $2
-//                 WHERE
-//                     NOT EXISTS (
-//                     SELECT email FROM lookup_media_watching
-//                     WHERE email = $3 AND media_id = $4
-//                 );`,
-//             [email, mediaId, email, mediaId]
+//         const reviewResponse = await pool.query(
+//             `INSERT INTO review(recommend, opinion) VALUES($1, $2)`,
+//             [recommend, opinion]
 //         );
-//         const response = await pool.query(
-//             `SELECT media_id, media_title,
-//             media_date,media_description,banner_title_image
-//             ,banner_image,name_tokens, added_date FROM lookup_media_watching
-//             NATURAL JOIN media WHERE email = $1 ORDER BY added_date`,
+//         console.log(reviewResponse.rows[0].review_id);
+//         const userInfoResponse = await pool.query(
+//             `SELECT user_id from user_info WHERE email = $1`,
 //             [email]
 //         );
-//         // if (!response.rows[0]) {
-//         //     throw new Error("User does not own this listing");
-//         // }
+//         console.log(userInfoResponse.rows[0].user_id);
+//         await pool.query(
+//             `INSERT INTO lookup_game_review(game_id, review_id, user_id)
+//             VALUES($1, $2, $3)`,
+//             [
+//                 gameId,
+//                 reviewResponse.rows[0].review_id,
+//                 userInfoResponse.rows[0].user_id,
+//             ]
+//         );
 //         pool.query("COMMIT");
 //         res.send({ watching: response.rows });
 //     } catch (error) {

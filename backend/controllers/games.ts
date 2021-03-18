@@ -333,35 +333,55 @@ export const getGameInfo = async (req: Request, res: Response) => {
     }
 };
 
+export const getReviews = async (req: any, res: Response) => {
+    try {
+        let sql = ` select ui.username, ui.avatar_url,
+         r.recommend, r.opinion
+        from lookup_game_review lr 
+          join review r on lr.review_id = r.review_id
+         join user_info ui on lr.user_id = ui.user_id
+         WHERE lr.game_id = $1 `;
+
+        const reviewersResponse = await pool.query(sql, [req.params.gameId]);
+        res.send({ reviews: reviewersResponse.rows });
+    } catch (error) {
+        return res.sendStatus(INTERNAL_SERVER_ERROR_STATUS);
+    }
+};
+
 // export const postReview = async (req: any, res: Response) => {
 //     const decodedJwt = jwt_decode(req.cookies.ACCESS_TOKEN);
 //     //@ts-ignore
 //     const email = decodedJwt.subject;
-//     const mediaId = req.params.mediaId;
+//     const gameId = req.params.gameId;
+//     const recommend = req.body.recommend;
+//     const opinion = req.body.opinion;
 //     try {
 //         //Transaction
 //         await pool.query("BEGIN");
 //         //Insert if it does not exist on table
-//         await pool.query(
-//             `INSERT INTO lookup_(email, media_id)
-//                 SELECT $1, $2
-//                 WHERE
-//                     NOT EXISTS (
-//                     SELECT email FROM lookup_media_watching
-//                     WHERE email = $3 AND media_id = $4
-//                 );`,
-//             [email, mediaId, email, mediaId]
+
+//         const reviewResponse = await pool.query(
+//             `INSERT INTO review(recommend, opinion) VALUES($1, $2)`,
+//             [recommend, opinion]
 //         );
-//         const response = await pool.query(
-//             `SELECT media_id, media_title,
-//             media_date,media_description,banner_title_image
-//             ,banner_image,name_tokens, added_date FROM lookup_media_watching
-//             NATURAL JOIN media WHERE email = $1 ORDER BY added_date`,
+//         console.log(reviewResponse.rows[0].review_id);
+
+//         const userInfoResponse = await pool.query(
+//             `SELECT user_id from user_info WHERE email = $1`,
 //             [email]
 //         );
-//         // if (!response.rows[0]) {
-//         //     throw new Error("User does not own this listing");
-//         // }
+//         console.log(userInfoResponse.rows[0].user_id);
+//         await pool.query(
+//             `INSERT INTO lookup_game_review(game_id, review_id, user_id)
+//             VALUES($1, $2, $3)`,
+//             [
+//                 gameId,
+//                 reviewResponse.rows[0].review_id,
+//                 userInfoResponse.rows[0].user_id,
+//             ]
+//         );
+
 //         pool.query("COMMIT");
 //         res.send({ watching: response.rows });
 //     } catch (error) {

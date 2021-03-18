@@ -24,6 +24,10 @@ export interface FetchGameInfoAction {
     payload: FetchGameInfoResponse;
 }
 
+export interface FetchGameInfoReviewsAction {
+    type: ActionTypes.FETCH_GAME_INFO_REVIEWS;
+    payload: FetchGameInfoReviewsResponse;
+}
 export interface GamesErrorAction {
     type: ActionTypes.GAME_ERROR;
     payload: ServerError;
@@ -49,15 +53,16 @@ export interface Reviewer {
     opinion: string;
 }
 
-export interface IGameInfo extends Game {
-    reviews: Reviewer[];
-}
 export interface FetchGamesResponse {
     games: Game[];
 }
 
 export interface FetchGameInfoResponse {
-    games: IGameInfo[];
+    games: Game[];
+}
+
+export interface FetchGameInfoReviewsResponse {
+    reviews: Reviewer[];
 }
 
 export const fetchGames = () => async (dispatch: Dispatch) => {
@@ -99,6 +104,25 @@ export const fetchGameInfo = (gameId: number) => async (dispatch: Dispatch) => {
         );
         dispatch<FetchGameInfoAction>({
             type: ActionTypes.FETCH_GAME_INFO,
+            payload: response.data,
+        });
+    } catch (error) {
+        dispatch<GamesErrorAction>({
+            type: ActionTypes.GAME_ERROR,
+            payload: { error: SERVER_ERROR_MESSAGE },
+        });
+    }
+};
+
+export const fetchGameInfoReviews = (gameId: number) => async (
+    dispatch: Dispatch
+) => {
+    try {
+        const response = await axios.get<FetchGameInfoReviewsResponse>(
+            `/api/reviews/${gameId}`
+        );
+        dispatch<FetchGameInfoReviewsAction>({
+            type: ActionTypes.FETCH_GAME_INFO_REVIEWS,
             payload: response.data,
         });
     } catch (error) {
