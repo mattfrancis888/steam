@@ -970,13 +970,18 @@ body {
 
 .reviewForm {
   margin-top: 2rem;
-  background-image: linear-gradient(135deg, rgba(97, 100, 101, 0.3) 0%, rgba(226, 244, 255, 0.3) 100%);
   padding: 1rem;
+  background-image: linear-gradient(135deg, rgba(97, 100, 101, 0.3) 0%, rgba(226, 244, 255, 0.3) 100%);
 }
 @media screen and (min-width: 768px) {
   .reviewForm {
     margin-top: 3rem;
+    padding: 1rem 2rem 1rem 2rem;
   }
+}
+
+.reviewSectionsWrap {
+  width: 100%;
 }
 
 .writeAReviewTitle {
@@ -1001,6 +1006,11 @@ body {
 
 .doYouRecommend {
   font-size: 1.1rem;
+}
+@media screen and (min-width: 992px) {
+  .doYouRecommend {
+    font-size: 1.3rem;
+  }
 }
 
 .reviewFieldTitleWrap {
@@ -1064,11 +1074,6 @@ body {
     font-size: 1.7rem;
   }
 }
-@media screen and (min-width: 992px) {
-  .createReviewTextArea {
-    font-size: 1.9rem;
-  }
-}
 
 .reviewTextAreaAndAvatarWrap {
   display: flex;
@@ -1077,7 +1082,7 @@ body {
 .reviewAvatar {
   min-width: 6.6rem;
   height: 6.6rem;
-  background: red;
+  border: 1px solid white;
   margin-right: 1rem;
 }
 @media screen and (min-width: 768px) {
@@ -1085,6 +1090,11 @@ body {
     min-width: 9.5rem;
     height: 9.5rem;
   }
+}
+.reviewAvatar > img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
 .myReviewWrap {
@@ -1122,16 +1132,8 @@ body {
   background: rgba(103, 193, 245, 0.6);
 }
 
-.reviewContentExceptAvatarWrap {
-  width: 70%;
-}
-@media screen and (min-width: 370px) {
-  .reviewContentExceptAvatarWrap {
-    width: 98%;
-  }
-}
-
 .postReviewButton {
+  cursor: pointer;
   font-size: 1.4rem;
   color: #2b5066;
   background: linear-gradient(to bottom, #c1e4f9 5%, #94b7ca 95%);

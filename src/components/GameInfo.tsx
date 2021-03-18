@@ -8,6 +8,7 @@ import {
     Game,
     Reviewer,
     fetchGameInfoReviews,
+    postReview,
 } from "../actions";
 import { connect } from "react-redux";
 import { StoreState } from "../reducers";
@@ -31,17 +32,23 @@ export interface GameInfoCarouselProps {
 interface GameInfoProps {
     fetchGameInfo(gameId: number): void;
     fetchGameInfoReviews(gameId: number): void;
+    postReview(formValues: IPostReview, gameId: number): void;
     errors: ErrorStateResponse;
     gameInfo: GameInfoStateResponse;
     gameInfoReviews: GameInfoReviewsStateResponse;
     match: any;
 }
 
+export interface IPostReview {
+    opinion: string;
+    recommend: boolean;
+}
 const GameInfo: React.FC<GameInfoProps> = (props) => {
     useEffect(() => {
         props.fetchGameInfo(props.match.params.gameId);
         props.fetchGameInfoReviews(props.match.params.gameId);
     }, []);
+    useEffect(() => {}, [props.gameInfoReviews.data]);
 
     const renderPrice = (game: Game) => {
         if (game.discount_percentage) {
@@ -107,7 +114,11 @@ const GameInfo: React.FC<GameInfoProps> = (props) => {
                                 }}
                             ></img>
                         </div>
-                        <p className="reviewerUsername">{review.username}</p>
+                        <p className="reviewerUsername">
+                            {review.username
+                                ? review.username
+                                : `Anonymous User`}
+                        </p>
                     </div>
                     <div className="reviewerReviewWrap">
                         <div className="reviewerVerdictWrap">
@@ -121,8 +132,10 @@ const GameInfo: React.FC<GameInfoProps> = (props) => {
     };
 
     const onSubmitRegister = async (formValues: WriteReviewFormValues) => {
-        // props.signUp(formValues);
-        console.log(formValues);
+        const recommendObj = { recommend: recommend };
+        const updatedObj: IPostReview = Object.assign(formValues, recommendObj);
+        props.postReview(updatedObj, props.match.params.gameId);
+        // console.log(formValues);
     };
     const [recommend, setRecommend] = useState(true);
     const onRecommendorNot = (response: boolean) => {
@@ -249,4 +262,5 @@ const mapStateToProps = (state: StoreState) => {
 export default connect(mapStateToProps, {
     fetchGameInfo,
     fetchGameInfoReviews,
+    postReview,
 })(GameInfo);

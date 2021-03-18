@@ -335,12 +335,12 @@ export const getGameInfo = async (req: Request, res: Response) => {
 
 export const getReviews = async (req: any, res: Response) => {
     try {
-        let sql = ` select ui.username, ui.avatar_url,
-         r.recommend, r.opinion
-        from lookup_game_review lr 
-          join review r on lr.review_id = r.review_id
-         join user_info ui on lr.user_id = ui.user_id
-         WHERE lr.game_id = $1 `;
+        let sql = `   select ui.username, ui.avatar_url,
+        r.recommend, r.opinion
+       from lookup_game_review lr 
+         join review r on lr.review_id = r.review_id
+        full outer join user_info ui on lr.user_id = ui.user_id
+        WHERE lr.game_id = $1; `;
 
         const reviewersResponse = await pool.query(sql, [req.params.gameId]);
         res.send({ reviews: reviewersResponse.rows });
@@ -349,44 +349,56 @@ export const getReviews = async (req: any, res: Response) => {
     }
 };
 
-// export const postReview = async (req: any, res: Response) => {
-//     const decodedJwt = jwt_decode(req.cookies.ACCESS_TOKEN);
-//     //@ts-ignore
-//     const email = decodedJwt.subject;
-//     const gameId = req.params.gameId;
-//     const recommend = req.body.recommend;
-//     const opinion = req.body.opinion;
-//     try {
-//         //Transaction
-//         await pool.query("BEGIN");
-//         //Insert if it does not exist on table
+export const postReview = async (
+    req: any,
+    res: Response,
+    next: NextFunction
+) => {
+    let decodedJwt = null;
+    if (req.cookies.ACCESS_TOKEN)
+        decodedJwt = jwt_decode(req.cookies.ACCESS_TOKEN);
 
-//         const reviewResponse = await pool.query(
-//             `INSERT INTO review(recommend, opinion) VALUES($1, $2)`,
-//             [recommend, opinion]
-//         );
-//         console.log(reviewResponse.rows[0].review_id);
+    let email = null;
+    //@ts-ignore
+    if (decodedJwt) email = decodedJwt.subject;
+    const gameId = req.params.gameId;
+    const recommend = req.body.recommend;
+    const opinion = req.body.opinion;
+    try {
+        //Transaction
+        await pool.query("BEGIN");
+        //Insert if it does not exist on table
+        const reviewResponse = await pool.query(
+            `INSERT INTO review(recommend, opinion) VALUES($1, $2) RETURNING review_id`,
+            [recommend, opinion]
+        );
 
-//         const userInfoResponse = await pool.query(
-//             `SELECT user_id from user_info WHERE email = $1`,
-//             [email]
-//         );
-//         console.log(userInfoResponse.rows[0].user_id);
-//         await pool.query(
-//             `INSERT INTO lookup_game_review(game_id, review_id, user_id)
-//             VALUES($1, $2, $3)`,
-//             [
-//                 gameId,
-//                 reviewResponse.rows[0].review_id,
-//                 userInfoResponse.rows[0].user_id,
-//             ]
-//         );
+        const reviewId = reviewResponse.rows[0].review_id;
+        if (email) {
+            const userInfoResponse = await pool.query(
+                `SELECT user_id from user_info WHERE email = $1`,
+                [email]
+            );
+            const userId = userInfoResponse.rows[0].user_id;
+            await pool.query(
+                `INSERT INTO lookup_game_review(game_id, review_id, user_id)
+                VALUES($1, $2, $3)`,
+                [gameId, reviewId, userId]
+            );
+        } else {
+            //User is not signed it
+            await pool.query(
+                `INSERT INTO lookup_game_review(game_id, review_id, user_id)
+                VALUES($1, $2, $3)`,
+                [gameId, reviewId, null]
+            );
+        }
 
-//         pool.query("COMMIT");
-//         res.send({ watching: response.rows });
-//     } catch (error) {
-//         pool.query("ROLLBACK");
-//         console.log("ROLLBACK TRIGGERED", error);
-//         return res.sendStatus(INTERNAL_SERVER_ERROR_STATUS);
-//     }
-// };
+        pool.query("COMMIT");
+        next();
+    } catch (error) {
+        pool.query("ROLLBACK");
+        console.log("ROLLBACK TRIGGERED", error);
+        return res.sendStatus(INTERNAL_SERVER_ERROR_STATUS);
+    }
+};

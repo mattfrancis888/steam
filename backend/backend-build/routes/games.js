@@ -8,6 +8,7 @@ gameRouter.get("/games-discounted", games_1.getDiscountedGames);
 // gameRouter.get("/game-info/:gameId", getGameInfoTest);
 gameRouter.get("/game-info/:gameId", games_1.getGameInfo);
 gameRouter.get("/reviews/:gameId", games_1.getReviews);
+gameRouter.post("/review/:gameId", games_1.postReview, games_1.getReviews);
 gameRouter.get("/games-test", games_1.getGamesTest);
 // mediasRouter.post("/add-to-watching/:mediaId", addToWatchingByUser);
 // mediasRouter.delete("/remove-from-watching/:mediaId", removeFromWatchingByUser);

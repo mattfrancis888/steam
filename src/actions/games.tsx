@@ -4,6 +4,7 @@ import { Dispatch } from "redux";
 
 import { SERVER_ERROR_MESSAGE } from "../constants";
 import history from "../browserHistory";
+import { IPostReview } from "../components/GameInfo";
 
 export interface ServerError {
     error: string;
@@ -27,6 +28,11 @@ export interface FetchGameInfoAction {
 export interface FetchGameInfoReviewsAction {
     type: ActionTypes.FETCH_GAME_INFO_REVIEWS;
     payload: FetchGameInfoReviewsResponse;
+}
+
+export interface PostReviewAction {
+    type: ActionTypes.POST_REVIEW;
+    payload: PostReviewResponse;
 }
 export interface GamesErrorAction {
     type: ActionTypes.GAME_ERROR;
@@ -65,6 +71,9 @@ export interface FetchGameInfoReviewsResponse {
     reviews: Reviewer[];
 }
 
+export interface PostReviewResponse {
+    reviews: Reviewer[];
+}
 export const fetchGames = () => async (dispatch: Dispatch) => {
     try {
         const response = await axios.get<FetchGamesResponse>(`/api/games`);
@@ -123,6 +132,26 @@ export const fetchGameInfoReviews = (gameId: number) => async (
         );
         dispatch<FetchGameInfoReviewsAction>({
             type: ActionTypes.FETCH_GAME_INFO_REVIEWS,
+            payload: response.data,
+        });
+    } catch (error) {
+        dispatch<GamesErrorAction>({
+            type: ActionTypes.GAME_ERROR,
+            payload: { error: SERVER_ERROR_MESSAGE },
+        });
+    }
+};
+
+export const postReview = (formValues: IPostReview, gameId: number) => async (
+    dispatch: Dispatch
+) => {
+    try {
+        const response = await axios.post<PostReviewResponse>(
+            `/api/review/${gameId}`,
+            formValues
+        );
+        dispatch<PostReviewAction>({
+            type: ActionTypes.POST_REVIEW,
             payload: response.data,
         });
     } catch (error) {

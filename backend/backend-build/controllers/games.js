@@ -55,9 +55,10 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getReviews = exports.getGameInfo = exports.getDiscountedGames = exports.getGames = exports.getGameInfoTest = exports.getGamesTest = void 0;
+exports.postReview = exports.getReviews = exports.getGameInfo = exports.getDiscountedGames = exports.getGames = exports.getGameInfoTest = exports.getGamesTest = void 0;
 var databasePool_1 = __importDefault(require("../databasePool"));
 var constants_1 = require("../constants");
+var jwt_decode_1 = __importDefault(require("jwt-decode"));
 //Thre are 2 ways to turn handle;
 // {
 //     "games": {
@@ -271,7 +272,7 @@ var getReviews = function (req, res) { return __awaiter(void 0, void 0, void 0, 
         switch (_a.label) {
             case 0:
                 _a.trys.push([0, 2, , 3]);
-                sql = " select ui.username, ui.avatar_url,\n         r.recommend, r.opinion\n        from lookup_game_review lr \n          join review r on lr.review_id = r.review_id\n         join user_info ui on lr.user_id = ui.user_id\n         WHERE lr.game_id = $1 ";
+                sql = "   select ui.username, ui.avatar_url,\n        r.recommend, r.opinion\n       from lookup_game_review lr \n         join review r on lr.review_id = r.review_id\n        full outer join user_info ui on lr.user_id = ui.user_id\n        WHERE lr.game_id = $1; ";
                 return [4 /*yield*/, databasePool_1.default.query(sql, [req.params.gameId])];
             case 1:
                 reviewersResponse = _a.sent();
@@ -285,41 +286,60 @@ var getReviews = function (req, res) { return __awaiter(void 0, void 0, void 0, 
     });
 }); };
 exports.getReviews = getReviews;
-// export const postReview = async (req: any, res: Response) => {
-//     const decodedJwt = jwt_decode(req.cookies.ACCESS_TOKEN);
-//     //@ts-ignore
-//     const email = decodedJwt.subject;
-//     const gameId = req.params.gameId;
-//     const recommend = req.body.recommend;
-//     const opinion = req.body.opinion;
-//     try {
-//         //Transaction
-//         await pool.query("BEGIN");
-//         //Insert if it does not exist on table
-//         const reviewResponse = await pool.query(
-//             `INSERT INTO review(recommend, opinion) VALUES($1, $2)`,
-//             [recommend, opinion]
-//         );
-//         console.log(reviewResponse.rows[0].review_id);
-//         const userInfoResponse = await pool.query(
-//             `SELECT user_id from user_info WHERE email = $1`,
-//             [email]
-//         );
-//         console.log(userInfoResponse.rows[0].user_id);
-//         await pool.query(
-//             `INSERT INTO lookup_game_review(game_id, review_id, user_id)
-//             VALUES($1, $2, $3)`,
-//             [
-//                 gameId,
-//                 reviewResponse.rows[0].review_id,
-//                 userInfoResponse.rows[0].user_id,
-//             ]
-//         );
-//         pool.query("COMMIT");
-//         res.send({ watching: response.rows });
-//     } catch (error) {
-//         pool.query("ROLLBACK");
-//         console.log("ROLLBACK TRIGGERED", error);
-//         return res.sendStatus(INTERNAL_SERVER_ERROR_STATUS);
-//     }
-// };
+var postReview = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
+    var decodedJwt, email, gameId, recommend, opinion, reviewResponse, reviewId, userInfoResponse, userId, error_7;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                decodedJwt = null;
+                if (req.cookies.ACCESS_TOKEN)
+                    decodedJwt = jwt_decode_1.default(req.cookies.ACCESS_TOKEN);
+                email = null;
+                //@ts-ignore
+                if (decodedJwt)
+                    email = decodedJwt.subject;
+                gameId = req.params.gameId;
+                recommend = req.body.recommend;
+                opinion = req.body.opinion;
+                _a.label = 1;
+            case 1:
+                _a.trys.push([1, 9, , 10]);
+                //Transaction
+                return [4 /*yield*/, databasePool_1.default.query("BEGIN")];
+            case 2:
+                //Transaction
+                _a.sent();
+                return [4 /*yield*/, databasePool_1.default.query("INSERT INTO review(recommend, opinion) VALUES($1, $2) RETURNING review_id", [recommend, opinion])];
+            case 3:
+                reviewResponse = _a.sent();
+                reviewId = reviewResponse.rows[0].review_id;
+                if (!email) return [3 /*break*/, 6];
+                return [4 /*yield*/, databasePool_1.default.query("SELECT user_id from user_info WHERE email = $1", [email])];
+            case 4:
+                userInfoResponse = _a.sent();
+                userId = userInfoResponse.rows[0].user_id;
+                return [4 /*yield*/, databasePool_1.default.query("INSERT INTO lookup_game_review(game_id, review_id, user_id)\n                VALUES($1, $2, $3)", [gameId, reviewId, userId])];
+            case 5:
+                _a.sent();
+                return [3 /*break*/, 8];
+            case 6: 
+            //User is not signed it
+            return [4 /*yield*/, databasePool_1.default.query("INSERT INTO lookup_game_review(game_id, review_id, user_id)\n                VALUES($1, $2, $3)", [gameId, reviewId, null])];
+            case 7:
+                //User is not signed it
+                _a.sent();
+                _a.label = 8;
+            case 8:
+                databasePool_1.default.query("COMMIT");
+                next();
+                return [3 /*break*/, 10];
+            case 9:
+                error_7 = _a.sent();
+                databasePool_1.default.query("ROLLBACK");
+                console.log("ROLLBACK TRIGGERED", error_7);
+                return [2 /*return*/, res.sendStatus(constants_1.INTERNAL_SERVER_ERROR_STATUS)];
+            case 10: return [2 /*return*/];
+        }
+    });
+}); };
+exports.postReview = postReview;
