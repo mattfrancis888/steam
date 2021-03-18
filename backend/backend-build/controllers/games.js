@@ -1,4 +1,15 @@
 "use strict";
+var __assign = (this && this.__assign) || function () {
+    __assign = Object.assign || function(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
+                t[p] = s[p];
+        }
+        return t;
+    };
+    return __assign.apply(this, arguments);
+};
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
     return new (P || (P = Promise))(function (resolve, reject) {
@@ -35,11 +46,16 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
+var __spreadArray = (this && this.__spreadArray) || function (to, from) {
+    for (var i = 0, il = from.length, j = to.length; i < il; i++, j++)
+        to[j] = from[i];
+    return to;
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getGameInfo = exports.getDiscountedGames = exports.getGamesBaseInfo = void 0;
+exports.getGameInfo = exports.getDiscountedGames = exports.getGames = exports.getGameInfoTest = exports.getGamesTest = void 0;
 var databasePool_1 = __importDefault(require("../databasePool"));
 var constants_1 = require("../constants");
 //Thre are 2 ways to turn handle;
@@ -96,96 +112,106 @@ var constants_1 = require("../constants");
 //            ....
 //         ],
 // }
-//Check Reddit's saved post to get a clearer detail, but...
-//Option 1: 'Injecting it in node' after a SELECT * Query
-// export const getGamesBaseInfo = async (req: Request, res: Response) => {
-//     try {
-//         const response = await pool.query(
-//             `select * from game NATURAL join game_price ORDER BY game_id`
-//         );
-//         const genreResponse = await pool.query(
-//             `select * from lookup_game_genre NATURAL JOIN genre ORDER BY game_id`
-//         );
-//         let results: Games = {};
-//         // results.base_info = response.rows;
-//         // results.genres = genreResponse.rows;
-//         // results.screenshots = screenshotResponse.rows;
-//         // This will make an Object where each key is game_id and value are the genres for that game
-//         let genresByGames = genreResponse.rows.reduce((acc, r) => {
-//             console.log(acc, r);
-//             return {
-//                 ...acc,
-//                 [r.game_id]: [
-//                     ...(typeof acc[r.game_id] === "undefined"
-//                         ? []
-//                         : acc[r.game_id]),
-//                     r,
-//                 ],
-//             };
-//         }, {}); //Start with Empty Object
-//         results.base_info = response.rows.map((row) => ({
-//             ...row,
-//             genres:
-//                 typeof genresByGames[row.game_id] !== "undefined"
-//                     ? genresByGames[row.game_id]
-//                     : [],
-//         }));
-//         res.send({ games: results });
-//         // res.send({...response.rows})
-//     } catch (error) {
-//         return res.sendStatus(INTERNAL_SERVER_ERROR_STATUS);
-//     }
-// };
+// Check Reddit's saved post 'Combining results from different SQL tables' to get a clearer detail, but...
+// Option 1: 'Injecting it in node' after a SELECT * Query
+var getGamesTest = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var response_1, genreResponse, results, genresByGames_1, error_1;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 3, , 4]);
+                return [4 /*yield*/, databasePool_1.default.query("select * from game NATURAL join game_price ORDER BY game_id")];
+            case 1:
+                response_1 = _a.sent();
+                return [4 /*yield*/, databasePool_1.default.query("select * from lookup_game_genre NATURAL JOIN genre ORDER BY game_id")];
+            case 2:
+                genreResponse = _a.sent();
+                results = {};
+                genresByGames_1 = genreResponse.rows.reduce(function (acc, row) {
+                    var _a;
+                    // console.log(acc, row);
+                    //acc represents accumulator
+                    //acc is the object we are starting with, r is the object we have built so far
+                    return __assign(__assign({}, acc), (_a = {}, _a[row.game_id] = __spreadArray(__spreadArray([], (typeof acc[row.game_id] === "undefined"
+                        ? []
+                        : //If the accumulator already has defined [row.game_id]
+                            acc[row.game_id])), [
+                        //We are using property name as a number,
+                        //So we have to use bracket notation
+                        //Add current row to empty array or existing acc[row.game_id]
+                        row,
+                    ]), _a));
+                }, {});
+                //console.log(genresByGames) outputs:
+                //{
+                //   '1': [
+                //   { genre_id: 1, game_id: 1, genre_type: 'Action' },
+                //      { genre_id: 2, game_id: 1, genre_type: 'Fantasy' }
+                //       ],
+                //     '2': [ { genre_id: 1, game_id: 2, genre_type: 'Action' } ]
+                // }
+                results = response_1.rows.map(function (row) { return (__assign(__assign({}, row), { genres: typeof genresByGames_1[row.game_id] !== "undefined"
+                        ? genresByGames_1[row.game_id]
+                        : [] })); });
+                res.send({ games: results });
+                return [3 /*break*/, 4];
+            case 3:
+                error_1 = _a.sent();
+                console.log(error_1);
+                return [2 /*return*/, res.sendStatus(constants_1.INTERNAL_SERVER_ERROR_STATUS)];
+            case 4: return [2 /*return*/];
+        }
+    });
+}); };
+exports.getGamesTest = getGamesTest;
+var getGameInfoTest = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var gameId, sql, response_2, sql2, reviewersResponse, reviewers_1, results, error_2;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 3, , 4]);
+                gameId = req.params.gameId;
+                sql = "SELECT ga.game_id, ga.title, ga.cover_url, ga.release_date,\n        ga.about, g.genres, sc.screenshots, gp.price, gp.discount_percentage, gp.price_after_discount\n        FROM game ga\n            JOIN (\n              select lg.game_id, ARRAY_AGG(gr.genre_type) as genres\n              from lookup_game_genre lg \n                  JOIN genre gr on gr.genre_id = lg.genre_id\n              group by lg.game_id\n           ) g on g.game_id = ga.game_id\n            JOIN ( \n              select ls.game_id, ARRAY_AGG(s.screenshot_url) as screenshots\n              from lookup_game_screenshot ls \n                join screenshot s on s.screenshot_id = ls.screenshot_id\n              group by ls.game_id\n           ) sc on sc.game_id = ga.game_id\n           INNER JOIN game_price gp on ga.price_id = gp.price_id \n           WHERE ga.game_id = $1 ;";
+                return [4 /*yield*/, databasePool_1.default.query(sql, [gameId])];
+            case 1:
+                response_2 = _a.sent();
+                sql2 = " select lr.game_id, ui.username, ui.avatar_url,\n         r.recommend, r.opinion\n        from lookup_game_review lr \n          join review r on lr.review_id = r.review_id\n         join user_info ui on lr.user_id = ui.user_id ";
+                return [4 /*yield*/, databasePool_1.default.query(sql2)];
+            case 2:
+                reviewersResponse = _a.sent();
+                reviewers_1 = reviewersResponse.rows.reduce(function (acc, row) {
+                    var _a;
+                    // console.log(acc, row);
+                    return __assign(__assign({}, acc), (_a = {}, _a[row.game_id] = __spreadArray(__spreadArray([], (typeof acc[row.game_id] === "undefined"
+                        ? []
+                        : //If the accumulator already has defined [row.game_id]
+                            acc[row.game_id])), [
+                        row,
+                    ]), _a));
+                }, {});
+                results = response_2.rows.map(function (row) { return (__assign(__assign({}, row), { reviews: typeof reviewers_1[row.game_id] !== "undefined"
+                        ? reviewers_1[row.game_id]
+                        : [] })); });
+                // res.send(results);
+                res.send({ games: results });
+                return [3 /*break*/, 4];
+            case 3:
+                error_2 = _a.sent();
+                return [2 /*return*/, res.sendStatus(constants_1.INTERNAL_SERVER_ERROR_STATUS)];
+            case 4: return [2 /*return*/];
+        }
+    });
+}); };
+exports.getGameInfoTest = getGameInfoTest;
 //Option 2: Array_AGG
-var getGamesBaseInfo = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var sql, response_1, error_1;
+var getGames = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var sql, response_3, error_3;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
                 _a.trys.push([0, 2, , 3]);
                 sql = "SELECT ga.game_id, ga.title, ga.cover_url, ga.release_date,\n        ga.about, g.genres, sc.screenshots, gp.price, gp.discount_percentage, gp.price_after_discount\n        FROM game ga\n            JOIN (\n              select lg.game_id, ARRAY_AGG(gr.genre_type) as genres\n              from lookup_game_genre lg \n                  JOIN genre gr on gr.genre_id = lg.genre_id\n              group by lg.game_id\n           ) g on g.game_id = ga.game_id\n            JOIN ( \n              select ls.game_id, ARRAY_AGG(s.screenshot_url) as screenshots\n              from lookup_game_screenshot ls \n                join screenshot s on s.screenshot_id = ls.screenshot_id\n              group by ls.game_id\n           ) sc on sc.game_id = ga.game_id\n           INNER JOIN game_price gp on ga.price_id = gp.price_id ;";
                 return [4 /*yield*/, databasePool_1.default.query(sql)];
-            case 1:
-                response_1 = _a.sent();
-                res.send({ games: response_1.rows });
-                return [3 /*break*/, 3];
-            case 2:
-                error_1 = _a.sent();
-                return [2 /*return*/, res.sendStatus(constants_1.INTERNAL_SERVER_ERROR_STATUS)];
-            case 3: return [2 /*return*/];
-        }
-    });
-}); };
-exports.getGamesBaseInfo = getGamesBaseInfo;
-var getDiscountedGames = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var sql, response_2, error_2;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0:
-                _a.trys.push([0, 2, , 3]);
-                sql = "SELECT ga.game_id, ga.title, ga.cover_url, ga.release_date,\n        ga.about, g.genres, sc.screenshots, gp.price, gp.discount_percentage, gp.price_after_discount\n        FROM game ga\n            JOIN (\n              select lg.game_id, ARRAY_AGG(gr.genre_type) as genres\n              from lookup_game_genre lg \n                  JOIN genre gr on gr.genre_id = lg.genre_id\n              group by lg.game_id\n           ) g on g.game_id = ga.game_id\n            JOIN ( \n              select ls.game_id, ARRAY_AGG(s.screenshot_url) as screenshots\n              from lookup_game_screenshot ls \n                join screenshot s on s.screenshot_id = ls.screenshot_id\n              group by ls.game_id\n           ) sc on sc.game_id = ga.game_id\n           INNER JOIN game_price gp on ga.price_id = gp.price_id \n           WHERE gp.discount_percentage IS NOT NULL ;";
-                return [4 /*yield*/, databasePool_1.default.query(sql)];
-            case 1:
-                response_2 = _a.sent();
-                res.send({ games: response_2.rows });
-                return [3 /*break*/, 3];
-            case 2:
-                error_2 = _a.sent();
-                return [2 /*return*/, res.sendStatus(constants_1.INTERNAL_SERVER_ERROR_STATUS)];
-            case 3: return [2 /*return*/];
-        }
-    });
-}); };
-exports.getDiscountedGames = getDiscountedGames;
-var getGameInfo = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var gameId, sql, response_3, error_3;
-    return __generator(this, function (_a) {
-        switch (_a.label) {
-            case 0:
-                _a.trys.push([0, 2, , 3]);
-                gameId = req.params.gameId;
-                sql = "SELECT ga.game_id, ga.title, ga.cover_url, ga.release_date,\n        ga.about, g.genres, sc.screenshots, gp.price, gp.discount_percentage, gp.price_after_discount\n        FROM game ga\n            JOIN (\n              select lg.game_id, ARRAY_AGG(gr.genre_type) as genres\n              from lookup_game_genre lg \n                  JOIN genre gr on gr.genre_id = lg.genre_id\n              group by lg.game_id\n           ) g on g.game_id = ga.game_id\n            JOIN ( \n              select ls.game_id, ARRAY_AGG(s.screenshot_url) as screenshots\n              from lookup_game_screenshot ls \n                join screenshot s on s.screenshot_id = ls.screenshot_id\n              group by ls.game_id\n           ) sc on sc.game_id = ga.game_id\n           INNER JOIN game_price gp on ga.price_id = gp.price_id \n           WHERE ga.game_id = $1 ;";
-                return [4 /*yield*/, databasePool_1.default.query(sql, [gameId])];
             case 1:
                 response_3 = _a.sent();
                 res.send({ games: response_3.rows });
@@ -197,4 +223,82 @@ var getGameInfo = function (req, res) { return __awaiter(void 0, void 0, void 0,
         }
     });
 }); };
+exports.getGames = getGames;
+var getDiscountedGames = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var sql, response_4, error_4;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 2, , 3]);
+                sql = "SELECT ga.game_id, ga.title, ga.cover_url, ga.release_date,\n        ga.about, g.genres, sc.screenshots, gp.price, gp.discount_percentage, gp.price_after_discount\n        FROM game ga\n            JOIN (\n              select lg.game_id, ARRAY_AGG(gr.genre_type) as genres\n              from lookup_game_genre lg \n                  JOIN genre gr on gr.genre_id = lg.genre_id\n              group by lg.game_id\n           ) g on g.game_id = ga.game_id\n            JOIN ( \n              select ls.game_id, ARRAY_AGG(s.screenshot_url) as screenshots\n              from lookup_game_screenshot ls \n                join screenshot s on s.screenshot_id = ls.screenshot_id\n              group by ls.game_id\n           ) sc on sc.game_id = ga.game_id\n           INNER JOIN game_price gp on ga.price_id = gp.price_id \n           WHERE gp.discount_percentage IS NOT NULL ;";
+                return [4 /*yield*/, databasePool_1.default.query(sql)];
+            case 1:
+                response_4 = _a.sent();
+                res.send({ games: response_4.rows });
+                return [3 /*break*/, 3];
+            case 2:
+                error_4 = _a.sent();
+                return [2 /*return*/, res.sendStatus(constants_1.INTERNAL_SERVER_ERROR_STATUS)];
+            case 3: return [2 /*return*/];
+        }
+    });
+}); };
+exports.getDiscountedGames = getDiscountedGames;
+var getGameInfo = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var gameId, sql, response_5, error_5;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                _a.trys.push([0, 2, , 3]);
+                gameId = req.params.gameId;
+                sql = "SELECT ga.game_id, ga.title, ga.cover_url, ga.release_date,\n        ga.about, g.genres, sc.screenshots, gp.price, gp.discount_percentage, gp.price_after_discount\n        FROM game ga\n            JOIN (\n              select lg.game_id, ARRAY_AGG(gr.genre_type) as genres\n              from lookup_game_genre lg \n                  JOIN genre gr on gr.genre_id = lg.genre_id\n              group by lg.game_id\n           ) g on g.game_id = ga.game_id\n            JOIN ( \n              select ls.game_id, ARRAY_AGG(s.screenshot_url) as screenshots\n              from lookup_game_screenshot ls \n                join screenshot s on s.screenshot_id = ls.screenshot_id\n              group by ls.game_id\n           ) sc on sc.game_id = ga.game_id\n           INNER JOIN game_price gp on ga.price_id = gp.price_id \n           WHERE ga.game_id = $1 ;";
+                return [4 /*yield*/, databasePool_1.default.query(sql, [gameId])];
+            case 1:
+                response_5 = _a.sent();
+                res.send({ games: response_5.rows });
+                return [3 /*break*/, 3];
+            case 2:
+                error_5 = _a.sent();
+                return [2 /*return*/, res.sendStatus(constants_1.INTERNAL_SERVER_ERROR_STATUS)];
+            case 3: return [2 /*return*/];
+        }
+    });
+}); };
 exports.getGameInfo = getGameInfo;
+// export const postReview = async (req: any, res: Response) => {
+//     const decodedJwt = jwt_decode(req.cookies.ACCESS_TOKEN);
+//     //@ts-ignore
+//     const email = decodedJwt.subject;
+//     const mediaId = req.params.mediaId;
+//     try {
+//         //Transaction
+//         await pool.query("BEGIN");
+//         //Insert if it does not exist on table
+//         await pool.query(
+//             `INSERT INTO lookup_(email, media_id)
+//                 SELECT $1, $2
+//                 WHERE
+//                     NOT EXISTS (
+//                     SELECT email FROM lookup_media_watching
+//                     WHERE email = $3 AND media_id = $4
+//                 );`,
+//             [email, mediaId, email, mediaId]
+//         );
+//         const response = await pool.query(
+//             `SELECT media_id, media_title,
+//             media_date,media_description,banner_title_image
+//             ,banner_image,name_tokens, added_date FROM lookup_media_watching
+//             NATURAL JOIN media WHERE email = $1 ORDER BY added_date`,
+//             [email]
+//         );
+//         // if (!response.rows[0]) {
+//         //     throw new Error("User does not own this listing");
+//         // }
+//         pool.query("COMMIT");
+//         res.send({ watching: response.rows });
+//     } catch (error) {
+//         pool.query("ROLLBACK");
+//         console.log("ROLLBACK TRIGGERED", error);
+//         return res.sendStatus(INTERNAL_SERVER_ERROR_STATUS);
+//     }
+// };

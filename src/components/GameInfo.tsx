@@ -3,13 +3,13 @@ import history from "../browserHistory";
 import GameInfoCarousel from "./GameInfoCarousel";
 import WriteReview, { WriteReviewFormValues } from "./WriteReview";
 import { FiThumbsUp, FiThumbsDown } from "react-icons/fi";
-import { fetchGameInfo, Game } from "../actions";
+import { fetchGameInfo, Game, Reviewer } from "../actions";
 import { connect } from "react-redux";
 import { StoreState } from "../reducers";
 import Loading from "./Loading";
 import { ErrorStateResponse } from "reducers/errorReducer";
 import { GameInfoStateResponse } from "reducers/gameInfoReducer";
-
+import defaultAvatar from "../img/defaultAvatar.png";
 import anime from "animejs/lib/anime.es.js";
 import moment from "moment";
 export interface WriteReviewFormProps {
@@ -59,6 +59,56 @@ const GameInfo: React.FC<GameInfoProps> = (props) => {
                 </p>
             );
         }
+    };
+
+    const renderThumbIconForReview = (recommend: boolean) => {
+        if (recommend) {
+            return (
+                <React.Fragment>
+                    <FiThumbsUp className="reviewerThumbIcon" />
+                    <p className="reviewerVerdict">Recommended</p>
+                </React.Fragment>
+            );
+        } else {
+            return (
+                <React.Fragment>
+                    <FiThumbsDown className="reviewerThumbIcon" />
+                    <p className="reviewerVerdict">Not Recommended</p>
+                </React.Fragment>
+            );
+        }
+    };
+
+    const renderReviews = (reviews: Reviewer[]) => {
+        return reviews.map((review, index) => {
+            return (
+                <div className="reviewBox">
+                    <div className="reviewerInfoWrap">
+                        <div className="reviewerAvatarWrap">
+                            <img
+                                src={
+                                    review.avatar_url
+                                        ? review.avatar_url
+                                        : defaultAvatar
+                                }
+                                alt="avatar"
+                                onError={(e: any) => {
+                                    e.target.src = defaultAvatar; // some replacement image
+                                    // e.target.style = 'padding: 8px; margin: 16px' // inline styles in html format
+                                }}
+                            ></img>
+                        </div>
+                        <p className="reviewerUsername">{review.username}</p>
+                    </div>
+                    <div className="reviewerReviewWrap">
+                        <div className="reviewerVerdictWrap">
+                            {renderThumbIconForReview(review.recommend)}
+                        </div>
+                        <p className="reviewerDesc">{review.opinion}</p>
+                    </div>
+                </div>
+            );
+        });
     };
 
     const onSubmitRegister = async (formValues: WriteReviewFormValues) => {
@@ -153,17 +203,6 @@ const GameInfo: React.FC<GameInfoProps> = (props) => {
                         <h1>Buy {props.gameInfo.data.games[0].title}</h1>
                         <div className="gameInfoAddToCartWrap">
                             <div className="gameInfoPriceWrap">
-                                {/* {props.gameInfo.data.games[0].price && (
-                                    <p className="gameInfoOrigPrice">
-                                        {props.gameInfo.data.games[0].price}
-                                    </p>
-                                )}
-                                <p className="gameInfoadjustedPrice">
-                                    {
-                                        props.gameInfo.data.games[0]
-                                            .price_after_discount
-                                    }
-                                </p> */}
                                 {renderPrice(props.gameInfo.data.games[0])}
                             </div>
                             <button className="gameInfoAddToCartButton">
@@ -179,7 +218,7 @@ const GameInfo: React.FC<GameInfoProps> = (props) => {
 
                     <h1 className="gameInfoSectionTitle">Recent Reviews</h1>
                     <div className="reviewsContainer">
-                        <div className="reviewBox">
+                        {/* <div className="reviewBox">
                             <div className="reviewerInfoWrap">
                                 <div className="reviewerAvatarWrap">
                                     <img
@@ -188,7 +227,10 @@ const GameInfo: React.FC<GameInfoProps> = (props) => {
                                     ></img>
                                 </div>
                                 <p className="reviewerUsername">
-                                    usernameusernameusernameusername
+                                    {
+                                        props.gameInfo.data.games[0].reviews[0]
+                                            .username
+                                    }
                                 </p>
                             </div>
                             <div className="reviewerReviewWrap">
@@ -204,7 +246,8 @@ const GameInfo: React.FC<GameInfoProps> = (props) => {
                                     encountered.
                                 </p>
                             </div>
-                        </div>
+                        </div> */}
+                        {renderReviews(props.gameInfo.data.games[0].reviews)}
                     </div>
                 </div>
             );

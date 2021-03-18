@@ -5,9 +5,10 @@ import _ from "lodash";
 import jwt_decode from "jwt-decode";
 
 interface Games {
-    base_info?: any;
+    reviews?: any;
     genres?: any;
     screenshots?: any;
+    games?: any;
 }
 
 //Thre are 2 ways to turn handle;
@@ -71,54 +72,145 @@ interface Games {
 
 // }
 
-//Check Reddit's saved post to get a clearer detail, but...
-//Option 1: 'Injecting it in node' after a SELECT * Query
-// export const getGamesBaseInfo = async (req: Request, res: Response) => {
-//     try {
-//         const response = await pool.query(
-//             `select * from game NATURAL join game_price ORDER BY game_id`
-//         );
+// Check Reddit's saved post 'Combining results from different SQL tables' to get a clearer detail, but...
+// Option 1: 'Injecting it in node' after a SELECT * Query
+export const getGamesTest = async (req: Request, res: Response) => {
+    try {
+        const response = await pool.query(
+            `select * from game NATURAL join game_price ORDER BY game_id`
+        );
 
-//         const genreResponse = await pool.query(
-//             `select * from lookup_game_genre NATURAL JOIN genre ORDER BY game_id`
-//         );
+        const genreResponse = await pool.query(
+            `select * from lookup_game_genre NATURAL JOIN genre ORDER BY game_id`
+        );
 
-//         let results: Games = {};
+        // const test = { 10: {} };
+        // let obj1 = { hi: "bye" };
+        // let obj2 = { matt: "cool" };
+        // test[10] = [obj1, obj2];
 
-//         // results.base_info = response.rows;
-//         // results.genres = genreResponse.rows;
-//         // results.screenshots = screenshotResponse.rows;
-//         // This will make an Object where each key is game_id and value are the genres for that game
-//         let genresByGames = genreResponse.rows.reduce((acc, r) => {
-//             console.log(acc, r);
-//             return {
-//                 ...acc,
-//                 [r.game_id]: [
-//                     ...(typeof acc[r.game_id] === "undefined"
-//                         ? []
-//                         : acc[r.game_id]),
-//                     r,
-//                 ],
-//             };
-//         }, {}); //Start with Empty Object
-//         results.base_info = response.rows.map((row) => ({
-//             ...row,
-//             genres:
-//                 typeof genresByGames[row.game_id] !== "undefined"
-//                     ? genresByGames[row.game_id]
-//                     : [],
-//         }));
+        let results: any = {};
 
-//         res.send({ games: results });
-//         // res.send({...response.rows})
-//     } catch (error) {
-//         return res.sendStatus(INTERNAL_SERVER_ERROR_STATUS);
-//     }
-// };
+        // This will make an Object where each key is game_id and value are the genres for that game
+        let genresByGames = genreResponse.rows.reduce((acc, row) => {
+            // console.log(acc, row);
+            //acc represents accumulator
+            //acc is the object we are starting with, r is the object we have built so far
+            return {
+                ...acc,
+                //first iteration example:
+                //turn {} { genre_id: 1, game_id: 1, genre_type: 'Action' }
+                //into: { '1': [ { genre_id: 1, game_id: 1, genre_type: 'Action' } ] }
+
+                //What we are trying to essentially achieve below:
+                // const test = { 10: {} };
+                // let obj1 = { hi: "bye" };
+                // let obj2 = { matt: "cool" };
+                // test[10] = [obj1, obj2];
+                [row.game_id]: [
+                    //If the accumulator has no previusley defined [row.game_id]
+                    ...(typeof acc[row.game_id] === "undefined"
+                        ? []
+                        : //If the accumulator already has defined [row.game_id]
+                          acc[row.game_id]),
+                    //We are using property name as a number,
+                    //So we have to use bracket notation
+                    //Add current row to empty array or existing acc[row.game_id]
+                    row,
+                ],
+            };
+        }, {}); //Start with Empty Object
+
+        //console.log(genresByGames) outputs:
+        //{
+        //   '1': [
+        //   { genre_id: 1, game_id: 1, genre_type: 'Action' },
+        //      { genre_id: 2, game_id: 1, genre_type: 'Fantasy' }
+        //       ],
+        //     '2': [ { genre_id: 1, game_id: 2, genre_type: 'Action' } ]
+        // }
+
+        results = response.rows.map((row) => ({
+            ...row,
+            genres:
+                typeof genresByGames[row.game_id] !== "undefined"
+                    ? genresByGames[row.game_id]
+                    : [],
+        }));
+
+        res.send({ games: results });
+        // res.send({...response.rows})
+    } catch (error) {
+        console.log(error);
+        return res.sendStatus(INTERNAL_SERVER_ERROR_STATUS);
+    }
+};
+
+export const getGameInfoTest = async (req: Request, res: Response) => {
+    try {
+        let gameId = req.params.gameId;
+
+        let sql = `SELECT ga.game_id, ga.title, ga.cover_url, ga.release_date,
+        ga.about, g.genres, sc.screenshots, gp.price, gp.discount_percentage, gp.price_after_discount
+        FROM game ga
+            JOIN (
+              select lg.game_id, ARRAY_AGG(gr.genre_type) as genres
+              from lookup_game_genre lg 
+                  JOIN genre gr on gr.genre_id = lg.genre_id
+              group by lg.game_id
+           ) g on g.game_id = ga.game_id
+            JOIN ( 
+              select ls.game_id, ARRAY_AGG(s.screenshot_url) as screenshots
+              from lookup_game_screenshot ls 
+                join screenshot s on s.screenshot_id = ls.screenshot_id
+              group by ls.game_id
+           ) sc on sc.game_id = ga.game_id
+           INNER JOIN game_price gp on ga.price_id = gp.price_id 
+           WHERE ga.game_id = $1 ;`;
+        //Transaction
+
+        const response = await pool.query(sql, [gameId]);
+        let sql2 = ` select lr.game_id, ui.username, ui.avatar_url,
+         r.recommend, r.opinion
+        from lookup_game_review lr 
+          join review r on lr.review_id = r.review_id
+         join user_info ui on lr.user_id = ui.user_id `;
+
+        const reviewersResponse = await pool.query(sql2);
+        let reviewers = reviewersResponse.rows.reduce((acc, row) => {
+            // console.log(acc, row);
+            return {
+                ...acc,
+                [row.game_id]: [
+                    //If the accumulator has no previusley defined [row.game_id]
+                    ...(typeof acc[row.game_id] === "undefined"
+                        ? []
+                        : //If the accumulator already has defined [row.game_id]
+                          acc[row.game_id]),
+
+                    row,
+                ],
+            };
+        }, {});
+
+        let results = response.rows.map((row) => ({
+            ...row,
+            reviews:
+                typeof reviewers[row.game_id] !== "undefined"
+                    ? reviewers[row.game_id]
+                    : [],
+        }));
+
+        // res.send(results);
+        res.send({ games: results });
+    } catch (error) {
+        return res.sendStatus(INTERNAL_SERVER_ERROR_STATUS);
+    }
+};
 
 //Option 2: Array_AGG
 
-export const getGamesBaseInfo = async (req: Request, res: Response) => {
+export const getGames = async (req: Request, res: Response) => {
     try {
         //With Inner Joins AND DISTINCT; slower performance
         // let sql = `SELECT a.title,
@@ -240,3 +332,41 @@ export const getGameInfo = async (req: Request, res: Response) => {
         return res.sendStatus(INTERNAL_SERVER_ERROR_STATUS);
     }
 };
+
+// export const postReview = async (req: any, res: Response) => {
+//     const decodedJwt = jwt_decode(req.cookies.ACCESS_TOKEN);
+//     //@ts-ignore
+//     const email = decodedJwt.subject;
+//     const mediaId = req.params.mediaId;
+//     try {
+//         //Transaction
+//         await pool.query("BEGIN");
+//         //Insert if it does not exist on table
+//         await pool.query(
+//             `INSERT INTO lookup_(email, media_id)
+//                 SELECT $1, $2
+//                 WHERE
+//                     NOT EXISTS (
+//                     SELECT email FROM lookup_media_watching
+//                     WHERE email = $3 AND media_id = $4
+//                 );`,
+//             [email, mediaId, email, mediaId]
+//         );
+//         const response = await pool.query(
+//             `SELECT media_id, media_title,
+//             media_date,media_description,banner_title_image
+//             ,banner_image,name_tokens, added_date FROM lookup_media_watching
+//             NATURAL JOIN media WHERE email = $1 ORDER BY added_date`,
+//             [email]
+//         );
+//         // if (!response.rows[0]) {
+//         //     throw new Error("User does not own this listing");
+//         // }
+//         pool.query("COMMIT");
+//         res.send({ watching: response.rows });
+//     } catch (error) {
+//         pool.query("ROLLBACK");
+//         console.log("ROLLBACK TRIGGERED", error);
+//         return res.sendStatus(INTERNAL_SERVER_ERROR_STATUS);
+//     }
+// };

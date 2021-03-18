@@ -21,7 +21,7 @@ export interface FetchDiscountedGamesAction {
 
 export interface FetchGameInfoAction {
     type: ActionTypes.FETCH_GAME_INFO;
-    payload: FetchGamesResponse;
+    payload: FetchGameInfoResponse;
 }
 
 export interface GamesErrorAction {
@@ -41,13 +41,23 @@ export interface Game {
     discount_percentage: string;
     price_after_discount: string;
 }
+export interface Reviewer {
+    game_id: number;
+    username: string;
+    avatar_url: string;
+    recommend: boolean;
+    opinion: string;
+}
 
+export interface IGameInfo extends Game {
+    reviews: Reviewer[];
+}
 export interface FetchGamesResponse {
     games: Game[];
 }
 
 export interface FetchGameInfoResponse {
-    games: Game[];
+    games: IGameInfo[];
 }
 
 export const fetchGames = () => async (dispatch: Dispatch) => {
