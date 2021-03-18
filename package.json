@@ -22,6 +22,7 @@
         "js-cookie": "^2.2.1",
         "jwt-decode": "^3.1.2",
         "lodash": "^4.17.21",
+        "moment": "^2.29.1",
         "nock": "^13.0.11",
         "pure-react-carousel": "^1.27.6",
         "query-string": "^6.14.1",

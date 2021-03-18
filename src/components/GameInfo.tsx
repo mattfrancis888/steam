@@ -3,12 +3,15 @@ import history from "../browserHistory";
 import GameInfoCarousel from "./GameInfoCarousel";
 import WriteReview, { WriteReviewFormValues } from "./WriteReview";
 import { FiThumbsUp, FiThumbsDown } from "react-icons/fi";
-import { fetchGameInfo } from "../actions";
+import { fetchGameInfo, Game } from "../actions";
 import { connect } from "react-redux";
 import { StoreState } from "../reducers";
 import Loading from "./Loading";
 import { ErrorStateResponse } from "reducers/errorReducer";
 import { GameInfoStateResponse } from "reducers/gameInfoReducer";
+
+import anime from "animejs/lib/anime.es.js";
+import moment from "moment";
 export interface WriteReviewFormProps {
     onSubmit(formValues: any): void;
     authStatus?: string | null;
@@ -16,6 +19,9 @@ export interface WriteReviewFormProps {
     recommend: boolean;
 }
 
+export interface GameInfoCarouselProps {
+    screenshots: string[];
+}
 interface GameInfoProps {
     fetchGameInfo(gameId: number): void;
     errors: ErrorStateResponse;
@@ -27,6 +33,33 @@ const GameInfo: React.FC<GameInfoProps> = (props) => {
     useEffect(() => {
         props.fetchGameInfo(props.match.params.gameId);
     }, []);
+
+    const renderPrice = (game: Game) => {
+        if (game.discount_percentage) {
+            return (
+                <div className="gameInfoAdjustedPriceWrap">
+                    <div className="gameInfoDiscount">
+                        -{parseFloat(game.discount_percentage) * 100}%
+                    </div>
+                    <div>
+                        <p className="gameInfoOrigPriceStriked">
+                            ${parseFloat(game.price).toFixed(2)}
+                        </p>
+                        <p className="gameInfoPrice">
+                            ${parseFloat(game.price_after_discount).toFixed(2)}
+                        </p>
+                    </div>
+                </div>
+            );
+        } else {
+            //no discount
+            return (
+                <p className="chartGamePrice">
+                    ${parseFloat(game.price).toFixed(2)}
+                </p>
+            );
+        }
+    };
 
     const onSubmitRegister = async (formValues: WriteReviewFormValues) => {
         // props.signUp(formValues);
@@ -57,17 +90,55 @@ const GameInfo: React.FC<GameInfoProps> = (props) => {
                         <div className="gameInfoShowcasePreviewWrap">
                             <img
                                 className="gameInfoShowcaseTitleImage"
-                                src="https://cdn.akamai.steamstatic.com/steam/apps/489830/header.jpg?t=1590515887"
+                                src={props.gameInfo.data.games[0].cover_url}
                                 alt=""
+                                onLoad={() => {
+                                    anime({
+                                        targets: `.gameInfoShowcaseTitleImage`,
+                                        // Properties
+                                        // Animation Parameters
+
+                                        opacity: [
+                                            {
+                                                value: [0, 1],
+                                                duration: 250,
+                                                easing: "easeOutQuad",
+                                            },
+                                        ],
+                                    });
+                                }}
                             ></img>
                             <div className="gameInfoShowcaseTextWrap">
-                                <p>Release Date</p>
-                                <p>Genres</p>
+                                <p className="showcaseAbout">
+                                    {props.gameInfo.data.games[0].about}
+                                </p>
+                                <p className="releaseDate">
+                                    {`Release Date -  ${moment(
+                                        props.gameInfo.data.games[0]
+                                            .release_date
+                                    ).format("YYYY/MM/DD")}`}
+                                </p>
+                                <div className="gameInfoGenresWrap">
+                                    {props.gameInfo.data.games[0].genres.map(
+                                        (genre, index) => {
+                                            return (
+                                                <p
+                                                    key={index}
+                                                    className="gameInfoGenreTag"
+                                                >
+                                                    {genre}
+                                                </p>
+                                            );
+                                        }
+                                    )}
+                                </div>
                             </div>
                         </div>
                         <div className="gameInfoShowcaseCarouselWrap">
                             <GameInfoCarousel
-                                content={props.gameInfo.data.games}
+                                screenshots={
+                                    props.gameInfo.data.games[0].screenshots
+                                }
                             />
                         </div>
                     </div>
@@ -82,7 +153,7 @@ const GameInfo: React.FC<GameInfoProps> = (props) => {
                         <h1>Buy {props.gameInfo.data.games[0].title}</h1>
                         <div className="gameInfoAddToCartWrap">
                             <div className="gameInfoPriceWrap">
-                                {props.gameInfo.data.games[0].price && (
+                                {/* {props.gameInfo.data.games[0].price && (
                                     <p className="gameInfoOrigPrice">
                                         {props.gameInfo.data.games[0].price}
                                     </p>
@@ -92,7 +163,8 @@ const GameInfo: React.FC<GameInfoProps> = (props) => {
                                         props.gameInfo.data.games[0]
                                             .price_after_discount
                                     }
-                                </p>
+                                </p> */}
+                                {renderPrice(props.gameInfo.data.games[0])}
                             </div>
                             <button className="gameInfoAddToCartButton">
                                 Add To Cart
