@@ -18,6 +18,7 @@ import { EditProfileFormProps } from "./Profile";
 export interface EditProfileFormValues {
     username: string;
     imagePreview: string;
+    image: any;
 }
 
 const renderError = ({ error, touched }: any) => {
@@ -47,23 +48,6 @@ const renderAutoFocusTextInput = ({ input, label, meta, placeHolder }: any) => {
     );
 };
 
-const renderTextInput = ({ input, label, meta, placeHolder }: any) => {
-    //"component" property automatically passes props to argument, it has {input properties and meta properties}
-    //"label" automatically passes props to arguments
-    return (
-        <div>
-            {/* <label>{label}</label> */}
-            <input
-                className="createPostAdInputs"
-                {...input}
-                autoComplete="off"
-            />
-            {renderError(meta)}
-        </div>
-    );
-    //{..input} is shortcut for redux-form; where you take all the input from "component's" props and pass it as
-    //props to <input>
-};
 const renderFieldSectionLayout = (title: string, children: JSX.Element) => {
     return (
         <div className="editProfileFieldSection">
@@ -239,6 +223,7 @@ const PostAdForm: React.FC<
                                         props.dispatch(
                                             change("postAdForm", "image", null)
                                         );
+                                        props.change("imagePreview", null);
                                     }}
                                 >
                                     Remove

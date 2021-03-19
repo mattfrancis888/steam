@@ -2,7 +2,7 @@ import { Profiler } from "inspector";
 import React, { useState, useEffect } from "react";
 import defaultAvatar from "../img/defaultAvatar.png";
 import EditProfileForm from "./EditProfileForm";
-import { fetchProfile } from "../actions";
+import { fetchProfile, editProfile } from "../actions";
 import { connect } from "react-redux";
 import Loading from "./Loading";
 import { StoreState } from "../reducers";
@@ -20,6 +20,11 @@ export interface EditProfileFormProps {
 
 export interface ProfileProps {
     fetchProfile(): void;
+    editProfile(
+        formValues: any,
+        cloudinaryPublicId: string | null,
+        existingCloudinaryImagePath: string | null
+    ): void;
     profile: ProfileStateResponse;
     errors: ErrorStateResponse;
 }
@@ -27,6 +32,40 @@ export interface ProfileProps {
 const Profile: React.FC<ProfileProps> = (props) => {
     const onSubmitEditProfile = (formValues: any) => {
         console.log(formValues);
+        if (props.profile.data?.profile[0].avatar_url) {
+            let cloudinaryPaths = props.profile.data?.profile[0].avatar_url.split(
+                "/"
+            );
+            let cloudinaryLastPath = cloudinaryPaths.pop();
+            //@ts-ignore
+            let cloudinaryPublicId = cloudinaryLastPath.split(".")[0];
+
+            if (formValues.image) {
+                //Replace existing picture with new picture
+                props.editProfile(formValues, cloudinaryPublicId, null);
+            } else {
+                if (formValues.imagePreview === null) {
+                    //user removed picture.
+                    //Replace existing picture with nothing
+                    props.editProfile(formValues, cloudinaryPublicId, null);
+                } else {
+                    //If user has an existing image already, but they did not modify  <input type="file"/>
+                    //formValue.image will be empty. So we are going to prevent the user from
+                    //updating an the list with an empty image by using the cloudinary image link
+                    props.editProfile(
+                        formValues,
+                        cloudinaryPublicId,
+                        props.profile.data?.profile[0].avatar_url
+                    );
+                }
+            }
+        } else {
+            //If listing does not have initial cloudinary image link (because they made a listing without a picture beforehand
+            //or they removed their picture and want to edit their listing picture again)
+            //Upload cloudinary image
+
+            props.editProfile(formValues, null, null);
+        }
     };
 
     useEffect(() => {
@@ -98,4 +137,5 @@ const mapStateToProps = (state: StoreState) => {
 
 export default connect(mapStateToProps, {
     fetchProfile,
+    editProfile,
 })(Profile);
