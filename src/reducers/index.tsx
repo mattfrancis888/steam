@@ -11,6 +11,7 @@ import errorReducer, { ErrorStateResponse } from "./errorReducer";
 import gameInfoReviewsReducer, {
     GameInfoReviewsStateResponse,
 } from "./gameInfoReviewsReducer";
+import profileReducer, { ProfileStateResponse } from "./profileReducer";
 
 export interface StoreState {
     authStatus: AuthStateResponse;
@@ -18,6 +19,7 @@ export interface StoreState {
     discountedGames: DiscountedGamesStateResponse;
     gameInfo: GameInfoStateResponse;
     gameInfoReviews: GameInfoReviewsStateResponse;
+    profile: ProfileStateResponse;
     errors: ErrorStateResponse;
     form: FormStateMap;
 }
@@ -27,6 +29,7 @@ export default combineReducers<StoreState>({
     discountedGames: discountedGamesReducer,
     gameInfo: gameInfoReducer,
     gameInfoReviews: gameInfoReviewsReducer,
+    profile: profileReducer,
     errors: errorReducer,
     form: formReducer,
 });

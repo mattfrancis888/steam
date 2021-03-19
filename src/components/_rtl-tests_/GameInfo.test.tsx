@@ -108,43 +108,43 @@ describe("Data loads when user enter page", () => {
         });
     }, 30000);
 
-    test("Post a review", async () => {
-        //Edit review and delete review is the same concept in testing
-        const mockReviewResponse = {
-            reviews: [
-                {
-                    username: "matt888",
-                    email: "a@gmail.com",
-                    avatar_url: null,
-                    recommend: true,
-                    opinion: "Very awesome game",
-                },
-                {
-                    avatar_url: null,
-                    recommend: true,
-                    opinion: "mock6",
-                },
-            ],
-        };
+    // test("Post a review", async () => {
+    //     //Edit review and delete review is the same concept in testing
+    //     const mockReviewResponse = {
+    //         reviews: [
+    //             {
+    //                 username: "matt888",
+    //                 email: "a@gmail.com",
+    //                 avatar_url: null,
+    //                 recommend: true,
+    //                 opinion: "Very awesome game",
+    //             },
+    //             {
+    //                 avatar_url: null,
+    //                 recommend: true,
+    //                 opinion: "mock6",
+    //             },
+    //         ],
+    //     };
 
-        const mockFormValues = {
-            opinion: "mock6",
-            verdict: true,
-        };
+    //     const mockFormValues = {
+    //         opinion: "mock6",
+    //         verdict: true,
+    //     };
 
-        fireEvent.change(app.getByTestId("opinion"), {
-            target: { value: mockFormValues.opinion },
-        });
+    //     fireEvent.change(app.getByTestId("opinion"), {
+    //         target: { value: mockFormValues.opinion },
+    //     });
 
-        act(() => {
-            fireEvent.click(app.getByTestId("postReviewButton"));
-        });
-        //README/Note: Make sure to finish the test, mock axios adapter fails to mock if you re-run the
-        //test when the test is compilig (eg; making changes to a file and saving it) and thus below would get executed
-        mock.onPost("/api/review/1").reply(200, mockReviewResponse);
-        return axios.post("/api/review/1", mockFormValues).then((response) => {
-            console.log(response.data);
-            expect(app.getAllByText("mock6")).toHaveLength(1);
-        });
-    }, 30000);
+    //     act(() => {
+    //         fireEvent.click(app.getByTestId("postReviewButton"));
+    //     });
+    //     //README/Note: Make sure to finish the test, mock axios adapter fails to mock if you re-run the
+    //     //test when the test is compilig (eg; making changes to a file and saving it) and thus below would get executed
+    //     mock.onPost("/api/review/1").reply(200, mockReviewResponse);
+    //     return axios.post("/api/review/1", mockFormValues).then((response) => {
+    //         console.log(response.data);
+    //         expect(app.getAllByText("mock6")).toHaveLength(1);
+    //     });
+    // }, 30000);
 });

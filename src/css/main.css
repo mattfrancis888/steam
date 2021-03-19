@@ -1403,6 +1403,159 @@ body {
   }
 }
 
+.editProfileForm {
+  text-align: left;
+  border-radius: 0.5rem;
+}
+
+.editProfileInputsWrap {
+  width: 100%;
+}
+
+.editProfileInputs {
+  background-color: rgba(0, 0, 0, 0.25);
+  box-shadow: inset 1px 1px 0px #000a;
+  color: #909090;
+  outline: none !important;
+  border: none;
+  border-radius: 0.5rem;
+  outline: none;
+  padding: 1rem;
+  font-size: 1.1rem;
+  width: 100%;
+  margin-bottom: 0.5rem;
+}
+.editProfileInputs:focus {
+  outline: none;
+}
+@media screen and (min-width: 520px) {
+  .editProfileInputs {
+    padding: 1.3rem;
+    width: 33rem;
+  }
+}
+@media screen and (min-width: 768px) {
+  .editProfileInputs {
+    width: 40rem;
+    font-size: 1.7rem;
+  }
+}
+@media screen and (min-width: 992px) {
+  .editProfileInputs {
+    width: 45rem;
+  }
+}
+
+.editProfileFieldSection {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 3.5rem;
+}
+.editProfileFieldSection h1 {
+  font-weight: normal;
+  color: #969696;
+  text-transform: uppercase;
+  letter-spacing: 0.1rem;
+  margin: 0;
+  font-size: 1.4rem;
+}
+@media screen and (min-width: 520px) {
+  .editProfileFieldSection h1 {
+    font-size: 1.45rem;
+  }
+}
+@media screen and (min-width: 768px) {
+  .editProfileFieldSection {
+    margin-bottom: 5.5rem;
+  }
+}
+
+.editProfileSubmitWrap {
+  display: flex;
+}
+
+.editProfileSubmit {
+  cursor: pointer;
+  padding: 1rem 2rem;
+  border-radius: 0.5rem;
+  margin: 0;
+  margin-left: auto;
+  font-weight: bold;
+  font-size: 1.2rem;
+  letter-spacing: 0.1rem;
+  background: linear-gradient(to right, #47bfff 0%, #1a44c2 60%);
+  color: white;
+}
+@media screen and (min-width: 520px) {
+  .editProfileSubmit {
+    font-size: 1.4rem;
+    padding: 1.3rem 2.5rem;
+  }
+}
+
+.errorText {
+  margin: 0.2rem 0;
+  color: red;
+  font-size: 1rem;
+}
+@media screen and (min-width: 520px) {
+  .errorText {
+    font-size: 1.2rem;
+    margin: 1rem 0;
+  }
+}
+@media screen and (min-width: 768px) {
+  .errorText {
+    font-size: 1.4rem;
+  }
+}
+
+.editProfileFieldTitleWrap {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.7rem;
+  padding: 0.5rem 0;
+  margin-right: 2rem;
+  min-width: 8rem;
+}
+@media screen and (min-width: 520px) {
+  .editProfileFieldTitleWrap {
+    min-width: 10rem;
+  }
+}
+
+.imageUploadWrapper {
+  display: flex;
+  flex-direction: column;
+  max-width: 10rem;
+}
+.imageUploadWrapper .editProfileAvatar {
+  cursor: pointer;
+  width: 6.2rem;
+  padding: 2rem;
+  outline: none !important;
+  box-shadow: none !important;
+  border: none;
+  height: 6.2rem;
+  background-position: center;
+  background-size: contain;
+}
+.imageUploadWrapper .editProfileAvatar:focus {
+  outline: none !important;
+  border: 1px solid #c1dbf4;
+}
+@media screen and (min-width: 520px) {
+  .imageUploadWrapper .editProfileAvatar {
+    width: 10rem;
+    height: 10rem;
+  }
+}
+.imageUploadWrapper .removeUploadedImage {
+  color: #999999;
+  text-align: center;
+  cursor: pointer;
+}
+
 .bannerTitle {
   text-transform: uppercase;
   font-weight: 500;
@@ -2308,6 +2461,93 @@ body {
   border: 1px solid white;
   padding: 1rem;
   margin-left: auto;
+}
+
+.profileContainer {
+  padding: 1rem 3rem;
+  padding-bottom: 5rem;
+}
+@media screen and (min-width: 768px) {
+  .profileContainer {
+    padding: 1rem 6rem;
+    padding-bottom: 10rem;
+  }
+}
+@media screen and (min-width: 992px) {
+  .profileContainer {
+    padding: 1rem 20rem;
+    padding-bottom: 10rem;
+  }
+}
+
+.profileHeader {
+  background: rgba(58, 62, 71, 0.5);
+  border-radius: 0.25rem;
+  margin-bottom: 3rem;
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+}
+@media screen and (min-width: 768px) {
+  .profileHeader {
+    margin-bottom: 5rem;
+    padding: 2rem;
+  }
+}
+.profileHeader h1 {
+  overflow: hidden;
+  display: inline;
+  text-overflow: ellipsis;
+  width: 70%;
+  font-size: 1.3rem;
+  margin: 0;
+}
+@media screen and (min-width: 768px) {
+  .profileHeader h1 {
+    font-size: 1.8rem;
+  }
+}
+
+.profileHeaderAvatar {
+  margin-right: 1rem;
+  width: 6.4rem;
+  height: 6.4rem;
+}
+.profileHeaderAvatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profileAboutTitle {
+  font-weight: normal;
+  font-size: 2rem;
+  letter-spacing: 0.2rem;
+  text-transform: uppercase;
+}
+@media screen and (min-width: 768px) {
+  .profileAboutTitle {
+    font-size: 2.5rem;
+  }
+}
+
+.profileTextAndFormWrap p {
+  color: #969696;
+  font-size: 1.3rem;
+}
+@media screen and (min-width: 768px) {
+  .profileTextAndFormWrap p {
+    font-size: 1.6rem;
+  }
+}
+
+.profileTextWrap {
+  margin-bottom: 5rem;
+}
+@media screen and (min-width: 768px) {
+  .profileTextWrap {
+    margin-bottom: 7rem;
+  }
 }
 
 /*# sourceMappingURL=main.css.map */
