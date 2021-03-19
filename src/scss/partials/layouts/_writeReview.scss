@@ -1,16 +1,20 @@
 .reviewForm {
     margin-top: 2rem;
+    padding: 1rem;
     @media screen and (min-width: $md_breakpoint) {
         margin-top: 3rem;
+        padding: 1rem 2rem 1rem 2rem;
     }
     background-image: linear-gradient(
         135deg,
         rgba(97, 100, 101, 0.3) 0%,
         rgba(226, 244, 255, 0.3) 100%
     );
-    padding: 1rem;
 }
 
+.reviewSectionsWrap {
+    width: 100%;
+}
 .writeAReviewTitle {
     color: #66c0f4;
     font-weight: normal;
@@ -31,6 +35,9 @@
 
 .doYouRecommend {
     font-size: 1.1rem;
+    @media screen and (min-width: $lg_breakpoint) {
+        font-size: 1.3rem;
+    }
 }
 .reviewFieldTitleWrap {
     align-items: center;
@@ -82,9 +89,6 @@
     @media screen and (min-width: $md_breakpoint) {
         font-size: 1.7rem;
     }
-    @media screen and (min-width: $lg_breakpoint) {
-        font-size: 1.9rem;
-    }
 }
 
 .reviewTextAreaAndAvatarWrap {
@@ -93,12 +97,17 @@
 .reviewAvatar {
     min-width: 6.6rem;
     height: 6.6rem;
+    border: 1px solid white;
     @media screen and (min-width: $md_breakpoint) {
         min-width: 9.5rem;
         height: 9.5rem;
     }
-    background: red;
     margin-right: 1rem;
+    > img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+    }
 }
 
 .myReviewWrap {
@@ -134,13 +143,9 @@
 .recommendOrNotButtonClicked {
     background: rgba(103, 193, 245, 0.6);
 }
-.reviewContentExceptAvatarWrap {
-    width: 70%;
-    @media screen and (min-width: 370px) {
-        width: 98%;
-    }
-}
+
 .postReviewButton {
+    cursor: pointer;
     font-size: 1.4rem;
     color: #2b5066;
     background: linear-gradient(

@@ -944,6 +944,11 @@ body {
 
 .gameInfoCarouselScreenshots {
   display: flex;
+  cursor: pointer;
+}
+
+.gameInfoCarouselScreenshotsClicked {
+  border: 2px solid white;
 }
 
 .gameInfoCarouselSectionWrap {
@@ -965,13 +970,18 @@ body {
 
 .reviewForm {
   margin-top: 2rem;
-  background-image: linear-gradient(135deg, rgba(97, 100, 101, 0.3) 0%, rgba(226, 244, 255, 0.3) 100%);
   padding: 1rem;
+  background-image: linear-gradient(135deg, rgba(97, 100, 101, 0.3) 0%, rgba(226, 244, 255, 0.3) 100%);
 }
 @media screen and (min-width: 768px) {
   .reviewForm {
     margin-top: 3rem;
+    padding: 1rem 2rem 1rem 2rem;
   }
+}
+
+.reviewSectionsWrap {
+  width: 100%;
 }
 
 .writeAReviewTitle {
@@ -996,6 +1006,11 @@ body {
 
 .doYouRecommend {
   font-size: 1.1rem;
+}
+@media screen and (min-width: 992px) {
+  .doYouRecommend {
+    font-size: 1.3rem;
+  }
 }
 
 .reviewFieldTitleWrap {
@@ -1059,11 +1074,6 @@ body {
     font-size: 1.7rem;
   }
 }
-@media screen and (min-width: 992px) {
-  .createReviewTextArea {
-    font-size: 1.9rem;
-  }
-}
 
 .reviewTextAreaAndAvatarWrap {
   display: flex;
@@ -1072,7 +1082,7 @@ body {
 .reviewAvatar {
   min-width: 6.6rem;
   height: 6.6rem;
-  background: red;
+  border: 1px solid white;
   margin-right: 1rem;
 }
 @media screen and (min-width: 768px) {
@@ -1080,6 +1090,11 @@ body {
     min-width: 9.5rem;
     height: 9.5rem;
   }
+}
+.reviewAvatar > img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
 .myReviewWrap {
@@ -1117,16 +1132,8 @@ body {
   background: rgba(103, 193, 245, 0.6);
 }
 
-.reviewContentExceptAvatarWrap {
-  width: 70%;
-}
-@media screen and (min-width: 370px) {
-  .reviewContentExceptAvatarWrap {
-    width: 98%;
-  }
-}
-
 .postReviewButton {
+  cursor: pointer;
   font-size: 1.4rem;
   color: #2b5066;
   background: linear-gradient(to bottom, #c1e4f9 5%, #94b7ca 95%);
@@ -1165,6 +1172,43 @@ body {
     flex-direction: row;
     justify-content: space-between;
   }
+}
+
+.editForm {
+  margin-bottom: 5rem;
+}
+
+.editAndDeleteReviewButton {
+  cursor: pointer;
+  font-size: 1.4rem;
+  color: #2b5066;
+  background: linear-gradient(to bottom, #c1e4f9 5%, #94b7ca 95%);
+  border-radius: 0.4rem;
+  margin-top: 2rem;
+  margin-left: auto;
+  padding: 0.5rem 0.75rem;
+  height: 100%;
+}
+.editAndDeleteReviewButton:hover {
+  color: white;
+  background: linear-gradient(to bottom, #66c0f4 5%, #2f89bc 95%);
+}
+@media screen and (min-width: 520px) {
+  .editAndDeleteReviewButton {
+    width: auto;
+    margin-top: 0;
+    padding: 0 2rem;
+  }
+}
+
+.deleteReviewButton {
+  color: #67c1f5;
+  background: rgba(103, 193, 245, 0.2);
+  margin-right: 1rem;
+}
+.deleteReviewButton:hover {
+  background: linear-gradient(-60deg, #417a9b 5%, #67c1f5 95%);
+  color: white;
 }
 
 .authForm {
@@ -1740,6 +1784,21 @@ body {
   }
 }
 
+.gameInfoGenresWrap {
+  display: flex;
+}
+
+.gameInfoGenreTag {
+  color: #67c1f5;
+  background-color: rgba(103, 193, 245, 0.2);
+  margin-right: 0.5rem;
+  padding: 0.5rem;
+}
+.gameInfoGenreTag:hover {
+  color: white;
+  background: linear-gradient(135deg, #67c1f5 0%, #417a9b 100%);
+}
+
 .gameInfoShowcaseCarouselWrap {
   width: 60%;
   width: 100%;
@@ -1752,6 +1811,7 @@ body {
 
 .gameInfoShowcaseTitleImage {
   width: 60%;
+  opacity: 0;
 }
 @media screen and (min-width: 992px) {
   .gameInfoShowcaseTitleImage {
@@ -1766,6 +1826,7 @@ body {
   border-radius: 0.4rem;
   color: white;
   padding: 1.6rem;
+  padding-bottom: 3.6rem;
   margin: 5rem 0;
 }
 @media screen and (min-width: 992px) {
@@ -1824,7 +1885,8 @@ body {
 .gameInfoPriceWrap {
   display: flex;
   align-items: center;
-  padding: 0.25rem 1.5rem;
+  padding: 0.25rem 1rem;
+  padding-left: 0.25rem;
 }
 
 .gameInfoAddToCartButton {
@@ -1835,6 +1897,7 @@ body {
   cursor: pointer;
   padding: 0.7rem 1.5rem;
   font-weight: bold;
+  font-size: 1rem;
   outline: none !important;
   box-shadow: none !important;
   border: none;
@@ -1843,6 +1906,11 @@ body {
   color: white;
   background-color: #769605;
   transition: all 0.3s ease;
+}
+@media screen and (min-width: 520px) {
+  .gameInfoAddToCartButton {
+    font-size: 1.2rem;
+  }
 }
 
 .gameInfoSectionTitle {
@@ -1853,6 +1921,7 @@ body {
   text-transform: uppercase;
   font-weight: normal;
   color: white;
+  margin-top: 8rem;
 }
 
 .gameDescription {
@@ -1947,6 +2016,56 @@ body {
   .reviewerDesc {
     padding: 0 1rem;
   }
+}
+
+.gameInfoAdjustedPriceWrap {
+  display: flex;
+  align-items: center;
+}
+
+.gameInfoOrigPriceStriked {
+  text-decoration: line-through;
+  font-size: 1.2rem;
+  margin: 0;
+  margin-bottom: 0.25rem;
+  color: #626366;
+}
+
+.gameInfoPrice {
+  background-color: rgba(0, 0, 0, 0.6);
+  color: #acdbf5;
+  margin: 0;
+  font-size: 1rem;
+}
+@media screen and (min-width: 520px) {
+  .gameInfoPrice {
+    font-size: 1.4rem;
+  }
+}
+
+.gameInfoDiscount {
+  background: #4c6b22;
+  color: #a4d007;
+  margin-right: 1rem;
+  padding: 0.5rem 1.25rem;
+  font-size: 1.4rem;
+}
+@media screen and (min-width: 520px) {
+  .gameInfoDiscount {
+    font-size: 1.6rem;
+  }
+}
+
+.releaseDate {
+  color: #556772;
+}
+
+.showcaseAbout {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  padding-right: 6rem;
 }
 
 .registerContainer {

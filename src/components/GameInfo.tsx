@@ -1,8 +1,30 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import history from "../browserHistory";
 import GameInfoCarousel from "./GameInfoCarousel";
 import WriteReview, { WriteReviewFormValues } from "./WriteReview";
 import { FiThumbsUp, FiThumbsDown } from "react-icons/fi";
+import {
+    fetchGameInfo,
+    Game,
+    Reviewer,
+    fetchGameInfoReviews,
+    postReview,
+    editReview,
+    deleteReview,
+} from "../actions";
+import { connect } from "react-redux";
+import { StoreState } from "../reducers";
+import Loading from "./Loading";
+import { ErrorStateResponse } from "reducers/errorReducer";
+import { GameInfoStateResponse } from "reducers/gameInfoReducer";
+import defaultAvatar from "../img/defaultAvatar.png";
+import anime from "animejs/lib/anime.es.js";
+import moment from "moment";
+import { GameInfoReviewsStateResponse } from "reducers/gameInfoReviewsReducer";
+import _ from "lodash";
+import EditReview from "./EditReview";
+import jwt_decode from "jwt-decode";
+import Cookies from "js-cookie";
 export interface WriteReviewFormProps {
     onSubmit(formValues: any): void;
     authStatus?: string | null;
@@ -10,97 +32,383 @@ export interface WriteReviewFormProps {
     recommend: boolean;
 }
 
-const GameInfo: React.FC<{}> = (props) => {
-    const onSubmitRegister = async (formValues: WriteReviewFormValues) => {
-        // props.signUp(formValues);
-        console.log(formValues);
-    };
+export interface EditReviewFormProps {
+    onSubmit(formValues: any): void;
+    onDelete(): void;
+    authStatus?: string | null;
+    onRecommendorNot(response: boolean): void;
+    recommend: boolean;
+}
+
+export interface GameInfoCarouselProps {
+    screenshots: string[];
+}
+interface GameInfoProps {
+    fetchGameInfo(gameId: number): void;
+    fetchGameInfoReviews(gameId: number): void;
+    postReview(formValues: IPostAndEditReview, gameId: number): void;
+    editReview(formValues: IPostAndEditReview, gameId: number): void;
+    deleteReview(gameId: number): void;
+    errors: ErrorStateResponse;
+    gameInfo: GameInfoStateResponse;
+    gameInfoReviews: GameInfoReviewsStateResponse;
+    match: any;
+}
+
+export interface IPostAndEditReview {
+    opinion: string;
+    recommend: boolean;
+}
+const GameInfo: React.FC<GameInfoProps> = (props) => {
+    const itemEls = useRef(new Array());
+    //Using refs when you have a dynamic list: https://mattclaffey.medium.com/adding-react-refs-to-an-array-of-items-96e9a12ab40c
+    //normal [] would not wrok.
+    useEffect(() => {
+        props.fetchGameInfo(props.match.params.gameId);
+        props.fetchGameInfoReviews(props.match.params.gameId);
+    }, []);
+    useEffect(() => {
+        //This is used for to control thumbs up or thumbs down button
+        if (props.gameInfoReviews.data) {
+            if (Cookies.get("ACCESS_TOKEN")) {
+                //If user is signed in
+                //@ts-ignore
+                const email = jwt_decode(Cookies.get("ACCESS_TOKEN")).subject;
+                const filteredContent = _.filter(
+                    props.gameInfoReviews.data?.reviews,
+                    {
+                        email: email,
+                    }
+                );
+                if (filteredContent.length > 0) {
+                    //@ts-ignore
+                    setRecommend(filteredContent[0].recommend);
+                }
+            }
+        }
+        // itemEls.current[0]?.scrollIntoView({ behavior: "smooth" });
+    }, [props.gameInfoReviews.data]);
     const [recommend, setRecommend] = useState(true);
+
     const onRecommendorNot = (response: boolean) => {
         if (response) setRecommend(true);
         else setRecommend(false);
     };
 
-    return (
-        <div className="gameInfoContainer">
-            <h1 className="gameInfoTitle">
-                The Elder Scrolls V: Skyrim Special Edition
-            </h1>
-            <div className="gameInfoShowcaseContainer">
-                <div className="gameInfoShowcasePreviewWrap">
-                    <img
-                        className="gameInfoShowcaseTitleImage"
-                        src="https://cdn.akamai.steamstatic.com/steam/apps/489830/header.jpg?t=1590515887"
-                        alt=""
-                    ></img>
-                    <div className="gameInfoShowcaseTextWrap">
-                        <p>Release Date</p>
-                        <p>Genres</p>
+    const renderWriteReview = () => {
+        if (Cookies.get("ACCESS_TOKEN")) {
+            //If user is signed in
+            //@ts-ignore
+            const email = jwt_decode(Cookies.get("ACCESS_TOKEN")).subject;
+
+            const filteredContent = _.filter(
+                props.gameInfoReviews.data?.reviews,
+                {
+                    email: email,
+                }
+            );
+            //If user already wrote a review,
+            if (filteredContent.length > 0) {
+                return null;
+            } else {
+                return (
+                    <WriteReview
+                        recommend={recommend}
+                        onRecommendorNot={onRecommendorNot}
+                        onSubmit={(formValues: any) =>
+                            onSubmitPostReview(formValues)
+                        }
+                    />
+                );
+            }
+        } else {
+            //If user is not signed in
+            return (
+                <WriteReview
+                    recommend={recommend}
+                    onRecommendorNot={onRecommendorNot}
+                    onSubmit={(formValues: any) =>
+                        onSubmitPostReview(formValues)
+                    }
+                />
+            );
+        }
+    };
+
+    const renderEditReview = () => {
+        if (Cookies.get("ACCESS_TOKEN")) {
+            //If user is signed in
+            //@ts-ignore
+            const email = jwt_decode(Cookies.get("ACCESS_TOKEN")).subject;
+            const filteredContent = _.filter(
+                props.gameInfoReviews.data?.reviews,
+                {
+                    email: email,
+                }
+            );
+
+            //If user already wrote a review
+            if (filteredContent.length > 0) {
+                return (
+                    <EditReview
+                        recommend={recommend}
+                        onRecommendorNot={onRecommendorNot}
+                        onSubmit={(formValues: any) =>
+                            onSubmitEditReview(formValues)
+                        }
+                        onDelete={onSubmitDeleteReview}
+                        initialValues={{
+                            //@ts-ignore  typescript has issues with lodash's ._filter because they use flat array
+                            opinion: filteredContent[0].opinion,
+                        }}
+                    />
+                );
+            }
+        }
+    };
+
+    const renderPrice = (game: Game) => {
+        if (game.discount_percentage) {
+            return (
+                <div className="gameInfoAdjustedPriceWrap">
+                    <div className="gameInfoDiscount">
+                        -{parseFloat(game.discount_percentage) * 100}%
+                    </div>
+                    <div>
+                        <p className="gameInfoOrigPriceStriked">
+                            ${parseFloat(game.price).toFixed(2)}
+                        </p>
+                        <p className="gameInfoPrice">
+                            ${parseFloat(game.price_after_discount).toFixed(2)}
+                        </p>
                     </div>
                 </div>
-                <div className="gameInfoShowcaseCarouselWrap">
-                    {/* <GameInfoCarousel content={games} /> */}
-                </div>
-            </div>
-            <WriteReview
-                recommend={recommend}
-                onRecommendorNot={onRecommendorNot}
-                onSubmit={(formValues: any) => onSubmitRegister(formValues)}
-            />
-            <div className="gameInfoBuyContainer">
-                <h1>Buy The Elder Scrolls V: Skyrim Special Edition </h1>
-                <div className="gameInfoAddToCartWrap">
-                    <div className="gameInfoPriceWrap">
-                        <p className="gameInfoOrigPrice">18.99</p>
-                        <p className="gameInfoadjustedPrice">16.99</p>
-                    </div>
-                    <button className="gameInfoAddToCartButton">
-                        Add To Cart
-                    </button>
-                </div>
-            </div>
+            );
+        } else {
+            //no discount
+            return (
+                <p className="chartGamePrice">
+                    ${parseFloat(game.price).toFixed(2)}
+                </p>
+            );
+        }
+    };
 
-            <h1 className="gameInfoSectionTitle">About This Game</h1>
-            <p className="gameDescription">
-                Winner of more than 200 Game of the Year Awards, Skyrim Special
-                Edition brings the epic fantasy to life in stunning detail. The
-                Special Edition includes the critically acclaimed game and
-                add-ons with all-new features like remastered art and effects,
-                volumetric god rays, dynamic depth of field, screen-space
-                reflections, and more. Skyrim Special Edition also brings the
-                full power of mods to the PC and consoles. New quests,
-                environments, characters, dialogue, armor, weapons and more –
-                with Mods, there are no limits to what you can experience.{" "}
-            </p>
+    const renderThumbIconForReview = (recommend: boolean) => {
+        if (recommend) {
+            return (
+                <React.Fragment>
+                    <FiThumbsUp className="reviewerThumbIcon" />
+                    <p className="reviewerVerdict">Recommended</p>
+                </React.Fragment>
+            );
+        } else {
+            return (
+                <React.Fragment>
+                    <FiThumbsDown className="reviewerThumbIcon" />
+                    <p className="reviewerVerdict">Not Recommended</p>
+                </React.Fragment>
+            );
+        }
+    };
 
-            <h1 className="gameInfoSectionTitle">Recent Reviews</h1>
-            <div className="reviewsContainer">
-                <div className="reviewBox">
+    const renderReviews = (reviews: Reviewer[]) => {
+        return reviews.map((review, index) => {
+            return (
+                <div
+                    key={index}
+                    className="reviewBox"
+                    // ref={(element) =>
+                    //     index === 0 ? (itemEls.current[index] = element) : null
+                    // }
+                    ref={(element) => (itemEls.current[index] = element)}
+                >
                     <div className="reviewerInfoWrap">
                         <div className="reviewerAvatarWrap">
                             <img
-                                src="https://cdn.akamai.steamstatic.com/steamcommunity/public/images/avatars/f3/f3388a39be4329071367722dbf2754b83b05aab4_medium.jpg"
+                                src={
+                                    review.avatar_url
+                                        ? review.avatar_url
+                                        : defaultAvatar
+                                }
                                 alt="avatar"
+                                onError={(e: any) => {
+                                    e.target.src = defaultAvatar; // some replacement image
+                                    // e.target.style = 'padding: 8px; margin: 16px' // inline styles in html format
+                                }}
                             ></img>
                         </div>
                         <p className="reviewerUsername">
-                            usernameusernameusernameusername
+                            {review.username
+                                ? review.username
+                                : `Anonymous User`}
                         </p>
                     </div>
                     <div className="reviewerReviewWrap">
                         <div className="reviewerVerdictWrap">
-                            <FiThumbsUp className="reviewerThumbIcon" />
-                            <p className="reviewerVerdict">Recommended</p>
+                            {renderThumbIconForReview(review.recommend)}
                         </div>
-                        <p className="reviewerDesc">
-                            With zero cost to play and one of the highest skill
-                            ceilings of any game I've ever encountered.
-                        </p>
+                        <p className="reviewerDesc">{review.opinion}</p>
                     </div>
                 </div>
-            </div>
-        </div>
-    );
+            );
+        });
+    };
+
+    const onSubmitPostReview = (formValues: WriteReviewFormValues) => {
+        const recommendObj = { recommend: recommend };
+        const updatedObj: IPostAndEditReview = Object.assign(
+            formValues,
+            recommendObj
+        );
+        props.postReview(updatedObj, props.match.params.gameId);
+        itemEls.current[0]?.scrollIntoView({ behavior: "smooth" });
+    };
+
+    const onSubmitEditReview = (formValues: WriteReviewFormValues) => {
+        const recommendObj = { recommend: recommend };
+        const updatedObj: IPostAndEditReview = Object.assign(
+            formValues,
+            recommendObj
+        );
+        props.editReview(updatedObj, props.match.params.gameId);
+
+        if (Cookies.get("ACCESS_TOKEN")) {
+            //If user is signed in
+            //@ts-ignore
+            const email = jwt_decode(Cookies.get("ACCESS_TOKEN")).subject;
+            const editedReviewIndex = _.findIndex(
+                props.gameInfoReviews.data?.reviews,
+                {
+                    //@ts-ignore issue with lodash
+                    email: email,
+                }
+            );
+
+            itemEls.current[editedReviewIndex]?.scrollIntoView({
+                behavior: "smooth",
+            });
+        }
+    };
+
+    const onSubmitDeleteReview = () => {
+        props.deleteReview(props.match.params.gameId);
+    };
+
+    const renderContent = () => {
+        if (props.errors.data?.error) {
+            return (
+                <div className="serverErrorContainer">
+                    <h3 className="serverErrorText">
+                        {props.errors.data?.error}
+                    </h3>
+                </div>
+            );
+        } else if (props.gameInfo.data && props.gameInfoReviews.data) {
+            return (
+                <div className="gameInfoContainer">
+                    <h1 className="gameInfoTitle">
+                        {props.gameInfo.data.games[0].title}
+                    </h1>
+                    <div className="gameInfoShowcaseContainer">
+                        <div className="gameInfoShowcasePreviewWrap">
+                            <img
+                                className="gameInfoShowcaseTitleImage"
+                                src={props.gameInfo.data.games[0].cover_url}
+                                alt=""
+                                onLoad={() => {
+                                    anime({
+                                        targets: `.gameInfoShowcaseTitleImage`,
+                                        // Properties
+                                        // Animation Parameters
+
+                                        opacity: [
+                                            {
+                                                value: [0, 1],
+                                                duration: 250,
+                                                easing: "easeOutQuad",
+                                            },
+                                        ],
+                                    });
+                                }}
+                            ></img>
+                            <div className="gameInfoShowcaseTextWrap">
+                                <p className="showcaseAbout">
+                                    {props.gameInfo.data.games[0].about}
+                                </p>
+                                <p className="releaseDate">
+                                    {`Release Date -  ${moment(
+                                        props.gameInfo.data.games[0]
+                                            .release_date
+                                    ).format("YYYY/MM/DD")}`}
+                                </p>
+                                <div className="gameInfoGenresWrap">
+                                    {props.gameInfo.data.games[0].genres.map(
+                                        (genre, index) => {
+                                            return (
+                                                <p
+                                                    key={index}
+                                                    className="gameInfoGenreTag"
+                                                >
+                                                    {genre}
+                                                </p>
+                                            );
+                                        }
+                                    )}
+                                </div>
+                            </div>
+                        </div>
+                        <div className="gameInfoShowcaseCarouselWrap">
+                            <GameInfoCarousel
+                                screenshots={
+                                    props.gameInfo.data.games[0].screenshots
+                                }
+                            />
+                        </div>
+                    </div>
+
+                    {renderWriteReview()}
+                    <div className="gameInfoBuyContainer">
+                        <h1>Buy {props.gameInfo.data.games[0].title}</h1>
+                        <div className="gameInfoAddToCartWrap">
+                            <div className="gameInfoPriceWrap">
+                                {renderPrice(props.gameInfo.data.games[0])}
+                            </div>
+                            <button className="gameInfoAddToCartButton">
+                                Add To Cart
+                            </button>
+                        </div>
+                    </div>
+                    <h1 className="gameInfoSectionTitle">About This Game</h1>
+                    <p className="gameDescription">
+                        {props.gameInfo.data.games[0].about}
+                    </p>
+                    <h1 className="gameInfoSectionTitle">Recent Reviews</h1>
+                    {renderEditReview()}
+                    <div className="reviewsContainer">
+                        {renderReviews(props.gameInfoReviews.data.reviews)}
+                    </div>
+                </div>
+            );
+        } else {
+            return <Loading />;
+        }
+    };
+    return <React.Fragment>{renderContent()}</React.Fragment>;
 };
 
-export default GameInfo;
+const mapStateToProps = (state: StoreState) => {
+    return {
+        gameInfo: state.gameInfo,
+        gameInfoReviews: state.gameInfoReviews,
+        errors: state.errors,
+    };
+};
+
+export default connect(mapStateToProps, {
+    fetchGameInfo,
+    fetchGameInfoReviews,
+    postReview,
+    editReview,
+    deleteReview,
+})(GameInfo);

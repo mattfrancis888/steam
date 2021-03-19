@@ -12,10 +12,10 @@ import { StoreState } from "../reducers";
 import { connect } from "react-redux";
 import { WriteReviewFormProps } from "./GameInfo";
 import { FiThumbsUp, FiThumbsDown } from "react-icons/fi";
-
+import defaultAvatar from "../img/defaultAvatar.png";
 //Re-usable component
 export interface WriteReviewFormValues {
-    review: string;
+    opinion: string;
 }
 
 //Typescriptand redux form:
@@ -72,69 +72,77 @@ const WriteReview: React.FC<
                 data-testid="registerForm"
                 onSubmit={props.handleSubmit(onSubmit)}
             >
-                <div>
+                <div className="reviewSectionsWrap">
                     <div className="reviewFieldTitleWrap">
-                        <h1 className="writeAReviewTitle">Write A Review</h1>
+                        <h1 className="writeAReviewTitle">
+                            {`Write A Review ${
+                                !props.authStatus
+                                    ? `(as anonymous; sign-in to remove anonymity)`
+                                    : ``
+                            }`}
+                        </h1>
                         <p className="pleaseDescribe">
                             Please describe what you liked or disliked about
                             this game and whether you recommend it to others.
                         </p>
                     </div>
-                    <div className="reviewTextAreaAndAvatarWrap">
-                        <div className="reviewAvatar"></div>
-                        <div className="reviewContentExceptAvatarWrap">
-                            <div className="myReviewWrap">
-                                <Field
-                                    name="review"
-                                    label="review"
-                                    type="text"
-                                    component={renderTextArea}
-                                />
-                            </div>
-                            <div>
-                                <div className="reviewButtonsSection">
-                                    <p className="doYouRecommend">
-                                        Do you recommend this game?{" "}
-                                    </p>
-                                    <div className="reviewButtonsWrap">
-                                        <div className="recommendOrNotButtonsWrap">
-                                            {/* https://stackoverflow.com/questions/41590766/redux-form-always-validates-even-on-a-normal-button-press */}
-                                            {/* By adding type="button" the button will not be a "submit" button */}
-                                            <button
-                                                className={`recommendOrNotButton ${
-                                                    props.recommend
-                                                        ? `recommendOrNotButtonClicked`
-                                                        : ``
-                                                }`}
-                                                type="button"
-                                                onClick={() =>
-                                                    props.onRecommendorNot(true)
-                                                }
-                                            >
-                                                <FiThumbsUp />
-                                                <p> Yes</p>
-                                            </button>
-                                            <button
-                                                className={`recommendOrNotButton ${
-                                                    !props.recommend
-                                                        ? `recommendOrNotButtonClicked`
-                                                        : ``
-                                                }`}
-                                                type="button"
-                                                onClick={() =>
-                                                    props.onRecommendorNot(
-                                                        false
-                                                    )
-                                                }
-                                            >
-                                                <FiThumbsDown />
-                                                <p>No</p>
-                                            </button>
-                                        </div>
-                                        <button className="postReviewButton">
-                                            Post Review
+
+                    {/* <div className="reviewAvatar">
+                            <img src={defaultAvatar} alt="avatar"></img>
+                        </div> */}
+                    <div className="reviewContentExceptAvatarWrap">
+                        <div className="myReviewWrap">
+                            <Field
+                                name="opinion"
+                                label="opinion"
+                                type="text"
+                                component={renderTextArea}
+                            />
+                        </div>
+                        <div>
+                            <div className="reviewButtonsSection">
+                                <p className="doYouRecommend">
+                                    Do you recommend this game?{" "}
+                                </p>
+                                <div className="reviewButtonsWrap">
+                                    <div className="recommendOrNotButtonsWrap">
+                                        {/* https://stackoverflow.com/questions/41590766/redux-form-always-validates-even-on-a-normal-button-press */}
+                                        {/* By adding type="button" the button will not be a "submit" button */}
+                                        <button
+                                            className={`recommendOrNotButton ${
+                                                props.recommend
+                                                    ? `recommendOrNotButtonClicked`
+                                                    : ``
+                                            }`}
+                                            type="button"
+                                            onClick={() =>
+                                                props.onRecommendorNot(true)
+                                            }
+                                        >
+                                            <FiThumbsUp />
+                                            <p> Yes</p>
+                                        </button>
+                                        <button
+                                            className={`recommendOrNotButton ${
+                                                !props.recommend
+                                                    ? `recommendOrNotButtonClicked`
+                                                    : ``
+                                            }`}
+                                            type="button"
+                                            onClick={() =>
+                                                props.onRecommendorNot(false)
+                                            }
+                                        >
+                                            <FiThumbsDown />
+                                            <p>No</p>
                                         </button>
                                     </div>
+                                    <button
+                                        className="postReviewButton"
+                                        data-testid="postReviewButton"
+                                    >
+                                        Post Review
+                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -154,9 +162,9 @@ const validate = (
     //MUST BE NAMED VALIDATE! Other names would be ignored by reduxForm(..)
     const errors: FormErrors<WriteReviewFormValues> = {};
     //If you return an empty object, redux form will assume everything is ok
-    if (!formValues.review) {
+    if (!formValues.opinion) {
         //user did not enter title, so undefined
-        errors.review = "You must enter a review";
+        errors.opinion = "You must enter a review";
         //Must be the same name as field name! The "error" property in {meta} would receive this
     }
 

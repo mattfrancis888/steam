@@ -65,6 +65,20 @@
         padding: 0;
     }
 }
+
+.gameInfoGenresWrap {
+    display: flex;
+}
+.gameInfoGenreTag {
+    color: #67c1f5;
+    background-color: rgba(103, 193, 245, 0.2);
+    margin-right: 0.5rem;
+    padding: 0.5rem;
+    &:hover {
+        color: white;
+        background: linear-gradient(135deg, #67c1f5 0%, #417a9b 100%);
+    }
+}
 .gameInfoShowcaseCarouselWrap {
     width: 60%;
     width: 100%;
@@ -78,6 +92,7 @@
     @media screen and (min-width: $lg_breakpoint) {
         width: 100%;
     }
+    opacity: 0;
 }
 
 .gameInfoBuyContainer {
@@ -95,6 +110,7 @@
     border-radius: 0.4rem;
     color: white;
     padding: 1.6rem;
+    padding-bottom: 3.6rem;
     margin: 5rem 0;
     > h1 {
         font-size: 1.4rem;
@@ -136,7 +152,8 @@
 .gameInfoPriceWrap {
     display: flex;
     align-items: center;
-    padding: 0.25rem 1.5rem;
+    padding: 0.25rem 1rem;
+    padding-left: 0.25rem;
 }
 
 .gameInfoAddToCartButton {
@@ -147,6 +164,7 @@
     cursor: pointer;
     padding: 0.7rem 1.5rem;
     font-weight: bold;
+    font-size: 1rem;
     &:hover {
         color: white;
 
@@ -156,6 +174,9 @@
     outline: none !important;
     box-shadow: none !important;
     border: none;
+    @media screen and (min-width: $sm_breakpoint) {
+        font-size: 1.2rem;
+    }
 }
 
 .gameInfoSectionTitle {
@@ -166,6 +187,7 @@
     text-transform: uppercase;
     font-weight: normal;
     color: white;
+    margin-top: 8rem;
 }
 
 .gameDescription {
@@ -253,4 +275,49 @@
     @media screen and (min-width: $md_breakpoint) {
         padding: 0 1rem;
     }
+}
+
+.gameInfoAdjustedPriceWrap {
+    display: flex;
+    align-items: center;
+}
+
+.gameInfoOrigPriceStriked {
+    text-decoration: line-through;
+    font-size: 1.2rem;
+    margin: 0;
+    margin-bottom: 0.25rem;
+    color: #626366;
+}
+
+.gameInfoPrice {
+    background-color: rgba(0, 0, 0, 0.6);
+    color: #acdbf5;
+    margin: 0;
+    font-size: 1rem;
+    @media screen and (min-width: $sm_breakpoint) {
+        font-size: 1.4rem;
+    }
+}
+
+.gameInfoDiscount {
+    @include discountPriceColor;
+    margin-right: 1rem;
+    padding: 0.5rem 1.25rem;
+    font-size: 1.4rem;
+    @media screen and (min-width: $sm_breakpoint) {
+        font-size: 1.6rem;
+    }
+}
+
+.releaseDate {
+    color: #556772;
+}
+
+.showcaseAbout {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    padding-right: 6rem;
 }
