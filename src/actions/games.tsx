@@ -179,6 +179,7 @@ export const editReview = (
             type: ActionTypes.EDIT_REVIEW,
             payload: response.data,
         });
+        alert("Success! You have edited your review.");
     } catch (error) {
         dispatch<GamesErrorAction>({
             type: ActionTypes.GAME_ERROR,

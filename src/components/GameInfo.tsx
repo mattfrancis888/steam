@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import history from "../browserHistory";
 import GameInfoCarousel from "./GameInfoCarousel";
 import WriteReview, { WriteReviewFormValues } from "./WriteReview";
@@ -57,17 +57,16 @@ export interface IPostAndEditReview {
     recommend: boolean;
 }
 const GameInfo: React.FC<GameInfoProps> = (props) => {
+    const itemEls = useRef(new Array());
+    //Using refs when you have a dynamic list: https://mattclaffey.medium.com/adding-react-refs-to-an-array-of-items-96e9a12ab40c
+    //normal [] would not wrok.
     useEffect(() => {
         props.fetchGameInfo(props.match.params.gameId);
         props.fetchGameInfoReviews(props.match.params.gameId);
     }, []);
     useEffect(() => {
+        //This is used for to control thumbs up or thumbs down button
         if (props.gameInfoReviews.data) {
-            // setEditRecommend({
-            //     initialRender: false,
-            //     recommend: true,
-            // });
-
             if (Cookies.get("ACCESS_TOKEN")) {
                 //If user is signed in
                 //@ts-ignore
@@ -84,6 +83,8 @@ const GameInfo: React.FC<GameInfoProps> = (props) => {
                 }
             }
         }
+        console.log(itemEls.current);
+        // itemEls.current[0]?.scrollIntoView({ behavior: "smooth" });
     }, [props.gameInfoReviews.data]);
     const [recommend, setRecommend] = useState(true);
 
@@ -138,14 +139,13 @@ const GameInfo: React.FC<GameInfoProps> = (props) => {
             if (filteredContent.length > 0) {
                 return (
                     <EditReview
-                        //@ts-ignore  typescript has issues with lodash's ._filter because they use flat array
                         recommend={recommend}
                         onRecommendorNot={onRecommendorNot}
                         onSubmit={(formValues: any) =>
                             onSubmitEditReview(formValues)
                         }
                         initialValues={{
-                            //@ts-ignore
+                            //@ts-ignore  typescript has issues with lodash's ._filter because they use flat array
                             opinion: filteredContent[0].opinion,
                         }}
                     />
@@ -202,7 +202,13 @@ const GameInfo: React.FC<GameInfoProps> = (props) => {
     const renderReviews = (reviews: Reviewer[]) => {
         return reviews.map((review, index) => {
             return (
-                <div className="reviewBox">
+                <div
+                    key={index}
+                    className="reviewBox"
+                    ref={(element) =>
+                        index === 0 ? (itemEls.current[index] = element) : null
+                    }
+                >
                     <div className="reviewerInfoWrap">
                         <div className="reviewerAvatarWrap">
                             <img
@@ -242,6 +248,7 @@ const GameInfo: React.FC<GameInfoProps> = (props) => {
             recommendObj
         );
         props.postReview(updatedObj, props.match.params.gameId);
+        itemEls.current[0]?.scrollIntoView({ behavior: "smooth" });
     };
 
     const onSubmitEditReview = async (formValues: WriteReviewFormValues) => {
