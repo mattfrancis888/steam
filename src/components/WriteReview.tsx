@@ -137,7 +137,10 @@ const WriteReview: React.FC<
                                             <p>No</p>
                                         </button>
                                     </div>
-                                    <button className="postReviewButton">
+                                    <button
+                                        className="postReviewButton"
+                                        data-testid="postReviewButton"
+                                    >
                                         Post Review
                                     </button>
                                 </div>
