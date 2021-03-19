@@ -6,6 +6,7 @@ import GameInfo from "./GameInfo";
 import Cart from "./Cart";
 import Register from "./Register";
 import SignIn from "./SignIn";
+import Profile from "./Profile";
 const Routes: React.FC<{}> = () => {
     return (
         <React.Fragment>
@@ -16,6 +17,7 @@ const Routes: React.FC<{}> = () => {
                 <Route path="/cart" exact component={Cart} />
                 <Route path="/signin" exact component={SignIn} />
                 <Route path="/register" exact component={Register} />
+                <Route path="/profile" exact component={Profile} />
             </Switch>
         </React.Fragment>
     );
