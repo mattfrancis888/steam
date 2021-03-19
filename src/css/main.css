@@ -1174,6 +1174,10 @@ body {
   }
 }
 
+.editForm {
+  margin-bottom: 5rem;
+}
+
 .authForm {
   width: 80%;
 }

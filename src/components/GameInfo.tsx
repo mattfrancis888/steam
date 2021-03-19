@@ -9,6 +9,7 @@ import {
     Reviewer,
     fetchGameInfoReviews,
     postReview,
+    editReview,
 } from "../actions";
 import { connect } from "react-redux";
 import { StoreState } from "../reducers";
@@ -30,20 +31,28 @@ export interface WriteReviewFormProps {
     recommend: boolean;
 }
 
+export interface EditReviewFormProps {
+    onSubmit(formValues: any): void;
+    authStatus?: string | null;
+    onRecommendorNot(response: boolean): void;
+    recommend: boolean;
+}
+
 export interface GameInfoCarouselProps {
     screenshots: string[];
 }
 interface GameInfoProps {
     fetchGameInfo(gameId: number): void;
     fetchGameInfoReviews(gameId: number): void;
-    postReview(formValues: IPostReview, gameId: number): void;
+    postReview(formValues: IPostAndEditReview, gameId: number): void;
+    editReview(formValues: IPostAndEditReview, gameId: number): void;
     errors: ErrorStateResponse;
     gameInfo: GameInfoStateResponse;
     gameInfoReviews: GameInfoReviewsStateResponse;
     match: any;
 }
 
-export interface IPostReview {
+export interface IPostAndEditReview {
     opinion: string;
     recommend: boolean;
 }
@@ -52,21 +61,50 @@ const GameInfo: React.FC<GameInfoProps> = (props) => {
         props.fetchGameInfo(props.match.params.gameId);
         props.fetchGameInfoReviews(props.match.params.gameId);
     }, []);
-    useEffect(() => {}, [props.gameInfoReviews.data]);
+    useEffect(() => {
+        if (props.gameInfoReviews.data) {
+            // setEditRecommend({
+            //     initialRender: false,
+            //     recommend: true,
+            // });
+
+            if (Cookies.get("ACCESS_TOKEN")) {
+                //If user is signed in
+                //@ts-ignore
+                const email = jwt_decode(Cookies.get("ACCESS_TOKEN")).subject;
+                const filteredContent = _.filter(
+                    props.gameInfoReviews.data?.reviews,
+                    {
+                        email: email,
+                    }
+                );
+                if (filteredContent.length > 0) {
+                    //@ts-ignore
+                    setRecommend(filteredContent[0].recommend);
+                }
+            }
+        }
+    }, [props.gameInfoReviews.data]);
+    const [recommend, setRecommend] = useState(true);
+
+    const onRecommendorNot = (response: boolean) => {
+        if (response) setRecommend(true);
+        else setRecommend(false);
+    };
 
     const renderWriteReview = () => {
         if (Cookies.get("ACCESS_TOKEN")) {
             //If user is signed in
             //@ts-ignore
             const email = jwt_decode(Cookies.get("ACCESS_TOKEN")).subject;
-            console.log(email);
+
             const filteredContent = _.filter(
                 props.gameInfoReviews.data?.reviews,
                 {
                     email: email,
                 }
             );
-            //If user already wrote a review
+            //If user already wrote a review,
             if (filteredContent.length > 0) {
                 return null;
             }
@@ -76,7 +114,9 @@ const GameInfo: React.FC<GameInfoProps> = (props) => {
                 <WriteReview
                     recommend={recommend}
                     onRecommendorNot={onRecommendorNot}
-                    onSubmit={(formValues: any) => onSubmitRegister(formValues)}
+                    onSubmit={(formValues: any) =>
+                        onSubmitPostReview(formValues)
+                    }
                 />
             );
         }
@@ -93,20 +133,24 @@ const GameInfo: React.FC<GameInfoProps> = (props) => {
                     email: email,
                 }
             );
+
             //If user already wrote a review
             if (filteredContent.length > 0) {
                 return (
                     <EditReview
+                        //@ts-ignore  typescript has issues with lodash's ._filter because they use flat array
                         recommend={recommend}
                         onRecommendorNot={onRecommendorNot}
                         onSubmit={(formValues: any) =>
-                            onSubmitRegister(formValues)
+                            onSubmitEditReview(formValues)
                         }
+                        initialValues={{
+                            //@ts-ignore
+                            opinion: filteredContent[0].opinion,
+                        }}
                     />
                 );
             }
-        } else {
-            return null;
         }
     };
 
@@ -191,16 +235,22 @@ const GameInfo: React.FC<GameInfoProps> = (props) => {
         });
     };
 
-    const onSubmitRegister = async (formValues: WriteReviewFormValues) => {
+    const onSubmitPostReview = async (formValues: WriteReviewFormValues) => {
         const recommendObj = { recommend: recommend };
-        const updatedObj: IPostReview = Object.assign(formValues, recommendObj);
+        const updatedObj: IPostAndEditReview = Object.assign(
+            formValues,
+            recommendObj
+        );
         props.postReview(updatedObj, props.match.params.gameId);
-        // console.log(formValues);
     };
-    const [recommend, setRecommend] = useState(true);
-    const onRecommendorNot = (response: boolean) => {
-        if (response) setRecommend(true);
-        else setRecommend(false);
+
+    const onSubmitEditReview = async (formValues: WriteReviewFormValues) => {
+        const recommendObj = { recommend: recommend };
+        const updatedObj: IPostAndEditReview = Object.assign(
+            formValues,
+            recommendObj
+        );
+        props.editReview(updatedObj, props.match.params.gameId);
     };
 
     const renderContent = () => {
@@ -317,4 +367,5 @@ export default connect(mapStateToProps, {
     fetchGameInfo,
     fetchGameInfoReviews,
     postReview,
+    editReview,
 })(GameInfo);

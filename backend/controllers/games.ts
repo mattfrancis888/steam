@@ -4,13 +4,6 @@ import { FORBIDDEN_STATUS, INTERNAL_SERVER_ERROR_STATUS } from "../constants";
 import _ from "lodash";
 import jwt_decode from "jwt-decode";
 
-interface Games {
-    reviews?: any;
-    genres?: any;
-    screenshots?: any;
-    games?: any;
-}
-
 //Thre are 2 ways to turn handle;
 // {
 //     "games": {
@@ -420,30 +413,20 @@ export const editReview = async (
         await pool.query("BEGIN");
         //Insert if it does not exist on table
 
-        //get Review id
-        const reviewIdResponse = await pool.query(
-            `SELECT review_id from lookup_game_user WHERE email = $1 
-            AND game_id = $2`,
+        //get Review id, a user can only have 1 review
+        const response = await pool.query(
+            `select lg.review_id from lookup_game_review lg 
+            INNER JOIN user_info ui on lg.user_id = ui.user_id
+             WHERE ui.email = $1 AND lg.game_id = $2 `,
             [email, gameId]
         );
-        const reviewId = reviewIdResponse.rows[0].review_id;
+        const reviewId = response.rows[0].review_id;
+
         await pool.query(
-            `UPDATE review SET recommend = $1 AND opinion = $2  WHERE
+            `UPDATE review SET recommend = $1, opinion = $2  WHERE
             review_id = $3`,
             [recommend, opinion, reviewId]
         );
-
-        const userInfoResponse = await pool.query(
-            `SELECT user_id from user_info WHERE email = $1`,
-            [email]
-        );
-        const userId = userInfoResponse.rows[0].user_id;
-        await pool.query(
-            `UPDATE lookup_game_review SET review_id WHERE game_id = $1
-            AND review_id = $2 AND user_id = 3`,
-            [gameId, reviewId, userId]
-        );
-
         pool.query("COMMIT");
         next();
     } catch (error) {

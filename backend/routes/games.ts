@@ -7,6 +7,7 @@ import {
     getGameInfoTest,
     getReviews,
     postReview,
+    editReview,
 } from "../controllers/games";
 const gameRouter = Router();
 
@@ -17,6 +18,7 @@ gameRouter.get("/game-info/:gameId", getGameInfo);
 gameRouter.get("/reviews/:gameId", getReviews);
 gameRouter.post("/review/:gameId", postReview, getReviews);
 gameRouter.get("/games-test", getGamesTest);
+gameRouter.patch("/edit/:gameId", editReview, getReviews);
 // mediasRouter.post("/add-to-watching/:mediaId", addToWatchingByUser);
 // mediasRouter.delete("/remove-from-watching/:mediaId", removeFromWatchingByUser);
 // mediasRouter.get("/search", getMediasBySearch);

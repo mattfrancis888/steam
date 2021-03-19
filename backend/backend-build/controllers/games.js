@@ -344,7 +344,7 @@ var postReview = function (req, res, next) { return __awaiter(void 0, void 0, vo
 }); };
 exports.postReview = postReview;
 var editReview = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
-    var decodedJwt, email, gameId, recommend, opinion, reviewIdResponse, reviewId, userInfoResponse, userId, error_8;
+    var decodedJwt, email, gameId, recommend, opinion, response_6, reviewId, error_8;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -355,35 +355,28 @@ var editReview = function (req, res, next) { return __awaiter(void 0, void 0, vo
                 opinion = req.body.opinion;
                 _a.label = 1;
             case 1:
-                _a.trys.push([1, 7, , 8]);
+                _a.trys.push([1, 5, , 6]);
                 //Transaction
                 return [4 /*yield*/, databasePool_1.default.query("BEGIN")];
             case 2:
                 //Transaction
                 _a.sent();
-                return [4 /*yield*/, databasePool_1.default.query("SELECT review_id from lookup_game_user WHERE email = $1 \n            AND game_id = $2", [email, gameId])];
+                return [4 /*yield*/, databasePool_1.default.query("select lg.review_id from lookup_game_review lg \n            INNER JOIN user_info ui on lg.user_id = ui.user_id\n             WHERE ui.email = $1 AND lg.game_id = $2 ", [email, gameId])];
             case 3:
-                reviewIdResponse = _a.sent();
-                reviewId = reviewIdResponse.rows[0].review_id;
-                return [4 /*yield*/, databasePool_1.default.query("UPDATE review SET recommend = $1 AND opinion = $2  WHERE\n            review_id = $3", [recommend, opinion, reviewId])];
+                response_6 = _a.sent();
+                reviewId = response_6.rows[0].review_id;
+                return [4 /*yield*/, databasePool_1.default.query("UPDATE review SET recommend = $1, opinion = $2  WHERE\n            review_id = $3", [recommend, opinion, reviewId])];
             case 4:
-                _a.sent();
-                return [4 /*yield*/, databasePool_1.default.query("SELECT user_id from user_info WHERE email = $1", [email])];
-            case 5:
-                userInfoResponse = _a.sent();
-                userId = userInfoResponse.rows[0].user_id;
-                return [4 /*yield*/, databasePool_1.default.query("UPDATE lookup_game_review SET review_id WHERE game_id = $1\n            AND review_id = $2 AND user_id = 3", [gameId, reviewId, userId])];
-            case 6:
                 _a.sent();
                 databasePool_1.default.query("COMMIT");
                 next();
-                return [3 /*break*/, 8];
-            case 7:
+                return [3 /*break*/, 6];
+            case 5:
                 error_8 = _a.sent();
                 databasePool_1.default.query("ROLLBACK");
                 console.log("ROLLBACK TRIGGERED", error_8);
                 return [2 /*return*/, res.sendStatus(constants_1.INTERNAL_SERVER_ERROR_STATUS)];
-            case 8: return [2 /*return*/];
+            case 6: return [2 /*return*/];
         }
     });
 }); };
