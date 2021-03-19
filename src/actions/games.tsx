@@ -40,6 +40,11 @@ export interface EditReviewAction {
     payload: ReviewsResponse;
 }
 
+export interface DeleteReviewAction {
+    type: ActionTypes.DELETE_REVIEW;
+    payload: ReviewsResponse;
+}
+
 export interface GamesErrorAction {
     type: ActionTypes.GAME_ERROR;
     payload: ServerError;
@@ -179,7 +184,25 @@ export const editReview = (
             type: ActionTypes.EDIT_REVIEW,
             payload: response.data,
         });
-        alert("Success! You have edited your review.");
+        // alert("Success! You have edited your review.");
+    } catch (error) {
+        dispatch<GamesErrorAction>({
+            type: ActionTypes.GAME_ERROR,
+            payload: { error: SERVER_ERROR_MESSAGE },
+        });
+    }
+};
+
+export const deleteReview = (gameId: number) => async (dispatch: Dispatch) => {
+    try {
+        const response = await axios.delete<ReviewsResponse>(
+            `/api/delete/${gameId}`
+        );
+        dispatch<DeleteReviewAction>({
+            type: ActionTypes.DELETE_REVIEW,
+            payload: response.data,
+        });
+        alert("Success! You have deleted your review.");
     } catch (error) {
         dispatch<GamesErrorAction>({
             type: ActionTypes.GAME_ERROR,

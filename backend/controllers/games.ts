@@ -333,7 +333,7 @@ export const getReviews = async (req: any, res: Response) => {
        from lookup_game_review lr 
          join review r on lr.review_id = r.review_id
         full outer join user_info ui on lr.user_id = ui.user_id
-        WHERE lr.game_id = $1 ORDER BY lr.game_id ASC; `;
+        WHERE lr.game_id = $1 ORDER BY r.review_id DESC; `;
 
         const reviewersResponse = await pool.query(sql, [req.params.gameId]);
         res.send({ reviews: reviewersResponse.rows });
@@ -427,6 +427,53 @@ export const editReview = async (
             review_id = $3`,
             [recommend, opinion, reviewId]
         );
+        pool.query("COMMIT");
+        next();
+    } catch (error) {
+        pool.query("ROLLBACK");
+        console.log("ROLLBACK TRIGGERED", error);
+        return res.sendStatus(INTERNAL_SERVER_ERROR_STATUS);
+    }
+};
+
+export const deleteReview = async (
+    req: any,
+    res: Response,
+    next: NextFunction
+) => {
+    //Only signed in users can edit their review
+    const decodedJwt = jwt_decode(req.cookies.ACCESS_TOKEN);
+    //@ts-ignore
+    const email = decodedJwt.subject;
+    const gameId = req.params.gameId;
+
+    try {
+        //Transaction
+        await pool.query("BEGIN");
+        //Insert if it does not exist on table
+
+        //get Review id, a user can only have 1 review
+        const response = await pool.query(
+            `select ui.user_id, lg.review_id from lookup_game_review lg 
+            INNER JOIN user_info ui on lg.user_id = ui.user_id
+             WHERE ui.email = $1 AND lg.game_id = $2 `,
+            [email, gameId]
+        );
+        const reviewId = response.rows[0].review_id;
+        const userId = response.rows[0].user_id;
+
+        await pool.query(
+            `DELETE FROM lookup_game_review 
+             WHERE game_id = $1 AND
+            user_id = $2
+            AND review_id = $3`,
+            [gameId, userId, reviewId]
+        );
+
+        await pool.query(`DELETE FROM review where review_id = $1 `, [
+            reviewId,
+        ]);
+
         pool.query("COMMIT");
         next();
     } catch (error) {

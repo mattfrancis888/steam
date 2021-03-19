@@ -8,6 +8,7 @@ import {
     getReviews,
     postReview,
     editReview,
+    deleteReview,
 } from "../controllers/games";
 const gameRouter = Router();
 
@@ -19,6 +20,7 @@ gameRouter.get("/reviews/:gameId", getReviews);
 gameRouter.post("/review/:gameId", postReview, getReviews);
 gameRouter.get("/games-test", getGamesTest);
 gameRouter.patch("/edit/:gameId", editReview, getReviews);
+gameRouter.delete("/delete/:gameId", deleteReview, getReviews);
 // mediasRouter.post("/add-to-watching/:mediaId", addToWatchingByUser);
 // mediasRouter.delete("/remove-from-watching/:mediaId", removeFromWatchingByUser);
 // mediasRouter.get("/search", getMediasBySearch);

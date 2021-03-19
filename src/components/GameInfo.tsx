@@ -10,6 +10,7 @@ import {
     fetchGameInfoReviews,
     postReview,
     editReview,
+    deleteReview,
 } from "../actions";
 import { connect } from "react-redux";
 import { StoreState } from "../reducers";
@@ -33,6 +34,7 @@ export interface WriteReviewFormProps {
 
 export interface EditReviewFormProps {
     onSubmit(formValues: any): void;
+    onDelete(): void;
     authStatus?: string | null;
     onRecommendorNot(response: boolean): void;
     recommend: boolean;
@@ -46,6 +48,7 @@ interface GameInfoProps {
     fetchGameInfoReviews(gameId: number): void;
     postReview(formValues: IPostAndEditReview, gameId: number): void;
     editReview(formValues: IPostAndEditReview, gameId: number): void;
+    deleteReview(gameId: number): void;
     errors: ErrorStateResponse;
     gameInfo: GameInfoStateResponse;
     gameInfoReviews: GameInfoReviewsStateResponse;
@@ -83,7 +86,6 @@ const GameInfo: React.FC<GameInfoProps> = (props) => {
                 }
             }
         }
-        console.log(itemEls.current);
         // itemEls.current[0]?.scrollIntoView({ behavior: "smooth" });
     }, [props.gameInfoReviews.data]);
     const [recommend, setRecommend] = useState(true);
@@ -108,6 +110,16 @@ const GameInfo: React.FC<GameInfoProps> = (props) => {
             //If user already wrote a review,
             if (filteredContent.length > 0) {
                 return null;
+            } else {
+                return (
+                    <WriteReview
+                        recommend={recommend}
+                        onRecommendorNot={onRecommendorNot}
+                        onSubmit={(formValues: any) =>
+                            onSubmitPostReview(formValues)
+                        }
+                    />
+                );
             }
         } else {
             //If user is not signed in
@@ -144,6 +156,7 @@ const GameInfo: React.FC<GameInfoProps> = (props) => {
                         onSubmit={(formValues: any) =>
                             onSubmitEditReview(formValues)
                         }
+                        onDelete={onSubmitDeleteReview}
                         initialValues={{
                             //@ts-ignore  typescript has issues with lodash's ._filter because they use flat array
                             opinion: filteredContent[0].opinion,
@@ -205,9 +218,10 @@ const GameInfo: React.FC<GameInfoProps> = (props) => {
                 <div
                     key={index}
                     className="reviewBox"
-                    ref={(element) =>
-                        index === 0 ? (itemEls.current[index] = element) : null
-                    }
+                    // ref={(element) =>
+                    //     index === 0 ? (itemEls.current[index] = element) : null
+                    // }
+                    ref={(element) => (itemEls.current[index] = element)}
                 >
                     <div className="reviewerInfoWrap">
                         <div className="reviewerAvatarWrap">
@@ -241,7 +255,7 @@ const GameInfo: React.FC<GameInfoProps> = (props) => {
         });
     };
 
-    const onSubmitPostReview = async (formValues: WriteReviewFormValues) => {
+    const onSubmitPostReview = (formValues: WriteReviewFormValues) => {
         const recommendObj = { recommend: recommend };
         const updatedObj: IPostAndEditReview = Object.assign(
             formValues,
@@ -251,13 +265,34 @@ const GameInfo: React.FC<GameInfoProps> = (props) => {
         itemEls.current[0]?.scrollIntoView({ behavior: "smooth" });
     };
 
-    const onSubmitEditReview = async (formValues: WriteReviewFormValues) => {
+    const onSubmitEditReview = (formValues: WriteReviewFormValues) => {
         const recommendObj = { recommend: recommend };
         const updatedObj: IPostAndEditReview = Object.assign(
             formValues,
             recommendObj
         );
         props.editReview(updatedObj, props.match.params.gameId);
+
+        if (Cookies.get("ACCESS_TOKEN")) {
+            //If user is signed in
+            //@ts-ignore
+            const email = jwt_decode(Cookies.get("ACCESS_TOKEN")).subject;
+            const editedReviewIndex = _.findIndex(
+                props.gameInfoReviews.data?.reviews,
+                {
+                    //@ts-ignore issue with lodash
+                    email: email,
+                }
+            );
+
+            itemEls.current[editedReviewIndex]?.scrollIntoView({
+                behavior: "smooth",
+            });
+        }
+    };
+
+    const onSubmitDeleteReview = () => {
+        props.deleteReview(props.match.params.gameId);
     };
 
     const renderContent = () => {
@@ -375,4 +410,5 @@ export default connect(mapStateToProps, {
     fetchGameInfoReviews,
     postReview,
     editReview,
+    deleteReview,
 })(GameInfo);

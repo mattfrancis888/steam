@@ -55,7 +55,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.editReview = exports.postReview = exports.getReviews = exports.getGameInfo = exports.getDiscountedGames = exports.getGames = exports.getGameInfoTest = exports.getGamesTest = void 0;
+exports.deleteReview = exports.editReview = exports.postReview = exports.getReviews = exports.getGameInfo = exports.getDiscountedGames = exports.getGames = exports.getGameInfoTest = exports.getGamesTest = void 0;
 var databasePool_1 = __importDefault(require("../databasePool"));
 var constants_1 = require("../constants");
 var jwt_decode_1 = __importDefault(require("jwt-decode"));
@@ -272,7 +272,7 @@ var getReviews = function (req, res) { return __awaiter(void 0, void 0, void 0, 
         switch (_a.label) {
             case 0:
                 _a.trys.push([0, 2, , 3]);
-                sql = "   select ui.username, ui.email, ui.avatar_url,\n        r.recommend, r.opinion\n       from lookup_game_review lr \n         join review r on lr.review_id = r.review_id\n        full outer join user_info ui on lr.user_id = ui.user_id\n        WHERE lr.game_id = $1 ORDER BY lr.game_id ASC; ";
+                sql = "   select ui.username, ui.email, ui.avatar_url,\n        r.recommend, r.opinion\n       from lookup_game_review lr \n         join review r on lr.review_id = r.review_id\n        full outer join user_info ui on lr.user_id = ui.user_id\n        WHERE lr.game_id = $1 ORDER BY r.review_id DESC; ";
                 return [4 /*yield*/, databasePool_1.default.query(sql, [req.params.gameId])];
             case 1:
                 reviewersResponse = _a.sent();
@@ -381,3 +381,45 @@ var editReview = function (req, res, next) { return __awaiter(void 0, void 0, vo
     });
 }); };
 exports.editReview = editReview;
+var deleteReview = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
+    var decodedJwt, email, gameId, response_7, reviewId, userId, error_9;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                decodedJwt = jwt_decode_1.default(req.cookies.ACCESS_TOKEN);
+                email = decodedJwt.subject;
+                gameId = req.params.gameId;
+                _a.label = 1;
+            case 1:
+                _a.trys.push([1, 6, , 7]);
+                //Transaction
+                return [4 /*yield*/, databasePool_1.default.query("BEGIN")];
+            case 2:
+                //Transaction
+                _a.sent();
+                return [4 /*yield*/, databasePool_1.default.query("select ui.user_id, lg.review_id from lookup_game_review lg \n            INNER JOIN user_info ui on lg.user_id = ui.user_id\n             WHERE ui.email = $1 AND lg.game_id = $2 ", [email, gameId])];
+            case 3:
+                response_7 = _a.sent();
+                reviewId = response_7.rows[0].review_id;
+                userId = response_7.rows[0].user_id;
+                return [4 /*yield*/, databasePool_1.default.query("DELETE FROM lookup_game_review \n             WHERE game_id = $1 AND\n            user_id = $2\n            AND review_id = $3", [gameId, userId, reviewId])];
+            case 4:
+                _a.sent();
+                return [4 /*yield*/, databasePool_1.default.query("DELETE FROM review where review_id = $1 ", [
+                        reviewId,
+                    ])];
+            case 5:
+                _a.sent();
+                databasePool_1.default.query("COMMIT");
+                next();
+                return [3 /*break*/, 7];
+            case 6:
+                error_9 = _a.sent();
+                databasePool_1.default.query("ROLLBACK");
+                console.log("ROLLBACK TRIGGERED", error_9);
+                return [2 /*return*/, res.sendStatus(constants_1.INTERNAL_SERVER_ERROR_STATUS)];
+            case 7: return [2 /*return*/];
+        }
+    });
+}); };
+exports.deleteReview = deleteReview;

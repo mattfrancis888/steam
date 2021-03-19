@@ -126,9 +126,19 @@ const EditReview: React.FC<
                                         <p>No</p>
                                     </button>
                                 </div>
-                                <button className="postReviewButton">
-                                    Edit Review
-                                </button>
+                                <div>
+                                    <button
+                                        className="editAndDeleteReviewButton deleteReviewButton"
+                                        type="button"
+                                        onClick={() => props.onDelete()}
+                                    >
+                                        Delete Review
+                                    </button>
+
+                                    <button className="editAndDeleteReviewButton">
+                                        Edit Review
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>

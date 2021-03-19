@@ -9,6 +9,7 @@ export enum ActionTypes {
     FETCH_GAME_INFO_REVIEWS,
     POST_REVIEW,
     EDIT_REVIEW,
+    DELETE_REVIEW,
     GAME_ERROR,
 }
 export type AuthActions = AuthUserAction | AuthErrorAction;

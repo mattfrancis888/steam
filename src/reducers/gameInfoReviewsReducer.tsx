@@ -4,6 +4,7 @@ import {
     FetchGameInfoReviewsAction,
     ReviewsResponse,
     PostReviewAction,
+    DeleteReviewAction,
 } from "../actions";
 
 export interface GameInfoReviewsStateResponse {
@@ -12,7 +13,11 @@ export interface GameInfoReviewsStateResponse {
 
 const gameInfoReviewsReducer = (
     state: GameInfoReviewsStateResponse = {},
-    action: FetchGameInfoReviewsAction | PostReviewAction | EditReviewAction
+    action:
+        | FetchGameInfoReviewsAction
+        | PostReviewAction
+        | EditReviewAction
+        | DeleteReviewAction
 ) => {
     switch (action.type) {
         case ActionTypes.FETCH_GAME_INFO_REVIEWS:
@@ -20,6 +25,8 @@ const gameInfoReviewsReducer = (
         case ActionTypes.POST_REVIEW:
             return { ...state, data: action.payload };
         case ActionTypes.EDIT_REVIEW:
+            return { ...state, data: action.payload };
+        case ActionTypes.DELETE_REVIEW:
             return { ...state, data: action.payload };
 
         default:
