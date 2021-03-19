@@ -13,7 +13,6 @@ export interface EditProfileFormProps {
     onSubmit(formValues: any): void;
     initialValues?: any;
     dispatch?: any;
-    postAdForm?: boolean;
     listingDetail?: any;
     cloudinaryImage: string;
 }
@@ -47,6 +46,7 @@ const Profile: React.FC<ProfileProps> = (props) => {
                 if (formValues.imagePreview === null) {
                     //user removed picture.
                     //Replace existing picture with nothing
+
                     props.editProfile(formValues, cloudinaryPublicId, null);
                 } else {
                     //If user has an existing image already, but they did not modify  <input type="file"/>

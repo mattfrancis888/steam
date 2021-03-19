@@ -25,6 +25,7 @@ import _ from "lodash";
 import EditReview from "./EditReview";
 import jwt_decode from "jwt-decode";
 import Cookies from "js-cookie";
+import { ACCESS_TOKEN } from "../constants";
 export interface WriteReviewFormProps {
     onSubmit(formValues: any): void;
     authStatus?: string | null;
@@ -70,10 +71,10 @@ const GameInfo: React.FC<GameInfoProps> = (props) => {
     useEffect(() => {
         //This is used for to control thumbs up or thumbs down button
         if (props.gameInfoReviews.data) {
-            if (Cookies.get("ACCESS_TOKEN")) {
+            if (Cookies.get(ACCESS_TOKEN)) {
                 //If user is signed in
                 //@ts-ignore
-                const email = jwt_decode(Cookies.get("ACCESS_TOKEN")).subject;
+                const email = jwt_decode(Cookies.get(ACCESS_TOKEN)).subject;
                 const filteredContent = _.filter(
                     props.gameInfoReviews.data?.reviews,
                     {
@@ -96,10 +97,10 @@ const GameInfo: React.FC<GameInfoProps> = (props) => {
     };
 
     const renderWriteReview = () => {
-        if (Cookies.get("ACCESS_TOKEN")) {
+        if (Cookies.get(ACCESS_TOKEN)) {
             //If user is signed in
             //@ts-ignore
-            const email = jwt_decode(Cookies.get("ACCESS_TOKEN")).subject;
+            const email = jwt_decode(Cookies.get(ACCESS_TOKEN)).subject;
 
             const filteredContent = _.filter(
                 props.gameInfoReviews.data?.reviews,
@@ -136,10 +137,10 @@ const GameInfo: React.FC<GameInfoProps> = (props) => {
     };
 
     const renderEditReview = () => {
-        if (Cookies.get("ACCESS_TOKEN")) {
+        if (Cookies.get(ACCESS_TOKEN)) {
             //If user is signed in
             //@ts-ignore
-            const email = jwt_decode(Cookies.get("ACCESS_TOKEN")).subject;
+            const email = jwt_decode(Cookies.get(ACCESS_TOKEN)).subject;
             const filteredContent = _.filter(
                 props.gameInfoReviews.data?.reviews,
                 {
@@ -273,10 +274,10 @@ const GameInfo: React.FC<GameInfoProps> = (props) => {
         );
         props.editReview(updatedObj, props.match.params.gameId);
 
-        if (Cookies.get("ACCESS_TOKEN")) {
+        if (Cookies.get(ACCESS_TOKEN)) {
             //If user is signed in
             //@ts-ignore
-            const email = jwt_decode(Cookies.get("ACCESS_TOKEN")).subject;
+            const email = jwt_decode(Cookies.get(ACCESS_TOKEN)).subject;
             const editedReviewIndex = _.findIndex(
                 props.gameInfoReviews.data?.reviews,
                 {

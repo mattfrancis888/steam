@@ -6,10 +6,10 @@ import reducers from "./reducers";
 import { composeWithDevTools } from "redux-devtools-extension";
 import reduxThunk from "redux-thunk";
 import Cookies from "js-cookie";
-
+import { ACCESS_TOKEN } from "./constants";
 export const store = createStore(
     reducers,
-    { authStatus: { authenticated: Cookies.get("ACCESS_TOKEN") } },
+    { authStatus: { authenticated: Cookies.get(ACCESS_TOKEN) } },
     //if our inital state (authStauts) has a token from local storage, keep them logged in
     composeWithDevTools(applyMiddleware(reduxThunk))
 );

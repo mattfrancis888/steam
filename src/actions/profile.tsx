@@ -118,11 +118,12 @@ export const editProfile = (
                 ...formValues,
             }
         );
-        console.log(formValues, cloudinaryImagePath, cloudinaryPublicId);
+
         dispatch<EditProfileAction>({
             type: ActionTypes.EDIT_PROFILE,
             payload: response.data,
         });
+        alert("Success! Profile is updated.");
     } catch (error) {
         console.log("error", error);
         alert(SERVER_ERROR_MESSAGE);

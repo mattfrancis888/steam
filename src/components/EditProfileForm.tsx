@@ -58,7 +58,7 @@ const renderFieldSectionLayout = (title: string, children: JSX.Element) => {
         </div>
     );
 };
-const PostAdForm: React.FC<
+const EditProfileForm: React.FC<
     EditProfileFormProps & InjectedFormProps<{}, EditProfileFormProps>
 > = (props) => {
     const location = useLocation();
@@ -69,17 +69,6 @@ const PostAdForm: React.FC<
     useEffect(() => {
         if (props.cloudinaryImage) setCloudinaryImage(props.cloudinaryImage);
     }, []);
-
-    // useEffect(() => {
-    //     //If our listingDetail changes because we are swithcing listngs
-    //     //in our profile page
-    //     if (props.listingDetail)
-    //         setCloudinaryImage(props.listingDetail.listing_image);
-
-    //     if (props.postAdForm) {
-    //         setCloudinaryImage(null);
-    //     }
-    // }, [props.listingDetail]);
 
     const onSubmit = (formValues: any, dispatch: any) => {
         props.onSubmit(formValues);
@@ -221,7 +210,11 @@ const PostAdForm: React.FC<
                                         setListingImage(null);
                                         setCloudinaryImage(null);
                                         props.dispatch(
-                                            change("postAdForm", "image", null)
+                                            change(
+                                                "editProfileForm",
+                                                "image",
+                                                null
+                                            )
                                         );
                                         props.change("imagePreview", null);
                                     }}
@@ -269,10 +262,10 @@ export default connect(mapStateToProps, {
     // fetchCategoriesForListing
 })(
     reduxForm<{}, EditProfileFormProps>({
-        form: "postAdForm",
+        form: "editProfileForm",
         validate,
         enableReinitialize: true,
-    })(PostAdForm)
+    })(EditProfileForm)
 );
 
 //enableReinitialize: true is fo:
