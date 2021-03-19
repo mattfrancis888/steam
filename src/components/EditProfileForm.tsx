@@ -15,7 +15,6 @@ import { useLocation } from "react-router-dom";
 import history from "../browserHistory";
 import defaultAvatar from "../img/defaultAvatar.png";
 import { EditProfileFormProps } from "./Profile";
-export const CHOOSE_FILES = "Choose Files!";
 export interface EditProfileFormValues {
     username: string;
     imagePreview: string;
@@ -84,18 +83,7 @@ const PostAdForm: React.FC<
     const [cloudinaryImage, setCloudinaryImage] = useState<string | null>(null);
 
     useEffect(() => {
-        if (props.postAdForm) {
-            //It looks like initalValues does not work when we manipulated a field with
-            // props.change
-            //weird behaviour from redux form. So we do this instead of having:
-            //of
-            // <EditOrPostAdForm
-            // initialValues={{
-            //     imagePreview: CHOOSE_FILES,
-            // }}
-            // />
-            props.change("imagePreview", CHOOSE_FILES);
-        }
+        if (props.cloudinaryImage) setCloudinaryImage(props.cloudinaryImage);
     }, []);
 
     // useEffect(() => {
@@ -250,10 +238,6 @@ const PostAdForm: React.FC<
                                         setCloudinaryImage(null);
                                         props.dispatch(
                                             change("postAdForm", "image", null)
-                                        );
-                                        props.change(
-                                            "imagePreview",
-                                            CHOOSE_FILES
                                         );
                                     }}
                                 >

@@ -14,6 +14,7 @@ if (process.env.NODE_ENV !== "production") {
 var protected_1 = __importDefault(require("./routes/protected"));
 var routes_1 = __importDefault(require("./routes"));
 var games_1 = __importDefault(require("./routes/games"));
+var profile_1 = __importDefault(require("./routes/profile"));
 // import protectedRouter from "./routes/protected";
 var app = express_1.default();
 // middleware for parsing bodies from URL
@@ -33,6 +34,7 @@ app.use("/api/test", function (req, res) {
 app.use("/api", protected_1.default);
 app.use("/api", routes_1.default);
 app.use("/api", games_1.default);
+app.use("/api", profile_1.default);
 // app.use("/", protectedRouter);
 var port = process.env.PORT || 5000;
 app.listen(port, function () {

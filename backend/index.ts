@@ -9,6 +9,7 @@ if (process.env.NODE_ENV !== "production") {
 import protectedRouter from "./routes/protected";
 import route from "./routes";
 import gameRouter from "./routes/games";
+import profileRouter from "./routes/profile";
 // import protectedRouter from "./routes/protected";
 const app = express();
 // middleware for parsing bodies from URL
@@ -30,6 +31,7 @@ app.use("/api/test", (req, res) => {
 app.use("/api", protectedRouter);
 app.use("/api", route);
 app.use("/api", gameRouter);
+app.use("/api", profileRouter);
 // app.use("/", protectedRouter);
 
 const port = process.env.PORT || 5000;
