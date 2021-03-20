@@ -23,6 +23,8 @@
 }
 .homeFirstSection {
     padding: 1rem 3rem;
+    display: flex;
+    flex-direction: column;
     @media screen and (min-width: $sm_breakpoint) {
         padding: 1rem 3rem;
     }

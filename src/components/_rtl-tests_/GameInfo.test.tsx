@@ -107,6 +107,24 @@ describe("Data loads when user enter page", () => {
             expect(app.getByText(/Recent Reviews/i)).toBeInTheDocument();
         });
     }, 30000);
+    test("Add to cart", async () => {
+        Object.defineProperty(window, "localStorage", {
+            value: {
+                getItem: jest.fn(() => null),
+                setItem: jest.fn(() => null),
+                clear: jest.fn(() => null),
+            },
+            writable: true,
+        });
+        await waitForExpect(() => {
+            act(() => {
+                fireEvent.click(app.getByTestId("addToCartbutton"));
+            });
+            expect(window.localStorage.setItem).toHaveBeenCalledTimes(1);
+            history.push("/cart");
+            expect(pushSpy).toBeCalledWith("/cart");
+        });
+    }, 30000);
 
     // test("Post a review", async () => {
     //     //Edit review and delete review is the same concept in testing

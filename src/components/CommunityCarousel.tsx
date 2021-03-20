@@ -14,6 +14,7 @@ import { useHistory } from "react-router-dom";
 import useWindowDimensions from "../windowDimensions";
 import { CommunityCarouelProps } from "./Home";
 import anime from "animejs/lib/anime.es.js";
+import history from "../browserHistory";
 import { LG_SCREEN_SIZE, XL_SCREEN_SIZE, MED_SCREEN_SIZE } from "../constants";
 import { Game } from "../actions";
 
@@ -22,7 +23,7 @@ const CommunityCarousel: React.FC<CommunityCarouelProps> = (props) => {
     const [style, setStyle] = useState({ opacity: "1" });
 
     const renderPrice = (content: Game) => {
-        if (content.discount_percentage) {
+        if (parseFloat(content.discount_percentage) > 0) {
             return (
                 <div className="communityAdjustedPriceWrap">
                     <div className="communityDiscount">
@@ -54,7 +55,13 @@ const CommunityCarousel: React.FC<CommunityCarouelProps> = (props) => {
     const renderSlides = () => {
         return props.content.map((content, index) => {
             return (
-                <Slide index={index} key={index}>
+                <Slide
+                    index={index}
+                    key={index}
+                    onClick={() => {
+                        history.push(`game/${content.game_id}`);
+                    }}
+                >
                     <LazyLoad>
                         <div
                             key={index}

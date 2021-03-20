@@ -283,7 +283,7 @@ export const getDiscountedGames = async (req: Request, res: Response) => {
               group by ls.game_id
            ) sc on sc.game_id = ga.game_id
            INNER JOIN game_price gp on ga.price_id = gp.price_id 
-           WHERE gp.discount_percentage IS NOT NULL ;`;
+           WHERE gp.discount_percentage  > 0 ;`;
 
         const response = await pool.query(sql);
 

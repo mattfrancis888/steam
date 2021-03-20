@@ -16,6 +16,7 @@ import { SpecialOfferCarouselProps } from "./Home";
 import anime from "animejs/lib/anime.es.js";
 import { LG_SCREEN_SIZE, SM_SCREEN_SIZE, MED_SCREEN_SIZE } from "../constants";
 import _ from "lodash";
+import history from "../browserHistory";
 
 const SpecialOfferCarousel: React.FC<SpecialOfferCarouselProps> = (props) => {
     const { width } = useWindowDimensions();
@@ -48,6 +49,11 @@ const SpecialOfferCarousel: React.FC<SpecialOfferCarouselProps> = (props) => {
                                 {contents.map((content, index) => {
                                     return (
                                         <div
+                                            onClick={() => {
+                                                history.push(
+                                                    `game/${content.game_id}`
+                                                );
+                                            }}
                                             className="specialOfferGameContainer"
                                             key={index}
                                         >
