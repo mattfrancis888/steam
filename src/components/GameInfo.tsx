@@ -358,9 +358,12 @@ const GameInfo: React.FC<GameInfoProps> = (props) => {
         } else if (props.gameInfo.data && props.gameInfoReviews.data) {
             return (
                 <div className="gameInfoContainer">
-                    <button className="cart">{`Cart(${
-                        localCart != null ? cart.length : "0"
-                    })`}</button>
+                    <button
+                        className="cart"
+                        onClick={() => {
+                            history.push("/cart");
+                        }}
+                    >{`Cart(${localCart != null ? cart.length : "0"})`}</button>
 
                     <h1 className="gameInfoTitle">
                         {props.gameInfo.data.games[0].title}
@@ -431,6 +434,7 @@ const GameInfo: React.FC<GameInfoProps> = (props) => {
                             </div>
                             <button
                                 className="gameInfoAddToCartButton"
+                                data-testid="addToCartbutton"
                                 onClick={() => {
                                     if (props.gameInfo.data?.games)
                                         addItem(props.gameInfo.data.games[0]);

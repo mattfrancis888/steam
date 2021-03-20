@@ -72,6 +72,7 @@ const Cart: React.FC<{}> = () => {
                         {renderPrice(game)}
                         <p
                             className="removeFromCart"
+                            data-testid="removeCart"
                             onClick={() => {
                                 removeItem(game.game_id);
                             }}

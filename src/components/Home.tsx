@@ -170,7 +170,12 @@ const Home: React.FC<HomeProps> = (props) => {
             return (
                 <div className="homeContainer">
                     <div className="homeFirstSection">
-                        <button className="cart">{`Cart(${
+                        <button
+                            className="cart"
+                            onClick={() => {
+                                history.push("/cart");
+                            }}
+                        >{`Cart(${
                             localCart != null
                                 ? JSON.parse(localCart).length
                                 : "0"

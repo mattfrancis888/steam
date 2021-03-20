@@ -332,6 +332,9 @@
     background-color: rgba(164, 208, 7, 0.4);
     background-image: url(https://store.akamai.steamstatic.com/public/images/v6/storemenu/background_cart.jpg);
     cursor: pointer;
+    outline: none !important;
+    box-shadow: none !important;
+    border: none;
     &:hover {
         color: #111111;
         background-color: rgba(164, 208, 7, 0.5);
