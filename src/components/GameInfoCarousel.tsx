@@ -22,6 +22,13 @@ const GameInfoCarousel: React.FC<GameInfoCarouselProps> = (props) => {
     const [displayImage, setDisplayImage] = useState(props.screenshots[0]);
     const [imageClicked, setImageClicked] = useState(0);
 
+    useEffect(() => {
+        //When user clicks another game after clicking a game
+        // displayImage hook was at the previous's displayImage
+        //so update it here
+        setDisplayImage(props.screenshots[0]);
+    }, [props.screenshots]);
+
     const renderSlides = () => {
         return props.screenshots.map((screenshot, index) => {
             return (
@@ -48,7 +55,7 @@ const GameInfoCarousel: React.FC<GameInfoCarouselProps> = (props) => {
                                 setDisplayImage(screenshot);
                                 setImageClicked(index);
                                 anime({
-                                    targets: `.gameInfoDisplayImag`,
+                                    targets: `.gameInfoDisplayImage`,
                                     // Properties
                                     // Animation Parameters
 
@@ -110,11 +117,11 @@ const GameInfoCarousel: React.FC<GameInfoCarouselProps> = (props) => {
     return (
         <div>
             <img
-                className="gameInfoDisplayImag"
+                className="gameInfoDisplayImage"
                 src={displayImage}
                 onLoad={() => {
                     anime({
-                        targets: `.gameInfoDisplayImag`,
+                        targets: `.gameInfoDisplayImage`,
                         // Properties
                         // Animation Parameters
 

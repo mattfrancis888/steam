@@ -971,7 +971,7 @@ body {
   width: 100%;
 }
 
-.gameInfoDisplayImag {
+.gameInfoDisplayImage {
   width: 100%;
 }
 
@@ -2596,6 +2596,147 @@ body {
   .profileTextWrap {
     margin-bottom: 7rem;
   }
+}
+
+.searchContainer {
+  display: flex;
+  padding: 1rem 1rem;
+}
+@media screen and (min-width: 520px) {
+  .searchContainer {
+    padding: 1rem 3rem;
+  }
+}
+@media screen and (min-width: 768px) {
+  .searchContainer {
+    padding: 1rem 6rem;
+  }
+}
+
+.searchRowsColumn {
+  width: 100%;
+}
+@media screen and (min-width: 992px) {
+  .searchRowsColumn {
+    width: 80%;
+  }
+}
+
+.searchRow {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.2);
+  color: #c6d4df;
+  margin-bottom: 0.5rem;
+}
+.searchRow:hover {
+  border: 1px solid rgba(139, 185, 224, 0.2);
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.searchRowImageAndTitleWrap {
+  display: flex;
+}
+.searchRowImageAndTitleWrap > img {
+  width: 14rem;
+  height: 100%;
+  object-fit: cover;
+}
+.searchRowImageAndTitleWrap .searchGameTitle {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0;
+  font-size: 1.2rem;
+  margin-left: 0.5rem;
+  margin-top: 0.5rem;
+}
+@media screen and (min-width: 520px) {
+  .searchRowImageAndTitleWrap .searchGameTitle {
+    font-size: 1.4rem;
+    margin-left: 1rem;
+    margin-top: 0.75rem;
+  }
+}
+
+.searchRowDate {
+  font-size: 1.1rem;
+  color: #4c6c8c;
+}
+@media screen and (min-width: 520px) {
+  .searchRowDate {
+    display: block;
+  }
+}
+
+.searchRowPriceWrap {
+  display: flex;
+  align-items: center;
+  margin-right: 1rem;
+  width: 100%;
+  justify-content: flex-end;
+  margin-top: 0.5rem;
+}
+@media screen and (min-width: 520px) {
+  .searchRowPriceWrap {
+    margin-top: 0;
+    width: auto;
+  }
+}
+
+.searchRowDiscount {
+  margin-right: 2rem;
+  min-height: 100%;
+  font-size: 1.3rem;
+  padding: 0.8rem 0.5rem;
+  background: #4c6b22;
+  color: #a4d007;
+}
+
+.searchRowPriceStriked {
+  text-decoration: line-through;
+  font-size: 1.3rem;
+  margin: 0;
+  margin-bottom: 0.25rem;
+  color: #626366;
+}
+
+.searchRowPrice {
+  margin: 0;
+  font-size: 1.3rem;
+}
+
+.searchPreviewHover {
+  display: none;
+  max-width: 30rem;
+  padding: 1rem;
+  background: linear-gradient(to right, #c6e6f8 5%, #95bcd3 95%);
+}
+@media screen and (min-width: 992px) {
+  .searchPreviewHover {
+    display: block;
+  }
+}
+
+.searchGamePreviewTitle {
+  color: #263645;
+}
+
+.searchGameGenresWrap {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.searchGameGenres {
+  background-color: #96a3ae;
+  color: #e3eaef;
+  font-size: 1.1rem;
+  margin: 0;
+  margin-right: 0.25rem;
+  margin-bottom: 0.5rem;
+  padding: 0.5rem;
 }
 
 /*# sourceMappingURL=main.css.map */
