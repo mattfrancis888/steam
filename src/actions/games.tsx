@@ -20,6 +20,11 @@ export interface FetchDiscountedGamesAction {
     payload: FetchGamesResponse;
 }
 
+export interface FetchGamesByKeywordAction {
+    type: ActionTypes.FETCH_GAMES_BY_KEYWORD;
+    payload: FetchGamesResponse;
+}
+
 export interface FetchGameInfoAction {
     type: ActionTypes.FETCH_GAME_INFO;
     payload: FetchGameInfoResponse;
@@ -104,6 +109,25 @@ export const fetchDiscountedGames = () => async (dispatch: Dispatch) => {
         );
         dispatch<FetchDiscountedGamesAction>({
             type: ActionTypes.FETCH_GAMES_DISCOUNTED,
+            payload: response.data,
+        });
+    } catch (error) {
+        dispatch<GamesErrorAction>({
+            type: ActionTypes.GAME_ERROR,
+            payload: { error: SERVER_ERROR_MESSAGE },
+        });
+    }
+};
+
+export const fetchGamesByKeyword = (queryPath: string) => async (
+    dispatch: Dispatch
+) => {
+    try {
+        const response = await axios.get<FetchGamesResponse>(
+            `/api/search?q=${queryPath}`
+        );
+        dispatch<FetchGamesByKeywordAction>({
+            type: ActionTypes.FETCH_GAMES_BY_KEYWORD,
             payload: response.data,
         });
     } catch (error) {

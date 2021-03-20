@@ -55,7 +55,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteReview = exports.editReview = exports.postReview = exports.getReviews = exports.getGameInfo = exports.getDiscountedGames = exports.getGames = exports.getGameInfoTest = exports.getGamesTest = void 0;
+exports.deleteReview = exports.editReview = exports.postReview = exports.getReviews = exports.getGameInfo = exports.getGamesBySearch = exports.getDiscountedGames = exports.getGames = exports.getGameInfoTest = exports.getGamesTest = void 0;
 var databasePool_1 = __importDefault(require("../databasePool"));
 var constants_1 = require("../constants");
 var jwt_decode_1 = __importDefault(require("jwt-decode"));
@@ -245,8 +245,31 @@ var getDiscountedGames = function (req, res) { return __awaiter(void 0, void 0, 
     });
 }); };
 exports.getDiscountedGames = getDiscountedGames;
+var getGamesBySearch = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
+    var searchKeyword, sql, response_5, error_5;
+    return __generator(this, function (_a) {
+        switch (_a.label) {
+            case 0:
+                searchKeyword = req.query.q;
+                _a.label = 1;
+            case 1:
+                _a.trys.push([1, 3, , 4]);
+                sql = "SELECT ga.game_id, ga.title, ga.cover_url, ga.release_date,\n        ga.about, g.genres, sc.screenshots, gp.price, gp.discount_percentage, gp.price_after_discount\n        FROM game ga\n            JOIN (\n              select lg.game_id, ARRAY_AGG(gr.genre_type) as genres\n              from lookup_game_genre lg \n                  JOIN genre gr on gr.genre_id = lg.genre_id\n              group by lg.game_id\n           ) g on g.game_id = ga.game_id\n            JOIN ( \n              select ls.game_id, ARRAY_AGG(s.screenshot_url) as screenshots\n              from lookup_game_screenshot ls \n                join screenshot s on s.screenshot_id = ls.screenshot_id\n              group by ls.game_id\n           ) sc on sc.game_id = ga.game_id\n           INNER JOIN game_price gp on ga.price_id = gp.price_id \n           WHERE name_tokens @@ to_tsquery($1)";
+                return [4 /*yield*/, databasePool_1.default.query(sql, [searchKeyword])];
+            case 2:
+                response_5 = _a.sent();
+                res.send({ games: response_5.rows });
+                return [3 /*break*/, 4];
+            case 3:
+                error_5 = _a.sent();
+                return [2 /*return*/, res.sendStatus(constants_1.INTERNAL_SERVER_ERROR_STATUS)];
+            case 4: return [2 /*return*/];
+        }
+    });
+}); };
+exports.getGamesBySearch = getGamesBySearch;
 var getGameInfo = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var gameId, sql, response_5, error_5;
+    var gameId, sql, response_6, error_6;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -255,11 +278,11 @@ var getGameInfo = function (req, res) { return __awaiter(void 0, void 0, void 0,
                 sql = "SELECT ga.game_id, ga.title, ga.cover_url, ga.release_date,\n        ga.about, g.genres, sc.screenshots, gp.price, gp.discount_percentage, gp.price_after_discount\n        FROM game ga\n            JOIN (\n              select lg.game_id, ARRAY_AGG(gr.genre_type) as genres\n              from lookup_game_genre lg \n                  JOIN genre gr on gr.genre_id = lg.genre_id\n              group by lg.game_id\n           ) g on g.game_id = ga.game_id\n            JOIN ( \n              select ls.game_id, ARRAY_AGG(s.screenshot_url) as screenshots\n              from lookup_game_screenshot ls \n                join screenshot s on s.screenshot_id = ls.screenshot_id\n              group by ls.game_id\n           ) sc on sc.game_id = ga.game_id\n           INNER JOIN game_price gp on ga.price_id = gp.price_id \n           WHERE ga.game_id = $1 ;";
                 return [4 /*yield*/, databasePool_1.default.query(sql, [gameId])];
             case 1:
-                response_5 = _a.sent();
-                res.send({ games: response_5.rows });
+                response_6 = _a.sent();
+                res.send({ games: response_6.rows });
                 return [3 /*break*/, 3];
             case 2:
-                error_5 = _a.sent();
+                error_6 = _a.sent();
                 return [2 /*return*/, res.sendStatus(constants_1.INTERNAL_SERVER_ERROR_STATUS)];
             case 3: return [2 /*return*/];
         }
@@ -267,7 +290,7 @@ var getGameInfo = function (req, res) { return __awaiter(void 0, void 0, void 0,
 }); };
 exports.getGameInfo = getGameInfo;
 var getReviews = function (req, res) { return __awaiter(void 0, void 0, void 0, function () {
-    var sql, reviewersResponse, error_6;
+    var sql, reviewersResponse, error_7;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -279,7 +302,7 @@ var getReviews = function (req, res) { return __awaiter(void 0, void 0, void 0, 
                 res.send({ reviews: reviewersResponse.rows });
                 return [3 /*break*/, 3];
             case 2:
-                error_6 = _a.sent();
+                error_7 = _a.sent();
                 return [2 /*return*/, res.sendStatus(constants_1.INTERNAL_SERVER_ERROR_STATUS)];
             case 3: return [2 /*return*/];
         }
@@ -287,7 +310,7 @@ var getReviews = function (req, res) { return __awaiter(void 0, void 0, void 0, 
 }); };
 exports.getReviews = getReviews;
 var postReview = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
-    var decodedJwt, email, gameId, recommend, opinion, reviewResponse, reviewId, userInfoResponse, userId, error_7;
+    var decodedJwt, email, gameId, recommend, opinion, reviewResponse, reviewId, userInfoResponse, userId, error_8;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -334,9 +357,9 @@ var postReview = function (req, res, next) { return __awaiter(void 0, void 0, vo
                 next();
                 return [3 /*break*/, 10];
             case 9:
-                error_7 = _a.sent();
+                error_8 = _a.sent();
                 databasePool_1.default.query("ROLLBACK");
-                console.log("ROLLBACK TRIGGERED", error_7);
+                console.log("ROLLBACK TRIGGERED", error_8);
                 return [2 /*return*/, res.sendStatus(constants_1.INTERNAL_SERVER_ERROR_STATUS)];
             case 10: return [2 /*return*/];
         }
@@ -344,7 +367,7 @@ var postReview = function (req, res, next) { return __awaiter(void 0, void 0, vo
 }); };
 exports.postReview = postReview;
 var editReview = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
-    var decodedJwt, email, gameId, recommend, opinion, response_6, reviewId, error_8;
+    var decodedJwt, email, gameId, recommend, opinion, response_7, reviewId, error_9;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -363,8 +386,8 @@ var editReview = function (req, res, next) { return __awaiter(void 0, void 0, vo
                 _a.sent();
                 return [4 /*yield*/, databasePool_1.default.query("select lg.review_id from lookup_game_review lg \n            INNER JOIN user_info ui on lg.user_id = ui.user_id\n             WHERE ui.email = $1 AND lg.game_id = $2 ", [email, gameId])];
             case 3:
-                response_6 = _a.sent();
-                reviewId = response_6.rows[0].review_id;
+                response_7 = _a.sent();
+                reviewId = response_7.rows[0].review_id;
                 return [4 /*yield*/, databasePool_1.default.query("UPDATE review SET recommend = $1, opinion = $2  WHERE\n            review_id = $3", [recommend, opinion, reviewId])];
             case 4:
                 _a.sent();
@@ -372,9 +395,9 @@ var editReview = function (req, res, next) { return __awaiter(void 0, void 0, vo
                 next();
                 return [3 /*break*/, 6];
             case 5:
-                error_8 = _a.sent();
+                error_9 = _a.sent();
                 databasePool_1.default.query("ROLLBACK");
-                console.log("ROLLBACK TRIGGERED", error_8);
+                console.log("ROLLBACK TRIGGERED", error_9);
                 return [2 /*return*/, res.sendStatus(constants_1.INTERNAL_SERVER_ERROR_STATUS)];
             case 6: return [2 /*return*/];
         }
@@ -382,7 +405,7 @@ var editReview = function (req, res, next) { return __awaiter(void 0, void 0, vo
 }); };
 exports.editReview = editReview;
 var deleteReview = function (req, res, next) { return __awaiter(void 0, void 0, void 0, function () {
-    var decodedJwt, email, gameId, response_7, reviewId, userId, error_9;
+    var decodedJwt, email, gameId, response_8, reviewId, userId, error_10;
     return __generator(this, function (_a) {
         switch (_a.label) {
             case 0:
@@ -399,9 +422,9 @@ var deleteReview = function (req, res, next) { return __awaiter(void 0, void 0, 
                 _a.sent();
                 return [4 /*yield*/, databasePool_1.default.query("select ui.user_id, lg.review_id from lookup_game_review lg \n            INNER JOIN user_info ui on lg.user_id = ui.user_id\n             WHERE ui.email = $1 AND lg.game_id = $2 ", [email, gameId])];
             case 3:
-                response_7 = _a.sent();
-                reviewId = response_7.rows[0].review_id;
-                userId = response_7.rows[0].user_id;
+                response_8 = _a.sent();
+                reviewId = response_8.rows[0].review_id;
+                userId = response_8.rows[0].user_id;
                 return [4 /*yield*/, databasePool_1.default.query("DELETE FROM lookup_game_review \n             WHERE game_id = $1 AND\n            user_id = $2\n            AND review_id = $3", [gameId, userId, reviewId])];
             case 4:
                 _a.sent();
@@ -414,9 +437,9 @@ var deleteReview = function (req, res, next) { return __awaiter(void 0, void 0, 
                 next();
                 return [3 /*break*/, 7];
             case 6:
-                error_9 = _a.sent();
+                error_10 = _a.sent();
                 databasePool_1.default.query("ROLLBACK");
-                console.log("ROLLBACK TRIGGERED", error_9);
+                console.log("ROLLBACK TRIGGERED", error_10);
                 return [2 /*return*/, res.sendStatus(constants_1.INTERNAL_SERVER_ERROR_STATUS)];
             case 7: return [2 /*return*/];
         }

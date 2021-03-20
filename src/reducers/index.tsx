@@ -12,11 +12,12 @@ import gameInfoReviewsReducer, {
     GameInfoReviewsStateResponse,
 } from "./gameInfoReviewsReducer";
 import profileReducer, { ProfileStateResponse } from "./profileReducer";
-
+import searchReducer, { SearchStateResponse } from "./searchReducer";
 export interface StoreState {
     authStatus: AuthStateResponse;
     games: GamesStateResponse;
     discountedGames: DiscountedGamesStateResponse;
+    // search: SearchStateResponse;
     gameInfo: GameInfoStateResponse;
     gameInfoReviews: GameInfoReviewsStateResponse;
     profile: ProfileStateResponse;
@@ -27,6 +28,7 @@ export default combineReducers<StoreState>({
     authStatus: authReducer,
     games: gamesBaseInfoReducer,
     discountedGames: discountedGamesReducer,
+    // search: searchReducer,
     gameInfo: gameInfoReducer,
     gameInfoReviews: gameInfoReviewsReducer,
     profile: profileReducer,

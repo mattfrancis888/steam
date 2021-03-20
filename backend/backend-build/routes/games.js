@@ -5,6 +5,7 @@ var games_1 = require("../controllers/games");
 var gameRouter = express_1.Router();
 gameRouter.get("/games", games_1.getGames);
 gameRouter.get("/games-discounted", games_1.getDiscountedGames);
+gameRouter.get("/search", games_1.getGamesBySearch);
 // gameRouter.get("/game-info/:gameId", getGameInfoTest);
 gameRouter.get("/game-info/:gameId", games_1.getGameInfo);
 gameRouter.get("/reviews/:gameId", games_1.getReviews);

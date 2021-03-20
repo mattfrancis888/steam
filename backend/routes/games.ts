@@ -9,11 +9,13 @@ import {
     postReview,
     editReview,
     deleteReview,
+    getGamesBySearch,
 } from "../controllers/games";
 const gameRouter = Router();
 
 gameRouter.get("/games", getGames);
 gameRouter.get("/games-discounted", getDiscountedGames);
+gameRouter.get("/search", getGamesBySearch);
 // gameRouter.get("/game-info/:gameId", getGameInfoTest);
 gameRouter.get("/game-info/:gameId", getGameInfo);
 gameRouter.get("/reviews/:gameId", getReviews);

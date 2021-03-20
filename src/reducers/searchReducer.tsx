@@ -1,21 +1,18 @@
 import {
     ActionTypes,
-    FetchGamesAction,
     FetchGamesByKeywordAction,
     FetchGamesResponse,
 } from "../actions";
 
-export interface GamesStateResponse {
+export interface SearchStateResponse {
     data?: FetchGamesResponse;
 }
 
-const gamesReducer = (
-    state: GamesStateResponse = {},
-    action: FetchGamesAction | FetchGamesByKeywordAction
+const searchReducer = (
+    state: SearchStateResponse = {},
+    action: FetchGamesByKeywordAction
 ) => {
     switch (action.type) {
-        case ActionTypes.FETCH_GAMES:
-            return { ...state, data: action.payload };
         case ActionTypes.FETCH_GAMES_BY_KEYWORD:
             return { ...state, data: action.payload };
 
@@ -24,4 +21,4 @@ const gamesReducer = (
     }
 };
 
-export default gamesReducer;
+export default searchReducer;

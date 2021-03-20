@@ -10,6 +10,7 @@ import moment from "moment";
 import { useLocation } from "react-router-dom";
 import queryString from "query-string";
 import _ from "lodash";
+import Searchbar from "./Searchbar";
 interface SearchProps {
     games: GamesStateResponse;
     discountedGames: GamesStateResponse;
@@ -30,10 +31,12 @@ const Search: React.FC<SearchProps> = (props) => {
     }, []);
 
     useEffect(() => {
-        if (props.discountedGames.data)
-            setHoverData(props.discountedGames.data.games[0].game_id);
-        else if (props.games.data)
-            setHoverData(props.games.data.games[0].game_id);
+        if (props.discountedGames.data) {
+            if (props.discountedGames.data.games.length > 0)
+                setHoverData(props.discountedGames.data.games[0].game_id);
+        } else if (props.games.data)
+            if (props.games.data.games.length > 0)
+                setHoverData(props.games.data.games[0].game_id);
     }, [props.games.data, props.discountedGames.data]);
 
     const [hoverData, setHoverData] = useState(1);
@@ -180,15 +183,31 @@ const Search: React.FC<SearchProps> = (props) => {
                     </h3>
                 </div>
             );
-        } else if (props.games.data || props.discountedGames.data) {
+        } else if (
+            props.games.data?.games ||
+            props.discountedGames.data?.games
+        ) {
+            if (
+                props.games.data?.games.length === 0 ||
+                props.discountedGames.data?.games.length === 0
+            ) {
+                return (
+                    <h1 className="noResultsText">{`No results found for "${queryValues.q}"`}</h1>
+                );
+            }
             return (
-                <div className={`searchContainer`}>
-                    <div className="searchGamesColumn">
-                        {renderChartGames()}
-                    </div>
+                <React.Fragment>
+                    <div className={`searchContainer`}>
+                        <Searchbar />
+                        <div className="searchColumnsWrap">
+                            <div className="searchGamesColumn">
+                                {renderChartGames()}
+                            </div>
 
-                    {renderChartGamePreview(hoverData)}
-                </div>
+                            {renderChartGamePreview(hoverData)}
+                        </div>
+                    </div>
+                </React.Fragment>
             );
         } else {
             return <Loading />;
