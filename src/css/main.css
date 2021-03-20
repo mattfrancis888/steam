@@ -2613,38 +2613,44 @@ body {
   }
 }
 
-.searchRowsColumn {
+.searchGamesColumn {
   width: 100%;
 }
 @media screen and (min-width: 992px) {
-  .searchRowsColumn {
+  .searchGamesColumn {
     width: 80%;
   }
 }
 
-.searchRow {
+.searchGameContainer {
+  position: relative;
+  width: 100%;
   display: flex;
   flex-wrap: wrap;
+  cursor: pointer;
   justify-content: space-between;
   align-items: center;
   background: rgba(0, 0, 0, 0.2);
   color: #c6d4df;
   margin-bottom: 0.5rem;
 }
-.searchRow:hover {
-  border: 1px solid rgba(139, 185, 224, 0.2);
-  background: rgba(0, 0, 0, 0.4);
+.searchGameContainer:hover {
+  background: linear-gradient(to right, #c6e6f8 5%, #95bcd3 95%);
+}
+.searchGameContainer:hover .searchGameTitle,
+.searchGameContainer:hover .searchGameDateAndPriceWrap {
+  color: #384959;
 }
 
-.searchRowImageAndTitleWrap {
+.searchGameImageAndTitleWrap {
   display: flex;
 }
-.searchRowImageAndTitleWrap > img {
+.searchGameImageAndTitleWrap > img {
   width: 14rem;
   height: 100%;
   object-fit: cover;
 }
-.searchRowImageAndTitleWrap .searchGameTitle {
+.searchGameImageAndTitleWrap .searchGameTitle {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -2654,39 +2660,39 @@ body {
   margin-top: 0.5rem;
 }
 @media screen and (min-width: 520px) {
-  .searchRowImageAndTitleWrap .searchGameTitle {
+  .searchGameImageAndTitleWrap .searchGameTitle {
     font-size: 1.4rem;
     margin-left: 1rem;
     margin-top: 0.75rem;
   }
 }
 
-.searchRowDate {
+.searchGameDateAndPriceWrap {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: flex-end;
+  margin: 0.5rem 1rem;
+  width: 100%;
+}
+.searchGameDateAndPriceWrap .searchGameDate {
   font-size: 1.1rem;
   color: #4c6c8c;
+  margin-right: auto;
 }
 @media screen and (min-width: 520px) {
-  .searchRowDate {
+  .searchGameDateAndPriceWrap .searchGameDate {
     display: block;
   }
 }
-
-.searchRowPriceWrap {
-  display: flex;
-  align-items: center;
-  margin-right: 1rem;
-  width: 100%;
-  justify-content: flex-end;
-  margin-top: 0.5rem;
-}
-@media screen and (min-width: 520px) {
-  .searchRowPriceWrap {
+@media screen and (min-width: 768px) {
+  .searchGameDateAndPriceWrap {
     margin-top: 0;
-    width: auto;
+    width: 40%;
   }
 }
 
-.searchRowDiscount {
+.searchGameDiscount {
   margin-right: 2rem;
   min-height: 100%;
   font-size: 1.3rem;
@@ -2695,7 +2701,7 @@ body {
   color: #a4d007;
 }
 
-.searchRowPriceStriked {
+.searchGamePriceStriked {
   text-decoration: line-through;
   font-size: 1.3rem;
   margin: 0;
@@ -2703,12 +2709,13 @@ body {
   color: #626366;
 }
 
-.searchRowPrice {
+.searchGamePrice {
   margin: 0;
   font-size: 1.3rem;
 }
 
 .searchPreviewHover {
+  margin-left: 5rem;
   display: none;
   max-width: 30rem;
   padding: 1rem;
@@ -2737,6 +2744,21 @@ body {
   margin-right: 0.25rem;
   margin-bottom: 0.5rem;
   padding: 0.5rem;
+}
+
+.searchGameContainerToggled {
+  background: linear-gradient(to right, #c6e6f8 5%, #95bcd3 95%);
+  padding-right: 0;
+}
+.searchGameContainerToggled .searchGameTitle,
+.searchGameContainerToggled .searchGameDateAndPriceWrap {
+  color: #384959;
+}
+@media screen and (min-width: 992px) {
+  .searchGameContainerToggled {
+    box-sizing: content-box;
+    padding-right: 5rem;
+  }
 }
 
 /*# sourceMappingURL=main.css.map */
