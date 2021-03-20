@@ -1629,6 +1629,8 @@ body {
 }
 
 .chartGamesColumn {
+  display: flex;
+  flex-direction: column;
   width: 100%;
 }
 @media screen and (min-width: 992px) {
@@ -1864,6 +1866,51 @@ body {
   margin-bottom: 0.25rem;
   padding: 0.5rem;
   color: white;
+}
+
+.seeMoreWrap {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+  margin-bottom: 1rem;
+  margin-right: 0.5rem;
+}
+
+.seeMoreText {
+  font-size: 1rem;
+  margin: 0;
+  margin-right: 1rem;
+}
+@media screen and (min-width: 520px) {
+  .seeMoreText {
+    font-size: 1.2rem;
+  }
+}
+@media screen and (min-width: md_breakpoint) {
+  .seeMoreText {
+    font-size: 1.4rem;
+  }
+}
+
+.chartSeeMore {
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  padding: 0.5rem;
+  cursor: pointer;
+}
+@media screen and (min-width: 520px) {
+  .chartSeeMore {
+    padding: 1rem;
+    font-size: 1.2rem;
+  }
+}
+@media screen and (min-width: md_breakpoint) {
+  .chartSeeMore {
+    padding: 1rem;
+    font-size: 1.4rem;
+  }
+}
+.chartSeeMore:hover {
+  border: 1px solid white;
 }
 
 .gameInfoContainer {

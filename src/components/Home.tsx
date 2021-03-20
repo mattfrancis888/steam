@@ -42,12 +42,20 @@ const Home: React.FC<HomeProps> = (props) => {
         props.fetchDiscountedGames();
     }, []);
 
+    useEffect(() => {
+        if (props.games.data) setHoverData(props.games.data.games[0].game_id);
+    }, [props.games.data]);
+
     const { width } = useWindowDimensions();
 
     const renderGenresForGameText = (gameId: number) => {
         let filteredContent = _.filter(props.games.data?.games, {
             game_id: gameId,
         });
+        if (filteredContent.length === 0)
+            filteredContent = _.filter(props.discountedGames.data?.games, {
+                game_id: gameId,
+            });
 
         return filteredContent.map((content, index) => {
             return content.genres.map((genre, index) => {
@@ -64,6 +72,11 @@ const Home: React.FC<HomeProps> = (props) => {
             game_id: gameId,
         });
 
+        if (filteredContent.length === 0)
+            filteredContent = _.filter(props.discountedGames.data?.games, {
+                game_id: gameId,
+            });
+
         return filteredContent.map((content, index) => {
             return content.genres.map((genre, index) => {
                 return (
@@ -79,6 +92,10 @@ const Home: React.FC<HomeProps> = (props) => {
         let game = _.filter(props.games.data?.games, {
             game_id: gameId,
         });
+        if (game.length === 0)
+            game = _.filter(props.discountedGames.data?.games, {
+                game_id: gameId,
+            });
         let maxScreenshotToShow = 4;
         return game[0].screenshots.map((screenshot, index) => {
             if (index < maxScreenshotToShow)
@@ -214,6 +231,28 @@ const Home: React.FC<HomeProps> = (props) => {
 
                     <div className="chart">
                         <div className="chartGamesColumn">
+                            <div className="seeMoreWrap">
+                                <p className="seeMoreText">See More:</p>
+                                <div
+                                    className="chartSeeMore"
+                                    onClick={() => {
+                                        if (specialsTabClicked) {
+                                            history.push({
+                                                pathname: "/search",
+                                                search: `?specials`,
+                                            });
+                                        } else {
+                                            history.push({
+                                                pathname: "/search",
+                                            });
+                                        }
+                                    }}
+                                >
+                                    {specialsTabClicked
+                                        ? "Specials"
+                                        : "Top Sellers"}
+                                </div>
+                            </div>
                             {renderChartGames()}
                         </div>
                         {renderChartGamePreview(hoverData)}

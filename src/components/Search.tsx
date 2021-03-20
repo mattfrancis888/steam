@@ -7,6 +7,8 @@ import { ErrorStateResponse } from "reducers/errorReducer";
 import Loading from "./Loading";
 import history from "../browserHistory";
 import moment from "moment";
+import { useLocation } from "react-router-dom";
+import queryString from "query-string";
 import _ from "lodash";
 interface SearchProps {
     games: GamesStateResponse;
@@ -17,10 +19,22 @@ interface SearchProps {
 }
 
 const Search: React.FC<SearchProps> = (props) => {
+    //For Query Strings:
+    const { search } = useLocation();
+    const queryValues = queryString.parse(search);
+
     useEffect(() => {
-        props.fetchGames();
-        // props.fetchDiscountedGames();
+        if (queryValues.specials !== undefined) {
+            props.fetchDiscountedGames();
+        } else props.fetchGames();
     }, []);
+
+    useEffect(() => {
+        if (props.discountedGames.data)
+            setHoverData(props.discountedGames.data.games[0].game_id);
+        else if (props.games.data)
+            setHoverData(props.games.data.games[0].game_id);
+    }, [props.games.data, props.discountedGames.data]);
 
     const [hoverData, setHoverData] = useState(1);
 
@@ -28,6 +42,11 @@ const Search: React.FC<SearchProps> = (props) => {
         let game = _.filter(props.games.data?.games, {
             game_id: gameId,
         });
+
+        if (game.length === 0)
+            game = _.filter(props.discountedGames.data?.games, {
+                game_id: gameId,
+            });
         let maxScreenshotToShow = 1;
         return game[0].screenshots.map((screenshot, index) => {
             if (index < maxScreenshotToShow)
@@ -39,10 +58,18 @@ const Search: React.FC<SearchProps> = (props) => {
         let filteredContent = _.filter(props.games.data?.games, {
             game_id: gameId,
         });
+        if (filteredContent.length === 0)
+            filteredContent = _.filter(props.discountedGames.data?.games, {
+                game_id: gameId,
+            });
 
         return filteredContent.map((content, index) => {
             return content.genres.map((genre, index) => {
-                return <p className="searchGameGenres">{genre}</p>;
+                return (
+                    <p key={index} className="searchGameGenres">
+                        {genre}
+                    </p>
+                );
             });
         });
     };
@@ -52,6 +79,10 @@ const Search: React.FC<SearchProps> = (props) => {
             game_id: gameId,
         });
 
+        if (filteredContent.length === 0)
+            filteredContent = _.filter(props.discountedGames.data?.games, {
+                game_id: gameId,
+            });
         return (
             <div className="searchPreviewHover">
                 <p className="searchGamePreviewTitle">
@@ -102,19 +133,14 @@ const Search: React.FC<SearchProps> = (props) => {
 
     const renderChartGames = () => {
         let contentToRender = props.games.data?.games;
-        // if (specialsTabClicked === true) {
-        //     contentToRender = props.discountedGames.data?.games;
-        // }
+        if (queryValues.specials !== undefined) {
+            contentToRender = props.discountedGames.data?.games;
+        }
         if (contentToRender)
             return contentToRender.map((content, index) => {
                 return (
                     <div
                         key={index}
-                        // className={`searchGame  ${
-                        //     hoverData === content.game_id
-                        //         ? "searchGameContainerToggled"
-                        //         : ""
-                        // }`}
                         className={`searchGameContainer ${
                             hoverData === content.game_id
                                 ? "searchGameContainerToggled"
@@ -154,7 +180,7 @@ const Search: React.FC<SearchProps> = (props) => {
                     </h3>
                 </div>
             );
-        } else if (props.games.data) {
+        } else if (props.games.data || props.discountedGames.data) {
             return (
                 <div className={`searchContainer`}>
                     <div className="searchGamesColumn">
