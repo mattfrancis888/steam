@@ -10,7 +10,7 @@ import {
 import "pure-react-carousel/dist/react-carousel.es.css";
 import { RiArrowRightSLine, RiArrowLeftSLine } from "react-icons/ri";
 import LazyLoad from "react-lazyload";
-import { useHistory } from "react-router-dom";
+import history from "../browserHistory";
 import useWindowDimensions from "../windowDimensions";
 import { FeaturedCarouselProps } from "./Home";
 import anime from "animejs/lib/anime.es.js";
@@ -22,7 +22,7 @@ const FeaturedCarousel: React.FC<FeaturedCarouselProps> = (props) => {
     const { width } = useWindowDimensions();
 
     const renderPrice = (content: Game) => {
-        if (content.discount_percentage) {
+        if (parseFloat(content.discount_percentage) > 0) {
             return (
                 <div className="featuredAdjustedPriceWrap">
                     <div className="featuredDiscount">
@@ -66,7 +66,13 @@ const FeaturedCarousel: React.FC<FeaturedCarouselProps> = (props) => {
     const renderSlides = () => {
         return props.content.map((content, index) => {
             return (
-                <Slide index={index} key={index}>
+                <Slide
+                    index={index}
+                    key={index}
+                    onClick={() => {
+                        history.push(`game/${content.game_id}`);
+                    }}
+                >
                     <LazyLoad>
                         <div
                             className={`featuredContainerCarousel featuredAnime${index}`}

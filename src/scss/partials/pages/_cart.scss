@@ -59,14 +59,6 @@
     font-size: 1.4rem;
 }
 
-.removeFromCart {
-    color: #56707f;
-    text-decoration: underline;
-    cursor: pointer;
-    &:hover {
-        color: $light-blue;
-    }
-}
 .totalContainer,
 .cartRow {
     padding: 1rem 1.5rem;
@@ -110,4 +102,19 @@
     margin-left: auto;
     margin-top: 3rem;
     margin-bottom: 2rem;
+}
+
+.cartPriceAndRemoveWrap {
+    // display: flex;
+    // flex-direction: column;
+    text-align: center;
+    .removeFromCart {
+        color: #56707f;
+        text-decoration: underline;
+        cursor: pointer;
+        &:hover {
+            color: $light-blue;
+        }
+        // margin: 0 auto;
+    }
 }

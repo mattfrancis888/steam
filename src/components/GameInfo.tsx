@@ -62,8 +62,9 @@ export interface IPostAndEditReview {
 }
 const GameInfo: React.FC<GameInfoProps> = (props) => {
     //cart: https://javascript.plainenglish.io/creating-a-persistent-cart-in-react-f287ed4b4df0
-    let [cart, setCart] = useState([]);
+    let [cart, setCart] = useState<[]>([]);
     let localCart = localStorage.getItem("cart");
+
     const addItem = (item: any) => {
         //create a copy of our cart state, avoid overwritting existing state
         let cartCopy: any = [...cart];
@@ -91,18 +92,18 @@ const GameInfo: React.FC<GameInfoProps> = (props) => {
         let stringCart = JSON.stringify(cartCopy);
         localStorage.setItem("cart", stringCart);
     };
-    // const removeItem = (itemID) => {};
 
     useEffect(() => {
         //turn it into js
-        //@ts-ignore
-        localCart = JSON.parse(localCart);
-        //load persisted cart into state if it exists
-        console.log(localCart);
-        //@ts-ignore
-        if (localCart) setCart(localCart);
-    }, []); //the empty array ensures useEffect only runs once
+        //console.log(localCart);
 
+        if (localCart != null) {
+            let parsedLocalCart = JSON.parse(localCart);
+            //load persisted cart into state if it exists
+            // console.log(parsedLocalCart);
+            setCart(parsedLocalCart);
+        }
+    }, []);
     const itemEls = useRef(new Array());
     //Using refs when you have a dynamic list: https://mattclaffey.medium.com/adding-react-refs-to-an-array-of-items-96e9a12ab40c
     //normal [] would not wrok.
@@ -211,7 +212,7 @@ const GameInfo: React.FC<GameInfoProps> = (props) => {
     };
 
     const renderPrice = (game: Game) => {
-        if (game.discount_percentage) {
+        if (parseFloat(game.discount_percentage) > 0) {
             return (
                 <div className="gameInfoAdjustedPriceWrap">
                     <div className="gameInfoDiscount">
@@ -358,8 +359,7 @@ const GameInfo: React.FC<GameInfoProps> = (props) => {
             return (
                 <div className="gameInfoContainer">
                     <button className="cart">{`Cart(${
-                        //@ts-ignore
-                        JSON.parse(localCart).length
+                        localCart != null ? cart.length : "0"
                     })`}</button>
 
                     <h1 className="gameInfoTitle">
@@ -434,6 +434,7 @@ const GameInfo: React.FC<GameInfoProps> = (props) => {
                                 onClick={() => {
                                     if (props.gameInfo.data?.games)
                                         addItem(props.gameInfo.data.games[0]);
+                                    history.push("/cart");
                                 }}
                             >
                                 Add To Cart

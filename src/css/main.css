@@ -414,6 +414,9 @@ body {
   width: 100%;
 }
 
+.featuredContainerCarousel {
+  cursor: pointer;
+}
 @media screen and (min-width: 992px) {
   .featuredContainerCarousel {
     margin: 0 5rem;
@@ -449,6 +452,10 @@ body {
   }
 }
 .featuredCarouselScreenshotSection .featuredCarouselGameTitle {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
   margin-left: 1.5rem;
   font-weight: normal;
   letter-spacing: 0.2rem;
@@ -1585,6 +1592,8 @@ body {
 
 .homeFirstSection {
   padding: 1rem 3rem;
+  display: flex;
+  flex-direction: column;
 }
 @media screen and (min-width: 520px) {
   .homeFirstSection {
@@ -2235,7 +2244,7 @@ body {
   background-image: url(https://store.akamai.steamstatic.com/public/images/v6/storemenu/background_cart.jpg);
   cursor: pointer;
   padding: 0.25rem 2rem;
-  font-size: 1.3rem;
+  font-size: 1.2rem;
   margin-left: auto;
 }
 .cart:hover {
@@ -2354,15 +2363,6 @@ body {
   font-size: 1.4rem;
 }
 
-.removeFromCart {
-  color: #56707f;
-  text-decoration: underline;
-  cursor: pointer;
-}
-.removeFromCart:hover {
-  color: #c1dbf4;
-}
-
 .totalContainer,
 .cartRow {
   padding: 1rem 1.5rem;
@@ -2406,6 +2406,18 @@ body {
   color: white;
   background-color: #769605;
   transition: all 0.3s ease;
+}
+
+.cartPriceAndRemoveWrap {
+  text-align: center;
+}
+.cartPriceAndRemoveWrap .removeFromCart {
+  color: #56707f;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.cartPriceAndRemoveWrap .removeFromCart:hover {
+  color: #c1dbf4;
 }
 
 .signInContainer {

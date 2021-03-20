@@ -34,6 +34,7 @@ interface HomeProps {
 }
 
 const Home: React.FC<HomeProps> = (props) => {
+    let localCart = localStorage.getItem("cart");
     const [hoverData, setHoverData] = useState(1);
     const [specialsTabClicked, setSpecialsTabClicked] = useState(false);
     useEffect(() => {
@@ -86,7 +87,7 @@ const Home: React.FC<HomeProps> = (props) => {
     };
 
     const renderPrice = (content: Game) => {
-        if (content.discount_percentage) {
+        if (parseFloat(content.discount_percentage) > 0) {
             return (
                 <div className="chartAdjustedPriceWrap">
                     <div className="chartDiscount">
@@ -124,6 +125,9 @@ const Home: React.FC<HomeProps> = (props) => {
             return contentToRender.map((content, index) => {
                 return (
                     <div
+                        onClick={() => {
+                            history.push(`game/${content.game_id}`);
+                        }}
                         key={index}
                         className={`chartGameContainer ${
                             hoverData === content.game_id
@@ -133,7 +137,6 @@ const Home: React.FC<HomeProps> = (props) => {
                         onMouseOver={() => {
                             setHoverData(content.game_id);
                         }}
-                        onClick={(event) => {}}
                     >
                         <div className="chartGameImage">
                             <img src={content.cover_url} alt="game"></img>
@@ -167,6 +170,11 @@ const Home: React.FC<HomeProps> = (props) => {
             return (
                 <div className="homeContainer">
                     <div className="homeFirstSection">
+                        <button className="cart">{`Cart(${
+                            localCart != null
+                                ? JSON.parse(localCart).length
+                                : "0"
+                        })`}</button>
                         <h1 className="bannerTitle">
                             Featured And Recommended
                         </h1>
