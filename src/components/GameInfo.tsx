@@ -61,6 +61,48 @@ export interface IPostAndEditReview {
     recommend: boolean;
 }
 const GameInfo: React.FC<GameInfoProps> = (props) => {
+    //cart: https://javascript.plainenglish.io/creating-a-persistent-cart-in-react-f287ed4b4df0
+    let [cart, setCart] = useState([]);
+    let localCart = localStorage.getItem("cart");
+    const addItem = (item: any) => {
+        //create a copy of our cart state, avoid overwritting existing state
+        let cartCopy: any = [...cart];
+
+        //assuming we have an ID field in our item
+        let { game_id } = item;
+
+        //look for item in cart array
+        let existingItem = cartCopy.find(
+            (cartItem: any) => cartItem.game_id == game_id
+        );
+
+        //if item already exists
+        console.log(existingItem);
+        if (existingItem) {
+        } else {
+            //if item doesn't exist, simply add it
+            cartCopy.push(item);
+        }
+
+        //update app state
+        setCart(cartCopy);
+
+        //make cart a string and store in local space
+        let stringCart = JSON.stringify(cartCopy);
+        localStorage.setItem("cart", stringCart);
+    };
+    // const removeItem = (itemID) => {};
+
+    useEffect(() => {
+        //turn it into js
+        //@ts-ignore
+        localCart = JSON.parse(localCart);
+        //load persisted cart into state if it exists
+        console.log(localCart);
+        //@ts-ignore
+        if (localCart) setCart(localCart);
+    }, []); //the empty array ensures useEffect only runs once
+
     const itemEls = useRef(new Array());
     //Using refs when you have a dynamic list: https://mattclaffey.medium.com/adding-react-refs-to-an-array-of-items-96e9a12ab40c
     //normal [] would not wrok.
@@ -214,6 +256,13 @@ const GameInfo: React.FC<GameInfoProps> = (props) => {
     };
 
     const renderReviews = (reviews: Reviewer[]) => {
+        if (reviews.length === 0) {
+            return (
+                <h1 className="noReviews">
+                    There are no reviews for this game.
+                </h1>
+            );
+        }
         return reviews.map((review, index) => {
             return (
                 <div
@@ -308,6 +357,11 @@ const GameInfo: React.FC<GameInfoProps> = (props) => {
         } else if (props.gameInfo.data && props.gameInfoReviews.data) {
             return (
                 <div className="gameInfoContainer">
+                    <button className="cart">{`Cart(${
+                        //@ts-ignore
+                        JSON.parse(localCart).length
+                    })`}</button>
+
                     <h1 className="gameInfoTitle">
                         {props.gameInfo.data.games[0].title}
                     </h1>
@@ -375,7 +429,13 @@ const GameInfo: React.FC<GameInfoProps> = (props) => {
                             <div className="gameInfoPriceWrap">
                                 {renderPrice(props.gameInfo.data.games[0])}
                             </div>
-                            <button className="gameInfoAddToCartButton">
+                            <button
+                                className="gameInfoAddToCartButton"
+                                onClick={() => {
+                                    if (props.gameInfo.data?.games)
+                                        addItem(props.gameInfo.data.games[0]);
+                                }}
+                            >
                                 Add To Cart
                             </button>
                         </div>

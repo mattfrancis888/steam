@@ -1,12 +1,14 @@
 .gameInfoContainer {
-    padding: 0rem 3rem;
+    padding: 0rem 3rem 5rem 3rem;
 
     @media screen and (min-width: $lg_breakpoint) {
-        padding: 0rem 8rem;
+        padding: 2rem 8rem 10rem 8rem;
     }
     @media screen and (min-width: $xl_breakpoint) {
-        padding: 0rem 20rem;
+        padding: 2rem 20rem 10rem 20rem;
     }
+    display: flex;
+    flex-direction: column;
 }
 .gameInfoTitle {
     padding: 0 0rem;
@@ -152,8 +154,8 @@
 .gameInfoPriceWrap {
     display: flex;
     align-items: center;
-    padding: 0.25rem 1rem;
-    padding-left: 0.25rem;
+    padding: 0.25rem 1.2rem;
+    color: #c6d4df;
 }
 
 .gameInfoAddToCartButton {
@@ -319,5 +321,31 @@
     -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
-    padding-right: 6rem;
+    padding-right: 2rem;
+    @media screen and (min-width: $lg_breakpoint) {
+        padding-right: 6rem;
+    }
+}
+.cart {
+    text-transform: uppercase;
+    color: #a4d007;
+    background-color: rgba(164, 208, 7, 0.4);
+    background-image: url(https://store.akamai.steamstatic.com/public/images/v6/storemenu/background_cart.jpg);
+    cursor: pointer;
+    &:hover {
+        color: #111111;
+        background-color: rgba(164, 208, 7, 0.5);
+    }
+    padding: 0.25rem 2rem;
+    font-size: 1.3rem;
+    margin-left: auto;
+}
+
+.noReviews {
+    color: #acb2b8;
+    font-size: 1.3rem;
+    font-weight: normal;
+    @media screen and (min-width: $lg_breakpoint) {
+        font-size: 1.6rem;
+    }
 }
