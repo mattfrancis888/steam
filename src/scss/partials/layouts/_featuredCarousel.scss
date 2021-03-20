@@ -71,12 +71,12 @@
     color: #acdbf5;
     bottom: 2rem;
     right: 0;
-    padding: 1rem;
+    // padding: 1rem;
     font-size: 1rem;
     @media screen and (min-width: $sm_breakpoint) {
         bottom: 5rem;
         right: 0;
-        padding: 0.75rem;
+        // padding: 0.75rem;
         font-size: 1.4rem;
     }
 }
@@ -101,9 +101,25 @@
     }
 }
 
+.featuredPriceStrikedAndPriceWrap {
+    padding: 0.25rem;
+    padding-right: 1rem;
+}
+.featuredGamePriceInnerWrap {
+    padding: 0.75rem;
+    padding-right: 1rem;
+    padding-left: 1rem;
+}
+
 .featuredDiscount {
     @include discountPriceColor;
+    display: flex;
+    align-items: center;
+    height: 100%;
     margin-right: 1rem;
-    padding: 0.5rem;
+    padding: 1rem;
     font-size: 1.4rem;
+    > p {
+        margin: 0;
+    }
 }

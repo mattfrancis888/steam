@@ -152,3 +152,17 @@
         padding-right: 5rem;
     }
 }
+
+.noResultsWrap {
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.2);
+    padding: 0.5rem;
+    font-size: 1.2rem;
+    @media screen and (min-width: $md_breakpoint) {
+        padding: 1rem;
+        font-size: 1.4rem;
+    }
+    @media screen and (min-width: $lg_breakpoint) {
+        font-size: 1.6rem;
+    }
+}

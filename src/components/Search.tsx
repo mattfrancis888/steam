@@ -86,6 +86,7 @@ const Search: React.FC<SearchProps> = (props) => {
             filteredContent = _.filter(props.discountedGames.data?.games, {
                 game_id: gameId,
             });
+
         return (
             <div className="searchPreviewHover">
                 <p className="searchGamePreviewTitle">
@@ -192,7 +193,16 @@ const Search: React.FC<SearchProps> = (props) => {
                 props.discountedGames.data?.games.length === 0
             ) {
                 return (
-                    <h1 className="noResultsText">{`No results found for "${queryValues.q}"`}</h1>
+                    <React.Fragment>
+                        <div className={`searchContainer`}>
+                            <Searchbar />
+                            <div className="searchColumnsWrap">
+                                <div className="noResultsWrap">
+                                    <p>There are no matches to your search. </p>
+                                </div>
+                            </div>
+                        </div>
+                    </React.Fragment>
                 );
             }
             return (

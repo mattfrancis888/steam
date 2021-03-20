@@ -42,9 +42,18 @@ const Home: React.FC<HomeProps> = (props) => {
         props.fetchDiscountedGames();
     }, []);
 
-    useEffect(() => {
-        if (props.games.data) setHoverData(props.games.data.games[0].game_id);
-    }, [props.games.data]);
+    // useEffect(() => {
+    //     if (props.games.data) setHoverData(props.games.data.games[0].game_id);
+    // }, [props.games.data]);
+
+    // useEffect(() => {
+    //     if (props.discountedGames.data) {
+    //         if (props.discountedGames.data.games.length > 0)
+    //             setHoverData(props.discountedGames.data.games[0].game_id);
+    //     } else if (props.games.data)
+    //         if (props.games.data.games.length > 0)
+    //             setHoverData(props.games.data.games[0].game_id);
+    // }, [props.games.data, props.discountedGames.data]);
 
     const { width } = useWindowDimensions();
 

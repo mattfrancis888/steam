@@ -216,9 +216,9 @@ const GameInfo: React.FC<GameInfoProps> = (props) => {
             return (
                 <div className="gameInfoAdjustedPriceWrap">
                     <div className="gameInfoDiscount">
-                        -{parseFloat(game.discount_percentage) * 100}%
+                        <p>-{parseFloat(game.discount_percentage) * 100}%</p>
                     </div>
-                    <div>
+                    <div className="gameInfoPriceStrikedAndPriceWrap">
                         <p className="gameInfoOrigPriceStriked">
                             ${parseFloat(game.price).toFixed(2)}
                         </p>
@@ -231,9 +231,11 @@ const GameInfo: React.FC<GameInfoProps> = (props) => {
         } else {
             //no discount
             return (
-                <p className="chartGamePrice">
-                    ${parseFloat(game.price).toFixed(2)}
-                </p>
+                <div className="chartGamePriceInnerWrap">
+                    <p className="chartGamePrice">
+                        ${parseFloat(game.price).toFixed(2)}
+                    </p>
+                </div>
             );
         }
     };

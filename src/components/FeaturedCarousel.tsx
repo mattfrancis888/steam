@@ -26,9 +26,9 @@ const FeaturedCarousel: React.FC<FeaturedCarouselProps> = (props) => {
             return (
                 <div className="featuredAdjustedPriceWrap">
                     <div className="featuredDiscount">
-                        -{parseFloat(content.discount_percentage) * 100}%
+                        <p>-{parseFloat(content.discount_percentage) * 100}%</p>
                     </div>
-                    <div>
+                    <div className="featuredPriceStrikedAndPriceWrap">
                         <p className="featuredOrigPriceStriked">
                             ${parseFloat(content.price).toFixed(2)}
                         </p>
@@ -44,9 +44,11 @@ const FeaturedCarousel: React.FC<FeaturedCarouselProps> = (props) => {
         } else {
             //no discount
             return (
-                <p className="chartGamePrice">
-                    ${parseFloat(content.price).toFixed(2)}
-                </p>
+                <div className="featuredGamePriceInnerWrap">
+                    <p className="featuredGamePrice">
+                        ${parseFloat(content.price).toFixed(2)}
+                    </p>
+                </div>
             );
         }
     };
@@ -138,8 +140,8 @@ const FeaturedCarousel: React.FC<FeaturedCarouselProps> = (props) => {
                     visibleSlides={1}
                     infinite={true}
                     step={1}
-                    isPlaying={true}
-                    interval={5000}
+                    // isPlaying={true}
+                    // interval={5000}
                 >
                     <div className="sliderAndButtonWrap">
                         <Slider>{renderSlides()}</Slider>
