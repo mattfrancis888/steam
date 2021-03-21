@@ -150,37 +150,41 @@ const Home: React.FC<HomeProps> = (props) => {
         }
         if (contentToRender)
             return contentToRender.map((content, index) => {
-                return (
-                    <div
-                        onClick={() => {
-                            history.push(`game/${content.game_id}`);
-                        }}
-                        key={index}
-                        className={`chartGameContainer ${
-                            hoverData === content.game_id
-                                ? "chartGameContainerToggled"
-                                : ""
-                        }`}
-                        onMouseOver={() => {
-                            setHoverData(content.game_id);
-                        }}
-                    >
-                        <div className="chartGameImage">
-                            <img src={content.cover_url} alt="game"></img>
-                        </div>
-                        <div className="chartGameInfo">
-                            <div className="chartGameGenreAndTitle">
-                                <p className="chartGameTitle">
-                                    {content.title}
-                                </p>
-                                <p className="chartGameGenres">
-                                    {renderGenresForGameText(content.game_id)}
-                                </p>
+                if (index < 11) {
+                    return (
+                        <div
+                            onClick={() => {
+                                history.push(`game/${content.game_id}`);
+                            }}
+                            key={index}
+                            className={`chartGameContainer ${
+                                hoverData === content.game_id
+                                    ? "chartGameContainerToggled"
+                                    : ""
+                            }`}
+                            onMouseOver={() => {
+                                setHoverData(content.game_id);
+                            }}
+                        >
+                            <div className="chartGameImage">
+                                <img src={content.cover_url} alt="game"></img>
                             </div>
-                            {renderPrice(content)}
+                            <div className="chartGameInfo">
+                                <div className="chartGameGenreAndTitle">
+                                    <p className="chartGameTitle">
+                                        {content.title}
+                                    </p>
+                                    <p className="chartGameGenres">
+                                        {renderGenresForGameText(
+                                            content.game_id
+                                        )}
+                                    </p>
+                                </div>
+                                {renderPrice(content)}
+                            </div>
                         </div>
-                    </div>
-                );
+                    );
+                }
             });
     };
 
@@ -194,27 +198,16 @@ const Home: React.FC<HomeProps> = (props) => {
                 </div>
             );
         } else if (props.games.data && props.discountedGames.data) {
+            let carouselSplit = _.chunk(props.games.data.games, 4);
             return (
                 <div className="homeContainer">
                     <div className="homeFirstSection">
-                        {/* <div className="cartAndSearchWrap">
-                            <button
-                                className="cart"
-                                onClick={() => {
-                                    history.push("/cart");
-                                }}
-                            >{`Cart(${
-                                localCart !== null
-                                    ? JSON.parse(localCart).length
-                                    : "0"
-                            })`}</button>
-                            <Searchbar />
-                        </div> */}
                         <CartAndSearchbar />
                         <h1 className="bannerTitle">
                             Featured And Recommended
                         </h1>
-                        <FeaturedCarousel content={props.games.data.games} />
+
+                        <FeaturedCarousel content={carouselSplit[0]} />
                         <h1 className="bannerTitle">Special Offers</h1>
                         <SpecialOfferCarousel
                             content={props.discountedGames.data.games}

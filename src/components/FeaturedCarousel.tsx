@@ -135,6 +135,7 @@ const FeaturedCarousel: React.FC<FeaturedCarouselProps> = (props) => {
                 <CarouselProvider
                     naturalSlideWidth={100}
                     naturalSlideHeight={width < LG_SCREEN_SIZE ? 45 : 31}
+                    // totalSlides={props.content.length}
                     totalSlides={props.content.length}
                     className="gameCarouselWrap"
                     visibleSlides={1}

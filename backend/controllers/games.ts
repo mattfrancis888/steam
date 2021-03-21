@@ -254,7 +254,7 @@ export const getGames = async (req: Request, res: Response) => {
                 join screenshot s on s.screenshot_id = ls.screenshot_id
               group by ls.game_id
            ) sc on sc.game_id = ga.game_id
-           INNER JOIN game_price gp on ga.price_id = gp.price_id ;`;
+           INNER JOIN game_price gp on ga.price_id = gp.price_id  ORDER BY ga.game_id ;`;
 
         const response = await pool.query(sql);
 
@@ -283,7 +283,7 @@ export const getDiscountedGames = async (req: Request, res: Response) => {
               group by ls.game_id
            ) sc on sc.game_id = ga.game_id
            INNER JOIN game_price gp on ga.price_id = gp.price_id 
-           WHERE gp.discount_percentage  > 0 ;`;
+           WHERE gp.discount_percentage  > 0  ORDER BY ga.game_id ;`;
 
         const response = await pool.query(sql);
 
@@ -313,7 +313,7 @@ export const getGamesBySearch = async (req: Request, res: Response) => {
               group by ls.game_id
            ) sc on sc.game_id = ga.game_id
            INNER JOIN game_price gp on ga.price_id = gp.price_id 
-           WHERE name_tokens @@ to_tsquery($1)`;
+           WHERE name_tokens @@ to_tsquery($1) ORDER BY ga.game_id `;
 
         const response = await pool.query(sql, [searchKeyword]);
 

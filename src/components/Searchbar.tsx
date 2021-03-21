@@ -8,6 +8,7 @@ import { StoreState } from "../reducers";
 import axios from "../actions/axiosConfig";
 import { Game } from "../actions";
 import useComponentVisible from "../useComponentVisible";
+
 interface SearchbarProps {
     fetchGamesByKeyword?(searchKeyword: string): void;
 }
@@ -26,7 +27,7 @@ const Searchbar: React.FC<SearchbarProps> = (props) => {
     useEffect(() => {
         async function fetchMyAPI() {
             let response = await axios.get(`/api/search?q=${searchTerm}`);
-            console.log("matt", response.data);
+            // console.log("matt", response.data);
             dataSet(response.data);
         }
 
@@ -63,10 +64,30 @@ const Searchbar: React.FC<SearchbarProps> = (props) => {
         if (data) {
             if (data.games) {
                 if (data.games.length > 0) {
-                    return data.games.map((game: Game) => {
+                    return data.games.map((game: Game, index: number) => {
                         return (
-                            <div className="matchRow">
-                                <img src={game.cover_url} alt="game"></img>
+                            <div
+                                className={`matchRow`}
+                                onClick={() =>
+                                    history.push(`/game/${game.game_id}`)
+                                }
+                            >
+                                <img
+                                    className={`matchRowImage matchRowImage${index}`}
+                                    src={game.cover_url}
+                                    onLoad={() => {
+                                        anime({
+                                            targets: `.matchRowImage${index}`,
+                                            // Properties
+                                            // Animation Parameters
+                                            opacity: ["0", "1"],
+
+                                            duration: 750,
+                                            easing: "easeOutQuad",
+                                        });
+                                    }}
+                                    alt="game"
+                                ></img>
                                 <div className="matchTextWrap">
                                     <p className="matchTitle">{game.title}</p>
                                     <p className="matchPrice">
@@ -106,8 +127,13 @@ const Searchbar: React.FC<SearchbarProps> = (props) => {
                         // directToListingsPage();
                     }}
                 />
-                <div className="matchContainer" ref={ref}>
-                    {isComponentVisible && renderSearchPreview()}
+                <div
+                    className={`matchContainer ${
+                        isComponentVisible ? "" : "hideMatchContainer"
+                    }`}
+                    ref={ref}
+                >
+                    {renderSearchPreview()}
                 </div>
             </form>
         </React.Fragment>

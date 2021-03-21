@@ -1,4 +1,7 @@
 .communityContainerCarousel {
+    display: flex;
+}
+.communityContainerCarousel {
     @media screen and (min-width: $lg_breakpoint) {
         margin: 0 5rem;
     }

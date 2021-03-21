@@ -16,6 +16,7 @@ import { useLocation } from "react-router-dom";
 import queryString from "query-string";
 import _ from "lodash";
 import Searchbar from "./Searchbar";
+import anime from "animejs/lib/anime.es.js";
 import CartAndSearchbar from "./CartAndSearchbar";
 interface SearchProps {
     games: GamesStateResponse;
@@ -31,6 +32,7 @@ const Search: React.FC<SearchProps> = (props) => {
     const { search } = useLocation();
     const queryValues = queryString.parse(search);
 
+    const [hoverData, setHoverData] = useState(1);
     let localCart = localStorage.getItem("cart");
     useEffect(() => {
         if (queryValues.q) {
@@ -49,8 +51,6 @@ const Search: React.FC<SearchProps> = (props) => {
                 setHoverData(props.games.data.games[0].game_id);
     }, [props.games.data, props.discountedGames.data]);
 
-    const [hoverData, setHoverData] = useState(1);
-
     const renderScreenshotsForGame = (gameId: number) => {
         let game = _.filter(props.games.data?.games, {
             game_id: gameId,
@@ -63,7 +63,25 @@ const Search: React.FC<SearchProps> = (props) => {
         let maxScreenshotToShow = 1;
         return game[0].screenshots.map((screenshot, index) => {
             if (index < maxScreenshotToShow)
-                return <img key={index} src={screenshot} alt="preview"></img>;
+                return (
+                    <img
+                        className={`searchScreenshotImage searchScreenshotImage${index}`}
+                        onLoad={() => {
+                            anime({
+                                targets: `.searchScreenshotImage${index}`,
+                                // Properties
+                                // Animation Parameters
+                                opacity: ["0", "1"],
+
+                                duration: 750,
+                                easing: "easeOutQuad",
+                            });
+                        }}
+                        key={index}
+                        src={screenshot}
+                        alt="preview"
+                    ></img>
+                );
         });
     };
 
@@ -118,7 +136,7 @@ const Search: React.FC<SearchProps> = (props) => {
     const renderPrice = (content: Game) => {
         if (parseFloat(content.discount_percentage) > 0) {
             return (
-                <React.Fragment>
+                <div className="searchGameAdjustedPriceWrap">
                     <div className="searchGameDiscount">
                         -{parseFloat(content.discount_percentage) * 100}%
                     </div>
@@ -133,7 +151,7 @@ const Search: React.FC<SearchProps> = (props) => {
                             )}
                         </p>
                     </div>
-                </React.Fragment>
+                </div>
             );
         } else {
             //no discount

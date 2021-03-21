@@ -35,11 +35,16 @@
             color: #384959;
         }
     }
+    @media screen and (min-width: $md_breakpoint) {
+        flex-wrap: nowrap;
+    }
     margin-bottom: 0.5rem;
 }
 .searchGameImageAndTitleWrap {
     display: flex;
-
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
     > img {
         width: 14rem;
         height: 100%;
@@ -137,6 +142,11 @@
     padding: 0.5rem;
 }
 
+.searchGameAdjustedPriceWrap {
+    width: 10rem;
+    display: flex;
+    justify-content: space-between;
+}
 .searchGameContainerToggled {
     .searchGameTitle,
     .searchGameDateAndPriceWrap {
@@ -162,4 +172,8 @@
         padding: 1rem;
         font-size: 1.4rem;
     }
+}
+
+.searchScreenshotImage {
+    opacity: 0;
 }

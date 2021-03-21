@@ -56,6 +56,7 @@
 }
 
 .matchContainer {
+    opacity: 1;
     @media screen and (min-width: $md_breakpoint) {
         width: 43rem;
     }
@@ -64,20 +65,25 @@
     bottom: -5.7rem;
     right: -0.25rem;
     z-index: 3;
+    transition: opacity 0.2s ease-in;
 }
 .matchRow {
     padding: 0.5rem;
     display: flex;
     flex-wrap: wrap;
-    color: black;
+    cursor: pointer;
+
     box-shadow: 0 0 12px #000000;
     background: linear-gradient(to bottom, #e3eaef 5%, #c7d5e0 95%);
     &:hover {
-        background-color: #212d3d;
-        color: white;
+        background: #212d3d;
+        .matchTextWrap {
+            color: white;
+        }
     }
 
-    > img {
+    .matchRowImage {
+        opacity: 0;
         @media screen and (min-width: $md_breakpoint) {
             width: 12rem;
             height: 4.5rem;
@@ -87,9 +93,15 @@
     }
 }
 
+.hideMatchContainer {
+    // transition: opacity 0.5s ease-in;
+    opacity: 0;
+}
+
 .matchTextWrap {
     margin-left: 1rem;
     color: black;
+
     .matchTitle {
         margin: 0;
     }

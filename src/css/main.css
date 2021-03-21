@@ -804,6 +804,10 @@ body {
   }
 }
 
+.communityContainerCarousel {
+  display: flex;
+}
+
 @media screen and (min-width: 992px) {
   .communityContainerCarousel {
     margin: 0 5rem;
@@ -1640,11 +1644,13 @@ body {
 }
 
 .matchContainer {
+  opacity: 1;
   width: 28rem;
   position: absolute;
   bottom: -5.7rem;
   right: -0.25rem;
   z-index: 3;
+  transition: opacity 0.2s ease-in;
 }
 @media screen and (min-width: 768px) {
   .matchContainer {
@@ -1656,23 +1662,30 @@ body {
   padding: 0.5rem;
   display: flex;
   flex-wrap: wrap;
-  color: black;
+  cursor: pointer;
   box-shadow: 0 0 12px #000000;
   background: linear-gradient(to bottom, #e3eaef 5%, #c7d5e0 95%);
 }
 .matchRow:hover {
-  background-color: #212d3d;
+  background: #212d3d;
+}
+.matchRow:hover .matchTextWrap {
   color: white;
 }
-.matchRow > img {
+.matchRow .matchRowImage {
+  opacity: 0;
   width: 12rem;
   height: 4.5rem;
 }
 @media screen and (min-width: 768px) {
-  .matchRow > img {
+  .matchRow .matchRowImage {
     width: 12rem;
     height: 4.5rem;
   }
+}
+
+.hideMatchContainer {
+  opacity: 0;
 }
 
 .matchTextWrap {
@@ -1745,15 +1758,18 @@ body {
   width: 100%;
   background-image: linear-gradient(#2a475e 5%, rgba(42, 71, 94, 0) 70%);
   padding: 1rem 1rem;
+  padding-bottom: 4rem;
 }
 @media screen and (min-width: 520px) {
   .chart {
     padding: 1rem 3rem;
+    padding-bottom: 5rem;
   }
 }
 @media screen and (min-width: 768px) {
   .chart {
     padding: 1rem 6rem;
+    padding-bottom: 6rem;
   }
 }
 
@@ -1845,6 +1861,7 @@ body {
   display: -webkit-box;
   -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 @media screen and (min-width: 520px) {
   .chartGameGenres {
@@ -1895,8 +1912,9 @@ body {
 .chartAdjustedPriceWrap {
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  width: 10rem;
 }
-
 .chartOrigPriceStriked {
   text-decoration: line-through;
   font-size: 1.2rem;
@@ -2846,9 +2864,17 @@ body {
 .searchGameContainer:hover .searchGameDateAndPriceWrap {
   color: #384959;
 }
+@media screen and (min-width: 768px) {
+  .searchGameContainer {
+    flex-wrap: nowrap;
+  }
+}
 
 .searchGameImageAndTitleWrap {
   display: flex;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .searchGameImageAndTitleWrap > img {
   width: 14rem;
@@ -2951,6 +2977,12 @@ body {
   padding: 0.5rem;
 }
 
+.searchGameAdjustedPriceWrap {
+  width: 10rem;
+  display: flex;
+  justify-content: space-between;
+}
+
 .searchGameContainerToggled {
   background: linear-gradient(to right, #c6e6f8 5%, #95bcd3 95%);
   padding-right: 0;
@@ -2977,6 +3009,10 @@ body {
     padding: 1rem;
     font-size: 1.4rem;
   }
+}
+
+.searchScreenshotImage {
+  opacity: 0;
 }
 
 /*# sourceMappingURL=main.css.map */

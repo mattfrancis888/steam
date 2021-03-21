@@ -65,10 +65,10 @@ const CommunityCarousel: React.FC<CommunityCarouelProps> = (props) => {
                     <LazyLoad>
                         <div
                             key={index}
-                            className={`featuredContainerCarousel featuredAnime${index}`}
+                            className={`communityContainerCarousel communityAnime${index}`}
                             onLoad={() => {
                                 anime({
-                                    targets: `.featuredAnime${index}`,
+                                    targets: `.communityAnime${index}`,
                                     // Properties
                                     // Animation Parameters
 
@@ -97,7 +97,7 @@ const CommunityCarousel: React.FC<CommunityCarouelProps> = (props) => {
                                         alt="game"
                                     ></img>
 
-                                    <video
+                                    {/* <video
                                         className="communityCarouselVid"
                                         autoPlay={true}
                                         playsInline={false}
@@ -109,7 +109,7 @@ const CommunityCarousel: React.FC<CommunityCarouelProps> = (props) => {
                                             src="  https://cdn.cloudflare.steamstatic.com/steam/apps/256820708/movie480_vp9.webm?t=1612810771"
                                             type="video/mp4"
                                         />
-                                    </video>
+                                    </video> */}
                                     <div className="communityPrice">
                                         {renderPrice(content)}
                                     </div>
@@ -169,7 +169,7 @@ const CommunityCarousel: React.FC<CommunityCarouelProps> = (props) => {
                 <CarouselProvider
                     naturalSlideWidth={100}
                     naturalSlideHeight={renderHeight()}
-                    totalSlides={2}
+                    totalSlides={props.content.length}
                     className="gameCarouselWrap"
                     visibleSlides={1}
                     infinite={true}

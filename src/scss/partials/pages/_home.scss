@@ -47,12 +47,15 @@
     );
 
     padding: 1rem 1rem;
+    padding-bottom: 4rem;
     @media screen and (min-width: $sm_breakpoint) {
         padding: 1rem 3rem;
+        padding-bottom: 5rem;
     }
 
     @media screen and (min-width: $md_breakpoint) {
         padding: 1rem 6rem;
+        padding-bottom: 6rem;
     }
 }
 
@@ -133,7 +136,7 @@
     display: -webkit-box;
     -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
-
+    overflow: hidden;
     @media screen and (min-width: $sm_breakpoint) {
         font-size: 1.2rem;
     }
@@ -172,6 +175,10 @@
 .chartAdjustedPriceWrap {
     display: flex;
     align-items: center;
+    justify-content: space-between;
+    width: 10rem;
+    @media screen and (min-width: $md_breakpoint) {
+    }
 }
 .chartOrigPriceStriked {
     text-decoration: line-through;
@@ -229,6 +236,8 @@
 .chartGamePreviewHover {
     display: none;
     margin-left: 5rem;
+    // float: right;
+
     @media screen and (min-width: $lg_breakpoint) {
         display: block;
     }
