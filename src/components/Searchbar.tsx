@@ -7,14 +7,20 @@ import { connect } from "react-redux";
 import { StoreState } from "../reducers";
 import axios from "../actions/axiosConfig";
 import { Game } from "../actions";
-
+import useComponentVisible from "../useComponentVisible";
 interface SearchbarProps {
     fetchGamesByKeyword?(searchKeyword: string): void;
 }
 
 const Searchbar: React.FC<SearchbarProps> = (props) => {
+    //Detect click outside of component:
+    // https://stackoverflow.com/questions/32553158/detect-click-outside-react-component
+    const {
+        ref,
+        isComponentVisible,
+        setIsComponentVisible,
+    } = useComponentVisible(true);
     const searchBarInputRef = useRef<HTMLInputElement>(null);
-
     const [searchTerm, setSearchTerm] = useState("");
     const [data, dataSet] = useState<any>(null);
     useEffect(() => {
@@ -91,6 +97,7 @@ const Searchbar: React.FC<SearchbarProps> = (props) => {
                     onKeyDown={handleKeyDown}
                     autoComplete="off"
                     ref={searchBarInputRef}
+                    onClick={() => setIsComponentVisible(true)}
                 />
                 <AiOutlineSearch
                     className="searchBarIcons"
@@ -99,7 +106,9 @@ const Searchbar: React.FC<SearchbarProps> = (props) => {
                         // directToListingsPage();
                     }}
                 />
-                <div className="matchContainer">{renderSearchPreview()}</div>
+                <div className="matchContainer" ref={ref}>
+                    {isComponentVisible && renderSearchPreview()}
+                </div>
             </form>
         </React.Fragment>
     );
