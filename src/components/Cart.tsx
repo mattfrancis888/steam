@@ -2,7 +2,7 @@ import { Game } from "actions";
 import React, { useEffect, useState } from "react";
 import { Router } from "react-router-dom";
 import history from "../browserHistory";
-import Routes from "./Routes";
+import CartAndSearchbar from "./CartAndSearchbar";
 const Cart: React.FC<{}> = () => {
     let [cart, setCart] = useState<[]>([]);
     let localCart = localStorage.getItem("cart");
@@ -22,6 +22,7 @@ const Cart: React.FC<{}> = () => {
     useEffect(() => {
         if (localCart != null) {
             let parsedLocalCart = JSON.parse(localCart);
+            console.log("cart2", parsedLocalCart);
             //load persisted cart into state if it exists
             // console.log(parsedLocalCart);
             setCart(parsedLocalCart);
@@ -85,15 +86,10 @@ const Cart: React.FC<{}> = () => {
         });
     };
 
-    const renderTotal = () => {
-        return cart.reduce((acc: number, curr: Game) => {
-            console.log(curr);
-            return parseInt(acc + curr.price);
-        }, 0);
-    };
     return (
         <div>
             <div className="cartHeaderContainer">
+                <CartAndSearchbar />
                 <h1 className="cartHeader">Your shopping cart</h1>
             </div>
             <div className="cartContainer">

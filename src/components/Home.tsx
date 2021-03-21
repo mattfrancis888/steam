@@ -14,7 +14,8 @@ import { ErrorStateResponse } from "reducers/errorReducer";
 import { LG_SCREEN_SIZE, MED_SCREEN_SIZE } from "../constants";
 import Loading from "./Loading";
 import useWindowDimensions from "../windowDimensions";
-
+import Searchbar from "./Searchbar";
+import CartAndSearchbar from "./CartAndSearchbar";
 export interface FeaturedCarouselProps {
     content: Game[];
 }
@@ -196,16 +197,20 @@ const Home: React.FC<HomeProps> = (props) => {
             return (
                 <div className="homeContainer">
                     <div className="homeFirstSection">
-                        <button
-                            className="cart"
-                            onClick={() => {
-                                history.push("/cart");
-                            }}
-                        >{`Cart(${
-                            localCart != null
-                                ? JSON.parse(localCart).length
-                                : "0"
-                        })`}</button>
+                        {/* <div className="cartAndSearchWrap">
+                            <button
+                                className="cart"
+                                onClick={() => {
+                                    history.push("/cart");
+                                }}
+                            >{`Cart(${
+                                localCart !== null
+                                    ? JSON.parse(localCart).length
+                                    : "0"
+                            })`}</button>
+                            <Searchbar />
+                        </div> */}
+                        <CartAndSearchbar />
                         <h1 className="bannerTitle">
                             Featured And Recommended
                         </h1>

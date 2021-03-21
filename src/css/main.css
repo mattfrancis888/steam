@@ -1585,12 +1585,18 @@ body {
   flex-flow: row nowrap;
   align-items: center;
   justify-content: space-around;
-  border: 1px solid white;
+  border-radius: 0.25rem;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  box-shadow: 1px 1px 0px rgba(255, 255, 255, 0.2);
   color: white;
-  padding: 0.5rem;
+  padding: 0.25rem;
+  padding-left: 1.5rem;
+  margin-top: 1rem;
+  margin-left: auto;
 }
 
 .searchBarIcons {
+  color: #c1dbf4;
   font-size: 1.3rem;
   cursor: pointer;
   margin-right: 0.3rem;
@@ -1622,7 +1628,7 @@ body {
 }
 @media screen and (min-width: 768px) {
   .searchBarInput {
-    font-size: 1.8rem;
+    font-size: 1.3rem;
   }
 }
 
@@ -2556,6 +2562,14 @@ body {
   color: #c1dbf4;
 }
 
+.cartAndSearchWrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+  margin-bottom: 1rem;
+}
+
 .signInContainer {
   background-image: url(https://store.akamai.steamstatic.com/public/shared/images/joinsteam/acct_creation_bg.jpg);
   background-color: #212429;
@@ -2907,11 +2921,6 @@ body {
   .noResultsWrap {
     padding: 1rem;
     font-size: 1.4rem;
-  }
-}
-@media screen and (min-width: 992px) {
-  .noResultsWrap {
-    font-size: 1.6rem;
   }
 }
 

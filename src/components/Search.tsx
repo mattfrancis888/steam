@@ -24,6 +24,7 @@ const Search: React.FC<SearchProps> = (props) => {
     const { search } = useLocation();
     const queryValues = queryString.parse(search);
 
+    let localCart = localStorage.getItem("cart");
     useEffect(() => {
         if (queryValues.specials !== undefined) {
             props.fetchDiscountedGames();
@@ -195,7 +196,20 @@ const Search: React.FC<SearchProps> = (props) => {
                 return (
                     <React.Fragment>
                         <div className={`searchContainer`}>
-                            <Searchbar />
+                            <div className="cartAndSearchWrap">
+                                <button
+                                    className="cart"
+                                    onClick={() => {
+                                        history.push("/cart");
+                                    }}
+                                >{`Cart(${
+                                    localCart !== null
+                                        ? JSON.parse(localCart).length
+                                        : "0"
+                                })`}</button>
+                                <Searchbar />
+                            </div>
+
                             <div className="searchColumnsWrap">
                                 <div className="noResultsWrap">
                                     <p>There are no matches to your search. </p>
@@ -208,7 +222,19 @@ const Search: React.FC<SearchProps> = (props) => {
             return (
                 <React.Fragment>
                     <div className={`searchContainer`}>
-                        <Searchbar />
+                        <div className="cartAndSearchWrap">
+                            <button
+                                className="cart"
+                                onClick={() => {
+                                    history.push("/cart");
+                                }}
+                            >{`Cart(${
+                                localCart !== null
+                                    ? JSON.parse(localCart).length
+                                    : "0"
+                            })`}</button>
+                            <Searchbar />
+                        </div>
                         <div className="searchColumnsWrap">
                             <div className="searchGamesColumn">
                                 {renderChartGames()}

@@ -46,14 +46,6 @@ const Searchbar: React.FC<SearchbarProps> = (props) => {
 
     return (
         <form className={"searchBarForm"}>
-            <AiOutlineSearch
-                className="searchBarIcons"
-                data-testid="searchIcon"
-                onClick={() => {
-                    // directToListingsPage();
-                }}
-            />
-            <input type="text" autoFocus={true} style={{ display: "none" }} />
             <input
                 autoFocus={false}
                 data-testid="searchBarInput"
@@ -65,6 +57,13 @@ const Searchbar: React.FC<SearchbarProps> = (props) => {
                 onKeyDown={handleKeyDown}
                 autoComplete="off"
                 ref={searchBarInputRef}
+            />
+            <AiOutlineSearch
+                className="searchBarIcons"
+                data-testid="searchIcon"
+                onClick={() => {
+                    // directToListingsPage();
+                }}
             />
         </form>
     );

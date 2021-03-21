@@ -12,7 +12,6 @@ import gameInfoReviewsReducer, {
     GameInfoReviewsStateResponse,
 } from "./gameInfoReviewsReducer";
 import profileReducer, { ProfileStateResponse } from "./profileReducer";
-import searchReducer, { SearchStateResponse } from "./searchReducer";
 export interface StoreState {
     authStatus: AuthStateResponse;
     games: GamesStateResponse;

@@ -26,6 +26,7 @@ import EditReview from "./EditReview";
 import jwt_decode from "jwt-decode";
 import Cookies from "js-cookie";
 import { ACCESS_TOKEN } from "../constants";
+import CartAndSearchbar from "./CartAndSearchbar";
 export interface WriteReviewFormProps {
     onSubmit(formValues: any): void;
     authStatus?: string | null;
@@ -65,7 +66,7 @@ const GameInfo: React.FC<GameInfoProps> = (props) => {
     let [cart, setCart] = useState<[]>([]);
     let localCart = localStorage.getItem("cart");
 
-    const addItem = (item: any) => {
+    const addItem = (item: Game) => {
         //create a copy of our cart state, avoid overwritting existing state
         let cartCopy: any = [...cart];
 
@@ -74,11 +75,11 @@ const GameInfo: React.FC<GameInfoProps> = (props) => {
 
         //look for item in cart array
         let existingItem = cartCopy.find(
-            (cartItem: any) => cartItem.game_id == game_id
+            (cartItem: Game) => cartItem.game_id === game_id
         );
 
         //if item already exists
-        console.log(existingItem);
+
         if (existingItem) {
         } else {
             //if item doesn't exist, simply add it
@@ -94,9 +95,6 @@ const GameInfo: React.FC<GameInfoProps> = (props) => {
     };
 
     useEffect(() => {
-        //turn it into js
-        //console.log(localCart);
-
         if (localCart != null) {
             let parsedLocalCart = JSON.parse(localCart);
             //load persisted cart into state if it exists
@@ -360,12 +358,7 @@ const GameInfo: React.FC<GameInfoProps> = (props) => {
         } else if (props.gameInfo.data && props.gameInfoReviews.data) {
             return (
                 <div className="gameInfoContainer">
-                    <button
-                        className="cart"
-                        onClick={() => {
-                            history.push("/cart");
-                        }}
-                    >{`Cart(${localCart != null ? cart.length : "0"})`}</button>
+                    <CartAndSearchbar />
 
                     <h1 className="gameInfoTitle">
                         {props.gameInfo.data.games[0].title}

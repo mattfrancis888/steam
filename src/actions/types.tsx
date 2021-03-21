@@ -13,6 +13,7 @@ export enum ActionTypes {
     FETCH_PROFILE,
     EDIT_PROFILE,
     FETCH_GAMES_BY_KEYWORD,
+    ADD_TO_CART,
     GAME_ERROR,
 }
 export type AuthActions = AuthUserAction | AuthErrorAction;

@@ -5,12 +5,18 @@
     flex-flow: row nowrap;
     align-items: center;
     justify-content: space-around;
-    border: 1px solid white;
+    border-radius: 0.25rem;
+    border: 1px solid rgba(0, 0, 0, 0.3);
+    box-shadow: 1px 1px 0px rgb(255 255 255 / 20%);
     color: white;
-    padding: 0.5rem;
+    padding: 0.25rem;
+    padding-left: 1.5rem;
+    margin-top: 1rem;
+    margin-left: auto;
 }
 
 .searchBarIcons {
+    color: $light-blue;
     font-size: 1.3rem;
     cursor: pointer;
     margin-right: 0.3rem;
@@ -38,7 +44,7 @@
     font-size: 1rem;
 
     @media screen and (min-width: $md_breakpoint) {
-        font-size: 1.8rem;
+        font-size: 1.3rem;
     }
 }
 
