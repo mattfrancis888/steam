@@ -13,6 +13,7 @@
     padding-left: 1.5rem;
     margin-top: 1rem;
     margin-left: auto;
+    position: relative;
 }
 
 .searchBarIcons {
@@ -52,4 +53,51 @@
 [type="search"]::-webkit-search-decoration {
     -webkit-appearance: none;
     appearance: none;
+}
+
+.matchContainer {
+    @media screen and (min-width: $md_breakpoint) {
+        width: 43rem;
+    }
+    width: 28rem;
+    position: absolute;
+    bottom: -5.7rem;
+    right: -0.25rem;
+    z-index: 3;
+}
+.matchRow {
+    padding: 0.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    color: black;
+    box-shadow: 0 0 12px #000000;
+    background: linear-gradient(to bottom, #e3eaef 5%, #c7d5e0 95%);
+    &:hover {
+        background-color: #212d3d;
+        color: white;
+    }
+
+    > img {
+        @media screen and (min-width: $md_breakpoint) {
+            width: 12rem;
+            height: 4.5rem;
+        }
+        width: 12rem;
+        height: 4.5rem;
+    }
+}
+
+.matchTextWrap {
+    margin-left: 1rem;
+    color: black;
+    .matchTitle {
+        margin: 0;
+    }
+    .matchPrice {
+        margin: 0;
+        margin-top: 0.25rem;
+        @media screen and (min-width: $md_breakpoint) {
+            margin-top: 0.5rem;
+        }
+    }
 }

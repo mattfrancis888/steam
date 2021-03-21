@@ -1,5 +1,10 @@
 import React, { useEffect, useState, useRef } from "react";
-import { fetchGames, fetchDiscountedGames, Game } from "../actions";
+import {
+    fetchGames,
+    fetchDiscountedGames,
+    Game,
+    fetchGamesByKeyword,
+} from "../actions";
 import { connect } from "react-redux";
 import { StoreState } from "../reducers";
 import { GamesStateResponse } from "../reducers/gamesReducer";
@@ -11,12 +16,14 @@ import { useLocation } from "react-router-dom";
 import queryString from "query-string";
 import _ from "lodash";
 import Searchbar from "./Searchbar";
+import CartAndSearchbar from "./CartAndSearchbar";
 interface SearchProps {
     games: GamesStateResponse;
     discountedGames: GamesStateResponse;
     errors: ErrorStateResponse;
     fetchGames(): void;
     fetchDiscountedGames(): void;
+    fetchGamesByKeyword(query: string | string[]): void;
 }
 
 const Search: React.FC<SearchProps> = (props) => {
@@ -26,7 +33,9 @@ const Search: React.FC<SearchProps> = (props) => {
 
     let localCart = localStorage.getItem("cart");
     useEffect(() => {
-        if (queryValues.specials !== undefined) {
+        if (queryValues.q) {
+            props.fetchGamesByKeyword(queryValues.q);
+        } else if (queryValues.specials !== undefined) {
             props.fetchDiscountedGames();
         } else props.fetchGames();
     }, []);
@@ -196,19 +205,7 @@ const Search: React.FC<SearchProps> = (props) => {
                 return (
                     <React.Fragment>
                         <div className={`searchContainer`}>
-                            <div className="cartAndSearchWrap">
-                                <button
-                                    className="cart"
-                                    onClick={() => {
-                                        history.push("/cart");
-                                    }}
-                                >{`Cart(${
-                                    localCart !== null
-                                        ? JSON.parse(localCart).length
-                                        : "0"
-                                })`}</button>
-                                <Searchbar />
-                            </div>
+                            <CartAndSearchbar />
 
                             <div className="searchColumnsWrap">
                                 <div className="noResultsWrap">
@@ -222,19 +219,7 @@ const Search: React.FC<SearchProps> = (props) => {
             return (
                 <React.Fragment>
                     <div className={`searchContainer`}>
-                        <div className="cartAndSearchWrap">
-                            <button
-                                className="cart"
-                                onClick={() => {
-                                    history.push("/cart");
-                                }}
-                            >{`Cart(${
-                                localCart !== null
-                                    ? JSON.parse(localCart).length
-                                    : "0"
-                            })`}</button>
-                            <Searchbar />
-                        </div>
+                        <CartAndSearchbar />
                         <div className="searchColumnsWrap">
                             <div className="searchGamesColumn">
                                 {renderChartGames()}
@@ -264,4 +249,5 @@ const mapStateToProps = (state: StoreState) => {
 export default connect(mapStateToProps, {
     fetchGames,
     fetchDiscountedGames,
+    fetchGamesByKeyword,
 })(Search);

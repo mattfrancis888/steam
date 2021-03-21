@@ -119,7 +119,7 @@ export const fetchDiscountedGames = () => async (dispatch: Dispatch) => {
     }
 };
 
-export const fetchGamesByKeyword = (queryPath: string) => async (
+export const fetchGamesByKeyword = (queryPath: string | string[]) => async (
     dispatch: Dispatch
 ) => {
     try {
