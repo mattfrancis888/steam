@@ -36,7 +36,7 @@ interface HomeProps {
 
 const Home: React.FC<HomeProps> = (props) => {
     let localCart = localStorage.getItem("cart");
-    const [hoverData, setHoverData] = useState(1);
+    const [hoverData, setHoverData] = useState(-9); //We can also switch this ot 1 since our first game has a game_id of 1
     const [specialsTabClicked, setSpecialsTabClicked] = useState(false);
     useEffect(() => {
         props.fetchGames();
@@ -47,14 +47,12 @@ const Home: React.FC<HomeProps> = (props) => {
     //     if (props.games.data) setHoverData(props.games.data.games[0].game_id);
     // }, [props.games.data]);
 
-    // useEffect(() => {
-    //     if (props.discountedGames.data) {
-    //         if (props.discountedGames.data.games.length > 0)
-    //             setHoverData(props.discountedGames.data.games[0].game_id);
-    //     } else if (props.games.data)
-    //         if (props.games.data.games.length > 0)
-    //             setHoverData(props.games.data.games[0].game_id);
-    // }, [props.games.data, props.discountedGames.data]);
+    useEffect(() => {
+        if (props.games.data)
+            if (props.games.data.games.length > 0)
+                //Get game id of first game
+                setHoverData(props.games.data.games[0].game_id);
+    }, [props.games.data]);
 
     const { width } = useWindowDimensions();
 
@@ -198,74 +196,90 @@ const Home: React.FC<HomeProps> = (props) => {
                 </div>
             );
         } else if (props.games.data && props.discountedGames.data) {
-            let carouselSplit = _.chunk(props.games.data.games, 4);
-            return (
-                <div className="homeContainer">
-                    <div className="homeFirstSection">
-                        <CartAndSearchbar />
-                        <h1 className="bannerTitle">
-                            Featured And Recommended
-                        </h1>
+            //If we enter a search that's not found, our reducer will have games as an empty array
+            //It takes time for React to change our reducer after calling props.fetchGames() and props.fetchDiscountedGames()
+            if (
+                props.games.data.games.length > 0 &&
+                props.discountedGames.data.games.length > 0
+            ) {
+                let specialTabsHoverData =
+                    props.discountedGames.data?.games[0].game_id;
+                let carouselSplit = _.chunk(props.games.data.games, 4);
+                return (
+                    <div className="homeContainer">
+                        <div className="homeFirstSection">
+                            <CartAndSearchbar />
+                            <h1 className="bannerTitle">
+                                Featured And Recommended
+                            </h1>
 
-                        <FeaturedCarousel content={carouselSplit[0]} />
-                        <h1 className="bannerTitle">Special Offers</h1>
-                        <SpecialOfferCarousel
-                            content={props.discountedGames.data.games}
-                        />
-                        <h1 className="bannerTitle">
-                            The Community Recommends
-                        </h1>
-                        <CommunityCarousel content={props.games.data.games} />
-                    </div>
-                    <div className="chartTabsWrap">
-                        <div
-                            className={`chartTab ${
-                                specialsTabClicked ? "" : " chartTabToggled"
-                            }`}
-                            onClick={() => setSpecialsTabClicked(false)}
-                        >
-                            Top Sellers
+                            <FeaturedCarousel content={carouselSplit[0]} />
+                            <h1 className="bannerTitle">Special Offers</h1>
+                            <SpecialOfferCarousel
+                                content={props.discountedGames.data.games}
+                            />
+                            <h1 className="bannerTitle">
+                                The Community Recommends
+                            </h1>
+                            <CommunityCarousel
+                                content={props.games.data.games}
+                            />
                         </div>
-                        <div
-                            className={`chartTab ${
-                                specialsTabClicked ? "chartTabToggled" : ""
-                            }`}
-                            onClick={() => setSpecialsTabClicked(true)}
-                        >
-                            Specials
-                        </div>
-                    </div>
-
-                    <div className="chart">
-                        <div className="chartGamesColumn">
-                            <div className="seeMoreWrap">
-                                <p className="seeMoreText">See More:</p>
-                                <div
-                                    className="chartSeeMore"
-                                    onClick={() => {
-                                        if (specialsTabClicked) {
-                                            history.push({
-                                                pathname: "/search",
-                                                search: `?specials`,
-                                            });
-                                        } else {
-                                            history.push({
-                                                pathname: "/search",
-                                            });
-                                        }
-                                    }}
-                                >
-                                    {specialsTabClicked
-                                        ? "Specials"
-                                        : "Top Sellers"}
-                                </div>
+                        <div className="chartTabsWrap">
+                            <div
+                                className={`chartTab ${
+                                    specialsTabClicked ? "" : " chartTabToggled"
+                                }`}
+                                onClick={() => setSpecialsTabClicked(false)}
+                            >
+                                Top Sellers
                             </div>
-                            {renderChartGames()}
+                            <div
+                                className={`chartTab ${
+                                    specialsTabClicked ? "chartTabToggled" : ""
+                                }`}
+                                onClick={() => {
+                                    setSpecialsTabClicked(true);
+                                    setHoverData(specialTabsHoverData);
+                                }}
+                            >
+                                Specials
+                            </div>
                         </div>
-                        {renderChartGamePreview(hoverData)}
+
+                        <div className="chart">
+                            <div className="chartGamesColumn">
+                                <div className="seeMoreWrap">
+                                    <p className="seeMoreText">See More:</p>
+                                    <div
+                                        className="chartSeeMore"
+                                        onClick={() => {
+                                            if (specialsTabClicked) {
+                                                history.push({
+                                                    pathname: "/search",
+                                                    search: `?specials`,
+                                                });
+                                            } else {
+                                                history.push({
+                                                    pathname: "/search",
+                                                });
+                                            }
+                                        }}
+                                    >
+                                        {specialsTabClicked
+                                            ? "Specials"
+                                            : "Top Sellers"}
+                                    </div>
+                                </div>
+                                {renderChartGames()}
+                            </div>
+                            {renderChartGamePreview(hoverData)}
+                        </div>
                     </div>
-                </div>
-            );
+                );
+            } else {
+                return null;
+            }
         } else {
             return <Loading />;
         }
