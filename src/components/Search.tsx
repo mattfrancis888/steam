@@ -61,28 +61,29 @@ const Search: React.FC<SearchProps> = (props) => {
                 game_id: gameId,
             });
         let maxScreenshotToShow = 1;
-        return game[0].screenshots.map((screenshot, index) => {
-            if (index < maxScreenshotToShow)
-                return (
-                    <img
-                        className={`searchScreenshotImage searchScreenshotImage${index}`}
-                        onLoad={() => {
-                            anime({
-                                targets: `.searchScreenshotImage${index}`,
-                                // Properties
-                                // Animation Parameters
-                                opacity: ["0", "1"],
+        if (game.length > 0)
+            return game[0].screenshots.map((screenshot, index) => {
+                if (index < maxScreenshotToShow)
+                    return (
+                        <img
+                            className={`searchScreenshotImage searchScreenshotImage${index}`}
+                            onLoad={() => {
+                                anime({
+                                    targets: `.searchScreenshotImage${index}`,
+                                    // Properties
+                                    // Animation Parameters
+                                    opacity: ["0", "1"],
 
-                                duration: 750,
-                                easing: "easeOutQuad",
-                            });
-                        }}
-                        key={index}
-                        src={screenshot}
-                        alt="preview"
-                    ></img>
-                );
-        });
+                                    duration: 750,
+                                    easing: "easeOutQuad",
+                                });
+                            }}
+                            key={index}
+                            src={screenshot}
+                            alt="preview"
+                        ></img>
+                    );
+            });
     };
 
     const renderGenresForGameText = (gameId: number) => {
@@ -93,16 +94,16 @@ const Search: React.FC<SearchProps> = (props) => {
             filteredContent = _.filter(props.discountedGames.data?.games, {
                 game_id: gameId,
             });
-
-        return filteredContent.map((content, index) => {
-            return content.genres.map((genre, index) => {
-                return (
-                    <p key={index} className="searchGameGenres">
-                        {genre}
-                    </p>
-                );
+        if (filteredContent.length > 0)
+            return filteredContent.map((content, index) => {
+                return content.genres.map((genre, index) => {
+                    return (
+                        <p key={index} className="searchGameGenres">
+                            {genre}
+                        </p>
+                    );
+                });
             });
-        });
     };
 
     const renderChartGamePreview = (gameId: number) => {
@@ -114,28 +115,28 @@ const Search: React.FC<SearchProps> = (props) => {
             filteredContent = _.filter(props.discountedGames.data?.games, {
                 game_id: gameId,
             });
-        console.log(hoverData, gameId);
 
-        return (
-            <div
-                className={`searchPreviewHover ${
-                    hoverData === gameId ? "" : "hideSearchPreviewHover"
-                }`}
-            >
-                <p className="searchGamePreviewTitle">
-                    {filteredContent.map((content, index) => {
-                        return content.title;
-                    })}
-                </p>
+        if (filteredContent.length > 0)
+            return (
+                <div
+                    className={`searchPreviewHover ${
+                        hoverData === gameId ? "" : "hideSearchPreviewHover"
+                    }`}
+                >
+                    <p className="searchGamePreviewTitle">
+                        {filteredContent.map((content, index) => {
+                            return content.title;
+                        })}
+                    </p>
 
-                <div className="chartGamePreviewScreenshots">
-                    {renderScreenshotsForGame(gameId)}
-                    <div className="searchGameGenresWrap">
-                        {renderGenresForGameText(gameId)}
+                    <div className="chartGamePreviewScreenshots">
+                        {renderScreenshotsForGame(gameId)}
+                        <div className="searchGameGenresWrap">
+                            {renderGenresForGameText(gameId)}
+                        </div>
                     </div>
                 </div>
-            </div>
-        );
+            );
     };
 
     const renderPrice = (content: Game) => {
@@ -191,7 +192,23 @@ const Search: React.FC<SearchProps> = (props) => {
                         }}
                     >
                         <div className="searchGameImageAndTitleWrap">
-                            <img src={content.cover_url} alt="game"></img>
+                            <img
+                                className={`searchGameImage searchGameImage${index}`}
+                                src={content.cover_url}
+                                onLoad={() => {
+                                    anime({
+                                        targets: `.searchGameImage${index}`,
+                                        opacity: [
+                                            {
+                                                value: [0, 1],
+                                                duration: 250,
+                                                easing: "easeOutQuad",
+                                            },
+                                        ],
+                                    });
+                                }}
+                                alt="game"
+                            ></img>
                             <p className="searchGameTitle">{content.title}</p>
                         </div>
 

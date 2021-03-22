@@ -356,101 +356,108 @@ const GameInfo: React.FC<GameInfoProps> = (props) => {
                 </div>
             );
         } else if (props.gameInfo.data && props.gameInfoReviews.data) {
-            return (
-                <div className="gameInfoContainer">
-                    <CartAndSearchbar />
+            if (props.gameInfo.data.games.length > 0)
+                //A review can be empty but the game info CANNOT be empty
+                return (
+                    <div className="gameInfoContainer">
+                        <CartAndSearchbar />
 
-                    <h1 className="gameInfoTitle">
-                        {props.gameInfo.data.games[0].title}
-                    </h1>
-                    <div className="gameInfoShowcaseContainer">
-                        <div className="gameInfoShowcasePreviewWrap">
-                            <img
-                                className="gameInfoShowcaseTitleImage"
-                                src={props.gameInfo.data.games[0].cover_url}
-                                alt=""
-                                onLoad={() => {
-                                    anime({
-                                        targets: `.gameInfoShowcaseTitleImage`,
-                                        // Properties
-                                        // Animation Parameters
+                        <h1 className="gameInfoTitle">
+                            {props.gameInfo.data.games[0].title}
+                        </h1>
+                        <div className="gameInfoShowcaseContainer">
+                            <div className="gameInfoShowcasePreviewWrap">
+                                <img
+                                    className="gameInfoShowcaseTitleImage"
+                                    src={props.gameInfo.data.games[0].cover_url}
+                                    alt=""
+                                    onLoad={() => {
+                                        anime({
+                                            targets: `.gameInfoShowcaseTitleImage`,
 
-                                        opacity: [
-                                            {
-                                                value: [0, 1],
-                                                duration: 250,
-                                                easing: "easeOutQuad",
-                                            },
-                                        ],
-                                    });
-                                }}
-                            ></img>
-                            <div className="gameInfoShowcaseTextWrap">
-                                <p className="showcaseAbout">
-                                    {props.gameInfo.data.games[0].about}
-                                </p>
-                                <p className="releaseDate">
-                                    {`Release Date -  ${moment(
-                                        props.gameInfo.data.games[0]
-                                            .release_date
-                                    ).format("YYYY/MM/DD")}`}
-                                </p>
-                                <div className="gameInfoGenresWrap">
-                                    {props.gameInfo.data.games[0].genres.map(
-                                        (genre, index) => {
-                                            return (
-                                                <p
-                                                    key={index}
-                                                    className="gameInfoGenreTag"
-                                                >
-                                                    {genre}
-                                                </p>
-                                            );
-                                        }
-                                    )}
+                                            opacity: [
+                                                {
+                                                    value: [0, 1],
+                                                    duration: 250,
+                                                    easing: "easeOutQuad",
+                                                },
+                                            ],
+                                        });
+                                    }}
+                                ></img>
+                                <div className="gameInfoShowcaseTextWrap">
+                                    <p className="showcaseAbout">
+                                        {props.gameInfo.data.games[0].about}
+                                    </p>
+                                    <p className="releaseDate">
+                                        {`Release Date -  ${moment(
+                                            props.gameInfo.data.games[0]
+                                                .release_date
+                                        ).format("YYYY/MM/DD")}`}
+                                    </p>
+                                    <div className="gameInfoGenresWrap">
+                                        {props.gameInfo.data.games[0].genres.map(
+                                            (genre, index) => {
+                                                return (
+                                                    <p
+                                                        key={index}
+                                                        className="gameInfoGenreTag"
+                                                    >
+                                                        {genre}
+                                                    </p>
+                                                );
+                                            }
+                                        )}
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div className="gameInfoShowcaseCarouselWrap">
-                            <GameInfoCarousel
-                                screenshots={
-                                    props.gameInfo.data.games[0].screenshots
-                                }
-                            />
-                        </div>
-                    </div>
-
-                    {renderWriteReview()}
-                    <div className="gameInfoBuyContainer">
-                        <h1>Buy {props.gameInfo.data.games[0].title}</h1>
-                        <div className="gameInfoAddToCartWrap">
-                            <div className="gameInfoPriceWrap">
-                                {renderPrice(props.gameInfo.data.games[0])}
+                            <div className="gameInfoShowcaseCarouselWrap">
+                                <GameInfoCarousel
+                                    screenshots={
+                                        props.gameInfo.data.games[0].screenshots
+                                    }
+                                />
                             </div>
-                            <button
-                                className="gameInfoAddToCartButton"
-                                data-testid="addToCartbutton"
-                                onClick={() => {
-                                    if (props.gameInfo.data?.games)
-                                        addItem(props.gameInfo.data.games[0]);
-                                    history.push("/cart");
-                                }}
-                            >
-                                Add To Cart
-                            </button>
+                        </div>
+
+                        {renderWriteReview()}
+                        <div className="gameInfoBuyContainer">
+                            <h1>Buy {props.gameInfo.data.games[0].title}</h1>
+                            <div className="gameInfoAddToCartWrap">
+                                <div className="gameInfoPriceWrap">
+                                    {renderPrice(props.gameInfo.data.games[0])}
+                                </div>
+                                <button
+                                    className="gameInfoAddToCartButton"
+                                    data-testid="addToCartbutton"
+                                    onClick={() => {
+                                        if (props.gameInfo.data?.games)
+                                            addItem(
+                                                props.gameInfo.data.games[0]
+                                            );
+                                        history.push("/cart");
+                                    }}
+                                >
+                                    Add To Cart
+                                </button>
+                            </div>
+                        </div>
+                        <h1 className="gameInfoSectionTitle">
+                            About This Game
+                        </h1>
+                        <p className="gameDescription">
+                            {props.gameInfo.data.games[0].about}
+                        </p>
+                        <h1 className="gameInfoSectionTitle">Recent Reviews</h1>
+                        {renderEditReview()}
+                        <div className="reviewsContainer">
+                            {renderReviews(props.gameInfoReviews.data.reviews)}
                         </div>
                     </div>
-                    <h1 className="gameInfoSectionTitle">About This Game</h1>
-                    <p className="gameDescription">
-                        {props.gameInfo.data.games[0].about}
-                    </p>
-                    <h1 className="gameInfoSectionTitle">Recent Reviews</h1>
-                    {renderEditReview()}
-                    <div className="reviewsContainer">
-                        {renderReviews(props.gameInfoReviews.data.reviews)}
-                    </div>
-                </div>
-            );
+                );
+            else {
+                return null;
+            }
         } else {
             return <Loading />;
         }

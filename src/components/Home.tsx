@@ -16,6 +16,7 @@ import Loading from "./Loading";
 import useWindowDimensions from "../windowDimensions";
 import Searchbar from "./Searchbar";
 import CartAndSearchbar from "./CartAndSearchbar";
+import anime from "animejs/lib/anime.es.js";
 export interface FeaturedCarouselProps {
     content: Game[];
 }
@@ -43,10 +44,6 @@ const Home: React.FC<HomeProps> = (props) => {
         props.fetchDiscountedGames();
     }, []);
 
-    // useEffect(() => {
-    //     if (props.games.data) setHoverData(props.games.data.games[0].game_id);
-    // }, [props.games.data]);
-
     useEffect(() => {
         if (props.games.data)
             if (props.games.data.games.length > 0)
@@ -64,15 +61,15 @@ const Home: React.FC<HomeProps> = (props) => {
             filteredContent = _.filter(props.discountedGames.data?.games, {
                 game_id: gameId,
             });
-
-        return filteredContent.map((content, index) => {
-            return content.genres.map((genre, index) => {
-                if (content.genres.length === index + 1) {
-                    return ` ${genre}`;
-                }
-                return ` ${genre},`;
+        if (filteredContent.length > 0)
+            return filteredContent.map((content, index) => {
+                return content.genres.map((genre, index) => {
+                    if (content.genres.length === index + 1) {
+                        return ` ${genre}`;
+                    }
+                    return ` ${genre},`;
+                });
             });
-        });
     };
 
     const renderGenresForGameTag = (gameId: number) => {
@@ -85,15 +82,16 @@ const Home: React.FC<HomeProps> = (props) => {
                 game_id: gameId,
             });
 
-        return filteredContent.map((content, index) => {
-            return content.genres.map((genre, index) => {
-                return (
-                    <p key={index} className="chartGamePreviewGenres">
-                        {genre}
-                    </p>
-                );
+        if (filteredContent.length > 0)
+            return filteredContent.map((content, index) => {
+                return content.genres.map((genre, index) => {
+                    return (
+                        <p key={index} className="chartGamePreviewGenres">
+                            {genre}
+                        </p>
+                    );
+                });
             });
-        });
     };
 
     const renderScreenshotsForGame = (gameId: number) => {
@@ -105,10 +103,31 @@ const Home: React.FC<HomeProps> = (props) => {
                 game_id: gameId,
             });
         let maxScreenshotToShow = 4;
-        return game[0].screenshots.map((screenshot, index) => {
-            if (index < maxScreenshotToShow)
-                return <img key={index} src={screenshot} alt="preview"></img>;
-        });
+
+        if (game.length > 0)
+            return game[0].screenshots.map((screenshot, index) => {
+                if (index < maxScreenshotToShow)
+                    return (
+                        <img
+                            className={`gameChartScreenshotPreview gameChartScreenshotPreview${index}`}
+                            key={index}
+                            onLoad={() => {
+                                anime({
+                                    targets: `.gameChartScreenshotPreview${index}`,
+                                    opacity: [
+                                        {
+                                            value: [0, 1],
+                                            duration: 250,
+                                            easing: "easeOutQuad",
+                                        },
+                                    ],
+                                });
+                            }}
+                            src={screenshot}
+                            alt="preview"
+                        ></img>
+                    );
+            });
     };
 
     const renderPrice = (content: Game) => {
@@ -164,7 +183,24 @@ const Home: React.FC<HomeProps> = (props) => {
                                 setHoverData(content.game_id);
                             }}
                         >
-                            <div className="chartGameImage">
+                            <div
+                                className={`chartGameImage chartGameImage${index}`}
+                                onLoad={() => {
+                                    anime({
+                                        targets: `.chartGameImage${index}`,
+                                        // Properties
+                                        // Animation Parameters
+
+                                        opacity: [
+                                            {
+                                                value: [0, 1],
+                                                duration: 250,
+                                                easing: "easeOutQuad",
+                                            },
+                                        ],
+                                    });
+                                }}
+                            >
                                 <img src={content.cover_url} alt="game"></img>
                             </div>
                             <div className="chartGameInfo">
@@ -289,23 +325,23 @@ const Home: React.FC<HomeProps> = (props) => {
         let filteredContent = _.filter(props.games.data?.games, {
             game_id: gameId,
         });
+        if (filteredContent.length > 0)
+            return (
+                <div className="chartGamePreviewHover">
+                    <p className="chartGamePreviewTitle">
+                        {filteredContent.map((content, index) => {
+                            return content.title;
+                        })}
+                    </p>
 
-        return (
-            <div className="chartGamePreviewHover">
-                <p className="chartGamePreviewTitle">
-                    {filteredContent.map((content, index) => {
-                        return content.title;
-                    })}
-                </p>
-
-                <div className="chartGamePreviewGenresWrap">
-                    {renderGenresForGameTag(gameId)}
+                    <div className="chartGamePreviewGenresWrap">
+                        {renderGenresForGameTag(gameId)}
+                    </div>
+                    <div className="chartGamePreviewScreenshots">
+                        {renderScreenshotsForGame(gameId)}
+                    </div>
                 </div>
-                <div className="chartGamePreviewScreenshots">
-                    {renderScreenshotsForGame(gameId)}
-                </div>
-            </div>
-        );
+            );
     };
     return <React.Fragment>{renderContent()}</React.Fragment>;
 };

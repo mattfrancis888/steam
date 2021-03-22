@@ -972,6 +972,7 @@ body {
 .gameInfoCarouselScreenshots {
   display: flex;
   cursor: pointer;
+  opacity: 0;
 }
 
 .gameInfoCarouselScreenshotsClicked {
@@ -993,6 +994,7 @@ body {
 
 .gameInfoDisplayImage {
   width: 100%;
+  opacity: 0;
 }
 
 .reviewForm {
@@ -1832,6 +1834,7 @@ body {
 }
 
 .chartGameImage {
+  opacity: 0;
   width: 22rem;
   height: 100%;
 }
@@ -1844,6 +1847,10 @@ body {
   .chartGameImage {
     width: 22rem;
   }
+}
+
+.gameChartScreenshotPreview {
+  opacity: 0;
 }
 
 .chartGameInfo {
@@ -1988,7 +1995,7 @@ body {
 .chartGamePreviewHover {
   display: none;
   margin-left: 5rem;
-  max-width: 32rem;
+  width: 32rem;
   padding: 1rem;
   background: linear-gradient(to right, #c6e6f8 5%, #95bcd3 95%);
 }
@@ -2555,6 +2562,7 @@ body {
 }
 
 .cartGameImage {
+  opacity: 0;
   width: 50%;
   margin-right: 1rem;
 }
@@ -2963,7 +2971,7 @@ body {
   position: absolute;
   right: -30rem;
   display: none;
-  max-width: 30rem;
+  width: 30rem;
   padding: 1rem;
   background: linear-gradient(to right, #c6e6f8 5%, #95bcd3 95%);
 }
@@ -3034,6 +3042,10 @@ body {
 }
 
 .searchScreenshotImage {
+  opacity: 0;
+}
+
+.searchGameImage {
   opacity: 0;
 }
 

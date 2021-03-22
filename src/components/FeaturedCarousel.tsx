@@ -59,10 +59,13 @@ const FeaturedCarousel: React.FC<FeaturedCarouselProps> = (props) => {
             game_id: gameId,
         });
         let maxScreenshotToShow = 4;
-        return gameForSlide[0].screenshots.map((screenshot, index) => {
-            if (index < maxScreenshotToShow)
-                return <img key={index} src={screenshot} alt="preview"></img>;
-        });
+        if (gameForSlide.length > 0)
+            return gameForSlide[0].screenshots.map((screenshot, index) => {
+                if (index < maxScreenshotToShow)
+                    return (
+                        <img key={index} src={screenshot} alt="preview"></img>
+                    );
+            });
     };
 
     const renderSlides = () => {

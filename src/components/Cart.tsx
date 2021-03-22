@@ -2,6 +2,7 @@ import { Game } from "actions";
 import React, { useEffect, useState } from "react";
 import { Router } from "react-router-dom";
 import history from "../browserHistory";
+import anime from "animejs/lib/anime.es.js";
 import CartAndSearchbar from "./CartAndSearchbar";
 const Cart: React.FC<{}> = () => {
     let [cart, setCart] = useState<[]>([]);
@@ -22,7 +23,6 @@ const Cart: React.FC<{}> = () => {
     useEffect(() => {
         if (localCart != null) {
             let parsedLocalCart = JSON.parse(localCart);
-            console.log("cart2", parsedLocalCart);
             //load persisted cart into state if it exists
             // console.log(parsedLocalCart);
             setCart(parsedLocalCart);
@@ -61,7 +61,24 @@ const Cart: React.FC<{}> = () => {
             return (
                 <div className="cartRow" key={index}>
                     <div className="cartImageAndTitleWrap">
-                        <div className="cartGameImage">
+                        <div
+                            className={`cartGameImage cartGameImage${index}`}
+                            onLoad={() => {
+                                anime({
+                                    targets: `.cartGameImage${index}`,
+                                    // Properties
+                                    // Animation Parameters
+
+                                    opacity: [
+                                        {
+                                            value: [0, 1],
+                                            duration: 250,
+                                            easing: "easeOutQuad",
+                                        },
+                                    ],
+                                });
+                            }}
+                        >
                             <img src={game.cover_url} alt="game"></img>
                         </div>
                         <p className="cartTitle">{game.title}</p>

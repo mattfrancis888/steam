@@ -44,6 +44,7 @@
     flex-wrap: wrap;
 }
 .cartGameImage {
+    opacity: 0;
     width: 50%;
     @media screen and (min-width: $sm_breakpoint) {
         width: 20%;
