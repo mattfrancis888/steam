@@ -272,7 +272,11 @@ const Search: React.FC<SearchProps> = (props) => {
                 </React.Fragment>
             );
         } else {
-            return <Loading />;
+            return (
+                <div className="loadingCenter">
+                    <Loading />
+                </div>
+            );
         }
     };
 

@@ -30,7 +30,7 @@ export interface ProfileProps {
 
 const Profile: React.FC<ProfileProps> = (props) => {
     const onSubmitEditProfile = (formValues: any) => {
-        console.log(formValues);
+        // console.log(formValues);
         if (props.profile.data?.profile[0].avatar_url) {
             let cloudinaryPaths = props.profile.data?.profile[0].avatar_url.split(
                 "/"
@@ -122,7 +122,11 @@ const Profile: React.FC<ProfileProps> = (props) => {
                 </div>
             );
         } else {
-            return <Loading />;
+            return (
+                <div className="loadingCenter">
+                    <Loading />
+                </div>
+            );
         }
     };
     return <React.Fragment>{renderContent()}</React.Fragment>;

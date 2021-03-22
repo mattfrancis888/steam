@@ -1718,6 +1718,29 @@ body {
   }
 }
 
+.serverErrorContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5rem 0;
+}
+.serverErrorContainer h3 {
+  color: white;
+  font-size: 1.1rem;
+  font-weight: normal;
+  padding: 3rem;
+}
+@media screen and (min-width: 768px) {
+  .serverErrorContainer h3 {
+    font-size: 1.4rem;
+  }
+}
+@media screen and (min-width: 768px) {
+  .serverErrorContainer {
+    padding: 10rem 0;
+  }
+}
+
 .bannerTitle {
   text-transform: uppercase;
   font-weight: 500;

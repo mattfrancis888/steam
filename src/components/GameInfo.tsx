@@ -456,12 +456,21 @@ const GameInfo: React.FC<GameInfoProps> = (props) => {
                     </div>
                 );
             else {
-                return null;
+                return (
+                    <div className="loadingCenter">
+                        <Loading />
+                    </div>
+                );
             }
         } else {
-            return <Loading />;
+            return (
+                <div className="loadingCenter">
+                    <Loading />
+                </div>
+            );
         }
     };
+
     return <React.Fragment>{renderContent()}</React.Fragment>;
 };
 

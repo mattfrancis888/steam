@@ -314,10 +314,18 @@ const Home: React.FC<HomeProps> = (props) => {
                     </div>
                 );
             } else {
-                return null;
+                return (
+                    <div className="loadingCenter">
+                        <Loading />
+                    </div>
+                );
             }
         } else {
-            return <Loading />;
+            return (
+                <div className="loadingCenter">
+                    <Loading />
+                </div>
+            );
         }
     };
 
