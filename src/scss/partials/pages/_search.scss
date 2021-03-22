@@ -37,8 +37,10 @@
     }
     @media screen and (min-width: $md_breakpoint) {
         flex-wrap: nowrap;
+        min-height: 6.6rem;
     }
     margin-bottom: 0.5rem;
+    min-height: 10.9rem;
 }
 .searchGameImageAndTitleWrap {
     display: flex;
@@ -152,7 +154,7 @@
 }
 
 .searchGameAdjustedPriceWrap {
-    width: 10rem;
+    width: 11rem;
     display: flex;
     justify-content: space-between;
 }

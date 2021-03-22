@@ -39,8 +39,12 @@ const Search: React.FC<SearchProps> = (props) => {
             props.fetchGamesByKeyword(queryValues.q);
         } else if (queryValues.specials !== undefined) {
             props.fetchDiscountedGames();
-        } else props.fetchGames();
-    }, []);
+        } else {
+            props.fetchGames();
+        }
+
+        //Search is used in the case the person presses a back button after an empty search
+    }, [search]);
 
     useEffect(() => {
         if (props.discountedGames.data) {
@@ -174,56 +178,67 @@ const Search: React.FC<SearchProps> = (props) => {
         if (queryValues.specials !== undefined) {
             contentToRender = props.discountedGames.data?.games;
         }
-        if (contentToRender)
-            return contentToRender.map((content, index) => {
-                return (
-                    <div
-                        key={index}
-                        className={`searchGameContainer ${
-                            hoverData === content.game_id
-                                ? "searchGameContainerToggled"
-                                : ""
-                        }`}
-                        onClick={() => {
-                            history.push(`game/${content.game_id}`);
-                        }}
-                        onMouseOver={() => {
-                            setHoverData(content.game_id);
-                        }}
-                    >
-                        <div className="searchGameImageAndTitleWrap">
-                            <img
-                                className={`searchGameImage searchGameImage${index}`}
-                                src={content.cover_url}
-                                onLoad={() => {
-                                    anime({
-                                        targets: `.searchGameImage${index}`,
-                                        opacity: [
-                                            {
-                                                value: [0, 1],
-                                                duration: 250,
-                                                easing: "easeOutQuad",
-                                            },
-                                        ],
-                                    });
-                                }}
-                                alt="game"
-                            ></img>
-                            <p className="searchGameTitle">{content.title}</p>
-                        </div>
+        if (contentToRender) {
+            if (contentToRender.length > 0)
+                return contentToRender.map((content, index) => {
+                    return (
+                        <div
+                            key={index}
+                            className={`searchGameContainer ${
+                                hoverData === content.game_id
+                                    ? "searchGameContainerToggled"
+                                    : ""
+                            }`}
+                            onClick={() => {
+                                history.push(`game/${content.game_id}`);
+                            }}
+                            onMouseOver={() => {
+                                setHoverData(content.game_id);
+                            }}
+                        >
+                            <div className="searchGameImageAndTitleWrap">
+                                <img
+                                    className={`searchGameImage searchGameImage${index}`}
+                                    src={content.cover_url}
+                                    onLoad={() => {
+                                        anime({
+                                            targets: `.searchGameImage${index}`,
+                                            opacity: [
+                                                {
+                                                    value: [0, 1],
+                                                    duration: 250,
+                                                    easing: "easeOutQuad",
+                                                },
+                                            ],
+                                        });
+                                    }}
+                                    alt="game"
+                                ></img>
+                                <p className="searchGameTitle">
+                                    {content.title}
+                                </p>
+                            </div>
 
-                        <div className="searchGameDateAndPriceWrap">
-                            <p className="searchGameDate">
-                                {moment(content.release_date).format(
-                                    "YYYY/MM/DD"
-                                )}
-                            </p>
-                            {renderPrice(content)}
+                            <div className="searchGameDateAndPriceWrap">
+                                <p className="searchGameDate">
+                                    {moment(content.release_date).format(
+                                        "YYYY/MM/DD"
+                                    )}
+                                </p>
+                                {renderPrice(content)}
+                            </div>
+                            {renderChartGamePreview(content.game_id)}
                         </div>
-                        {renderChartGamePreview(content.game_id)}
+                    );
+                });
+            else {
+                return (
+                    <div className="noResultsWrap">
+                        <p>There are no matches to your search. </p>
                     </div>
                 );
-            });
+            }
+        }
     };
 
     const renderContent = () => {
@@ -239,24 +254,24 @@ const Search: React.FC<SearchProps> = (props) => {
             props.games.data?.games ||
             props.discountedGames.data?.games
         ) {
-            if (
-                props.games.data?.games.length === 0 ||
-                props.discountedGames.data?.games.length === 0
-            ) {
-                return (
-                    <React.Fragment>
-                        <div className={`searchContainer`}>
-                            <CartAndSearchbar />
+            // if (
+            //     props.games.data?.games.length === 0 ||
+            //     props.discountedGames.data?.games.length === 0
+            // ) {
+            //     return (
+            //         <React.Fragment>
+            //             <div className={`searchContainer`}>
+            //                 <CartAndSearchbar />
 
-                            <div className="searchColumnsWrap">
-                                <div className="noResultsWrap">
-                                    <p>There are no matches to your search. </p>
-                                </div>
-                            </div>
-                        </div>
-                    </React.Fragment>
-                );
-            }
+            //                 <div className="searchColumnsWrap">
+            //                     <div className="noResultsWrap">
+            //                         <p>There are no matches to your search. </p>
+            //                     </div>
+            //                 </div>
+            //             </div>
+            //         </React.Fragment>
+            //     );
+            // }
             return (
                 <React.Fragment>
                     <div className={`searchContainer`}>

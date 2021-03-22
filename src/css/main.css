@@ -2901,6 +2901,7 @@ body {
   background: rgba(0, 0, 0, 0.2);
   color: #c6d4df;
   margin-bottom: 0.5rem;
+  min-height: 10.9rem;
 }
 .searchGameContainer:hover {
   background: linear-gradient(to right, #c6e6f8 5%, #95bcd3 95%);
@@ -2912,6 +2913,7 @@ body {
 @media screen and (min-width: 768px) {
   .searchGameContainer {
     flex-wrap: nowrap;
+    min-height: 6.6rem;
   }
 }
 
@@ -3031,7 +3033,7 @@ body {
 }
 
 .searchGameAdjustedPriceWrap {
-  width: 10rem;
+  width: 11rem;
   display: flex;
   justify-content: space-between;
 }
