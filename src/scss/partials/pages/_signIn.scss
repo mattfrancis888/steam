@@ -68,12 +68,14 @@
     max-width: 32rem;
     margin: 0 auto;
     .joinImage {
+        opacity: 0;
         width: 100%;
         object-fit: cover;
     }
 }
 
 .joinSteamButton {
+    cursor: pointer;
     background: transparent;
     color: white;
     border: 1px solid white;

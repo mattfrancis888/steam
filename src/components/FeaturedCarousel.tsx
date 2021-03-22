@@ -160,9 +160,9 @@ const FeaturedCarousel: React.FC<FeaturedCarouselProps> = (props) => {
                     visibleSlides={1}
                     infinite={true}
                     step={1}
-                    // isPlaying={autoPlay}
-                    isPlaying={false}
-                    interval={2000}
+                    isPlaying={autoPlay}
+                    // isPlaying={false}
+                    interval={5000}
                 >
                     <div className="sliderAndButtonWrap">
                         <Slider>{renderSlides()}</Slider>
@@ -173,7 +173,7 @@ const FeaturedCarousel: React.FC<FeaturedCarouselProps> = (props) => {
                                     ? "hideFeaturedCarouselButton"
                                     : ""
                             }`}
-                            onClick={(index) => {
+                            onClick={() => {
                                 setDisplayImage("");
                             }}
                         >
@@ -186,7 +186,7 @@ const FeaturedCarousel: React.FC<FeaturedCarouselProps> = (props) => {
                                     ? "hideFeaturedCarouselButton"
                                     : ""
                             }`}
-                            onClick={(index) => {
+                            onClick={() => {
                                 setDisplayImage("");
                             }}
                         >

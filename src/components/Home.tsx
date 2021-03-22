@@ -241,76 +241,88 @@ const Home: React.FC<HomeProps> = (props) => {
                 let specialTabsHoverData =
                     props.discountedGames.data?.games[0].game_id;
                 let carouselSplit = _.chunk(props.games.data.games, 4);
-                return (
-                    <div className="homeContainer">
-                        <div className="homeFirstSection">
-                            <CartAndSearchbar />
-                            <h1 className="bannerTitle">
-                                Featured And Recommended
-                            </h1>
+                if (carouselSplit[0] && carouselSplit[3])
+                    return (
+                        <div className="homeContainer">
+                            <div className="homeFirstSection">
+                                <CartAndSearchbar />
+                                <h1 className="bannerTitle">
+                                    Featured And Recommended
+                                </h1>
 
-                            <FeaturedCarousel content={carouselSplit[0]} />
-                            <h1 className="bannerTitle">Special Offers</h1>
-                            <SpecialOfferCarousel
-                                content={props.discountedGames.data.games}
-                            />
-                            <h1 className="bannerTitle">
-                                The Community Recommends
-                            </h1>
-                            <CommunityCarousel content={carouselSplit[3]} />
-                        </div>
-                        <div className="chartTabsWrap">
-                            <div
-                                className={`chartTab ${
-                                    specialsTabClicked ? "" : " chartTabToggled"
-                                }`}
-                                onClick={() => setSpecialsTabClicked(false)}
-                            >
-                                Top Sellers
+                                <FeaturedCarousel content={carouselSplit[0]} />
+                                <h1 className="bannerTitle">Special Offers</h1>
+                                <SpecialOfferCarousel
+                                    content={props.discountedGames.data.games}
+                                />
+                                <h1 className="bannerTitle">
+                                    The Community Recommends
+                                </h1>
+                                <CommunityCarousel content={carouselSplit[3]} />
                             </div>
-                            <div
-                                className={`chartTab ${
-                                    specialsTabClicked ? "chartTabToggled" : ""
-                                }`}
-                                onClick={() => {
-                                    setSpecialsTabClicked(true);
-                                    setHoverData(specialTabsHoverData);
-                                }}
-                            >
-                                Specials
-                            </div>
-                        </div>
-
-                        <div className="chart">
-                            <div className="chartGamesColumn">
-                                <div className="seeMoreWrap">
-                                    <p className="seeMoreText">See More:</p>
-                                    <div
-                                        className="chartSeeMore"
-                                        onClick={() => {
-                                            if (specialsTabClicked) {
-                                                history.push({
-                                                    pathname: "/search",
-                                                    search: `?specials`,
-                                                });
-                                            } else {
-                                                history.push({
-                                                    pathname: "/search",
-                                                });
-                                            }
-                                        }}
-                                    >
-                                        {specialsTabClicked
-                                            ? "Specials"
-                                            : "Top Sellers"}
-                                    </div>
+                            <div className="chartTabsWrap">
+                                <div
+                                    className={`chartTab ${
+                                        specialsTabClicked
+                                            ? ""
+                                            : " chartTabToggled"
+                                    }`}
+                                    onClick={() => setSpecialsTabClicked(false)}
+                                >
+                                    Top Sellers
                                 </div>
-                                {renderChartGames()}
+                                <div
+                                    className={`chartTab ${
+                                        specialsTabClicked
+                                            ? "chartTabToggled"
+                                            : ""
+                                    }`}
+                                    onClick={() => {
+                                        setSpecialsTabClicked(true);
+                                        setHoverData(specialTabsHoverData);
+                                    }}
+                                >
+                                    Specials
+                                </div>
                             </div>
-                            {renderChartGamePreview(hoverData)}
+
+                            <div className="chart">
+                                <div className="chartGamesColumn">
+                                    <div className="seeMoreWrap">
+                                        <p className="seeMoreText">See More:</p>
+                                        <div
+                                            className="chartSeeMore"
+                                            onClick={() => {
+                                                if (specialsTabClicked) {
+                                                    history.push({
+                                                        pathname: "/search",
+                                                        search: `?specials`,
+                                                    });
+                                                } else {
+                                                    history.push({
+                                                        pathname: "/search",
+                                                    });
+                                                }
+                                            }}
+                                        >
+                                            {specialsTabClicked
+                                                ? "Specials"
+                                                : "Top Sellers"}
+                                        </div>
+                                    </div>
+                                    {renderChartGames()}
+                                </div>
+                                {renderChartGamePreview(hoverData)}
+                            </div>
                         </div>
-                    </div>
-                );
+                    );
+                else {
+                    return (
+                        <div className="loadingCenter">
+                            <Loading />
+                        </div>
+                    );
+                }
             } else {
                 return (
                     <div className="loadingCenter">

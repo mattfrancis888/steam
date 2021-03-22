@@ -389,9 +389,31 @@ body {
   }
 }
 
+.headerAuthWrap {
+  display: flex;
+  align-items: center;
+  color: #d9dadd;
+}
+
+.headerProfileText {
+  cursor: pointer;
+  margin-right: 2rem;
+  font-size: 1.3rem;
+  font-weight: normal;
+}
+@media screen and (min-width: 520px) {
+  .headerProfileText {
+    font-size: 1.7rem;
+  }
+}
+@media screen and (min-width: 992px) {
+  .headerProfileText {
+    font-size: 1.7rem;
+  }
+}
+
 .headerAuthText {
   cursor: pointer;
-  display: block;
   font-weight: normal;
   font-size: 1.3rem;
 }
@@ -2780,11 +2802,13 @@ body {
   margin: 0 auto;
 }
 .joinImageWrap .joinImage {
+  opacity: 0;
   width: 100%;
   object-fit: cover;
 }
 
 .joinSteamButton {
+  cursor: pointer;
   background: transparent;
   color: white;
   border: 1px solid white;

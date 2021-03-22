@@ -22,7 +22,12 @@ import {
     SM_SCREEN_SIZE,
 } from "../constants";
 import { Game } from "../actions";
-
+const videosFromSteam = [
+    "https://cdn.akamai.steamstatic.com/steam/apps/256767815/movie480.webm?t=1583175736",
+    "https://cdn.cloudflare.steamstatic.com/steam/apps/81958/movie480.webm?t=1554409259",
+    "https://cdn.cloudflare.steamstatic.com/steam/apps/256694830/movie480.webm?t=1561485484",
+    "https://cdn.akamai.steamstatic.com/steam/apps/2028471/movie480.webm?t=1447357639",
+];
 const CommunityCarousel: React.FC<CommunityCarouelProps> = (props) => {
     const { width } = useWindowDimensions();
     const [style, setStyle] = useState({ opacity: "1" });
@@ -64,7 +69,7 @@ const CommunityCarousel: React.FC<CommunityCarouelProps> = (props) => {
                     index={index}
                     key={index}
                     onClick={() => {
-                        history.push(`game/${content.game_id}`);
+                        history.push(`/game/${content.game_id}`);
                     }}
                 >
                     <LazyLoad>
@@ -87,12 +92,7 @@ const CommunityCarousel: React.FC<CommunityCarouelProps> = (props) => {
                                 });
                             }}
                         >
-                            <div
-                                className="communityCarouselSectionWrap"
-                                onClick={() =>
-                                    history.push(`game${content.game_id}`)
-                                }
-                            >
+                            <div className="communityCarouselSectionWrap">
                                 <div
                                     className="communityCarouselImageSection"
                                     onMouseEnter={(e) => {
@@ -107,7 +107,7 @@ const CommunityCarousel: React.FC<CommunityCarouelProps> = (props) => {
                                         alt="game"
                                     ></img>
 
-                                    {/* <video
+                                    <video
                                         className="communityCarouselVid"
                                         autoPlay={true}
                                         playsInline={false}
@@ -115,11 +115,15 @@ const CommunityCarousel: React.FC<CommunityCarouelProps> = (props) => {
                                         loop={true}
                                         style={style}
                                     >
-                                        <source
+                                        {/* <source
                                             src="  https://cdn.cloudflare.steamstatic.com/steam/apps/256820708/movie480_vp9.webm?t=1612810771"
                                             type="video/mp4"
+                                        /> */}
+                                        <source
+                                            src={videosFromSteam[index]}
+                                            type="video/mp4"
                                         />
-                                    </video> */}
+                                    </video>
                                     <div className="communityPrice">
                                         {renderPrice(content)}
                                     </div>

@@ -41,7 +41,7 @@ const Searchbar: React.FC<SearchbarProps> = (props) => {
                     // history.push(`/search?q=${searchTerm}`);
                 }
             }
-        }, 850);
+        }, 550);
 
         return () => clearTimeout(delayDebounceFn);
     }, [searchTerm]);
@@ -124,7 +124,7 @@ const Searchbar: React.FC<SearchbarProps> = (props) => {
                     className="searchBarIcons"
                     data-testid="searchIcon"
                     onClick={() => {
-                        // directToListingsPage();
+                        history.push(`search?q=${searchTerm}`);
                     }}
                 />
                 <div

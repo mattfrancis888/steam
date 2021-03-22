@@ -8,6 +8,7 @@ import Loading from "./Loading";
 import { StoreState } from "../reducers";
 import { ProfileStateResponse } from "../reducers/profileReducer";
 import { ErrorStateResponse } from "../reducers/errorReducer";
+import requireAuth from "./requireAuth";
 
 export interface EditProfileFormProps {
     onSubmit(formValues: any): void;
@@ -142,4 +143,4 @@ const mapStateToProps = (state: StoreState) => {
 export default connect(mapStateToProps, {
     fetchProfile,
     editProfile,
-})(Profile);
+})(requireAuth(Profile));
