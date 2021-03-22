@@ -12,7 +12,7 @@
 .searchGamesColumn {
     width: 100%;
     @media screen and (min-width: $lg_breakpoint) {
-        width: 80%;
+        width: 77%;
     }
 }
 .searchColumnsWrap {
@@ -113,7 +113,9 @@
 }
 
 .searchPreviewHover {
-    margin-left: 5rem;
+    position: absolute;
+    right: -30rem;
+
     display: none;
     @media screen and (min-width: $lg_breakpoint) {
         display: block;
@@ -121,6 +123,9 @@
     max-width: 30rem;
     padding: 1rem;
     background: linear-gradient(to right, #c6e6f8 5%, #95bcd3 95%);
+}
+.hideSearchPreviewHover {
+    opacity: 0;
 }
 
 .searchGamePreviewTitle {

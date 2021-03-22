@@ -114,9 +114,14 @@ const Search: React.FC<SearchProps> = (props) => {
             filteredContent = _.filter(props.discountedGames.data?.games, {
                 game_id: gameId,
             });
+        console.log(hoverData, gameId);
 
         return (
-            <div className="searchPreviewHover">
+            <div
+                className={`searchPreviewHover ${
+                    hoverData === gameId ? "" : "hideSearchPreviewHover"
+                }`}
+            >
                 <p className="searchGamePreviewTitle">
                     {filteredContent.map((content, index) => {
                         return content.title;
@@ -198,6 +203,7 @@ const Search: React.FC<SearchProps> = (props) => {
                             </p>
                             {renderPrice(content)}
                         </div>
+                        {renderChartGamePreview(content.game_id)}
                     </div>
                 );
             });
@@ -243,7 +249,7 @@ const Search: React.FC<SearchProps> = (props) => {
                                 {renderChartGames()}
                             </div>
 
-                            {renderChartGamePreview(hoverData)}
+                            {/* {renderChartGamePreview(hoverData)} */}
                         </div>
                     </div>
                 </React.Fragment>
