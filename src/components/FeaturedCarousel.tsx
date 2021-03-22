@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import {
     CarouselProvider,
     Slider,
@@ -20,6 +20,8 @@ import _ from "lodash";
 
 const FeaturedCarousel: React.FC<FeaturedCarouselProps> = (props) => {
     const { width } = useWindowDimensions();
+    const [displayImage, setDisplayImage] = useState("");
+    const [autoPlay, setAutoPlay] = useState(false);
 
     const renderPrice = (content: Game) => {
         if (parseFloat(content.discount_percentage) > 0) {
@@ -63,7 +65,17 @@ const FeaturedCarousel: React.FC<FeaturedCarouselProps> = (props) => {
             return gameForSlide[0].screenshots.map((screenshot, index) => {
                 if (index < maxScreenshotToShow)
                     return (
-                        <img key={index} src={screenshot} alt="preview"></img>
+                        <img
+                            key={index}
+                            src={screenshot}
+                            onMouseEnter={(e) => {
+                                setDisplayImage(screenshot);
+                            }}
+                            onMouseLeave={(e) => {
+                                setDisplayImage("");
+                            }}
+                            alt="preview"
+                        ></img>
                     );
             });
     };
@@ -77,49 +89,53 @@ const FeaturedCarousel: React.FC<FeaturedCarouselProps> = (props) => {
                     onClick={() => {
                         history.push(`game/${content.game_id}`);
                     }}
+                    className="test"
                 >
-                    <LazyLoad>
-                        <div
-                            className={`featuredContainerCarousel featuredAnime${index}`}
-                            onLoad={() => {
-                                anime({
-                                    targets: `.featuredAnime${index}`,
-                                    // Properties
-                                    // Animation Parameters
+                    {/* <LazyLoad> */}
+                    <div
+                        className={`featuredContainerCarousel featuredAnime${index}`}
+                        onLoad={() => {
+                            anime({
+                                targets: `.featuredAnime${index}`,
+                                // Properties
+                                // Animation Parameters
 
-                                    opacity: [
-                                        {
-                                            value: [0, 1],
-                                            duration: 250,
-                                            easing: "easeOutQuad",
-                                        },
-                                    ],
-                                });
-                            }}
-                        >
-                            <div className="featuredCarouselSectionWrap">
-                                <div className="featuredCarouselImageSection">
-                                    <img
-                                        src={content.cover_url}
-                                        alt="game cover"
-                                    ></img>
-                                    <div className="featuredCarouselGamePrice">
-                                        {renderPrice(content)}
-                                    </div>
+                                opacity: [
+                                    {
+                                        value: [0, 1],
+                                        duration: 0,
+                                        easing: "easeOutQuad",
+                                    },
+                                ],
+                            });
+                        }}
+                    >
+                        <div className="featuredCarouselSectionWrap">
+                            <div className="featuredCarouselImageSection">
+                                <img
+                                    // src={content.cover_url}
+                                    src={
+                                        displayImage === ""
+                                            ? content.cover_url
+                                            : displayImage
+                                    }
+                                    alt="game cover"
+                                ></img>
+                                <div className="featuredCarouselGamePrice">
+                                    {renderPrice(content)}
                                 </div>
-                                <div className="featuredCarouselScreenshotSection">
-                                    <h1 className="featuredCarouselGameTitle">
-                                        {content.title}
-                                    </h1>
-                                    <div className="featuredCarouselGameScreenshotsWrap">
-                                        {renderScreenshotsForGame(
-                                            content.game_id
-                                        )}
-                                    </div>
+                            </div>
+                            <div className="featuredCarouselScreenshotSection">
+                                <h1 className="featuredCarouselGameTitle">
+                                    {content.title}
+                                </h1>
+                                <div className="featuredCarouselGameScreenshotsWrap">
+                                    {renderScreenshotsForGame(content.game_id)}
                                 </div>
                             </div>
                         </div>
-                    </LazyLoad>
+                    </div>
+                    {/* </LazyLoad> */}
                 </Slide>
             );
         });
@@ -129,10 +145,10 @@ const FeaturedCarousel: React.FC<FeaturedCarouselProps> = (props) => {
         return (
             <div
                 onMouseEnter={(e) => {
-                    // setStyle({ opacity: "1" });
+                    setAutoPlay(false);
                 }}
                 onMouseLeave={(e) => {
-                    // setStyle({ opacity: "0" });
+                    setAutoPlay(true);
                 }}
             >
                 <CarouselProvider
@@ -144,8 +160,9 @@ const FeaturedCarousel: React.FC<FeaturedCarouselProps> = (props) => {
                     visibleSlides={1}
                     infinite={true}
                     step={1}
-                    // isPlaying={true}
-                    // interval={5000}
+                    // isPlaying={autoPlay}
+                    isPlaying={false}
+                    interval={2000}
                 >
                     <div className="sliderAndButtonWrap">
                         <Slider>{renderSlides()}</Slider>
@@ -156,15 +173,22 @@ const FeaturedCarousel: React.FC<FeaturedCarouselProps> = (props) => {
                                     ? "hideFeaturedCarouselButton"
                                     : ""
                             }`}
+                            onClick={(index) => {
+                                setDisplayImage("");
+                            }}
                         >
                             <RiArrowLeftSLine />
                         </ButtonBack>
+
                         <ButtonNext
                             className={`gameNextButton ${
                                 width < LG_SCREEN_SIZE
                                     ? "hideFeaturedCarouselButton"
                                     : ""
                             }`}
+                            onClick={(index) => {
+                                setDisplayImage("");
+                            }}
                         >
                             <RiArrowRightSLine />
                         </ButtonNext>

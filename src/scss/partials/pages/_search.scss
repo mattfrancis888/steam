@@ -12,7 +12,13 @@
 .searchGamesColumn {
     width: 100%;
     @media screen and (min-width: $lg_breakpoint) {
-        width: 77%;
+        width: 66%;
+    }
+    @media screen and (min-width: $xl_breakpoint) {
+        width: 70%;
+    }
+    @media screen and (min-width: 1400px) {
+        width: 74%;
     }
 }
 .searchColumnsWrap {

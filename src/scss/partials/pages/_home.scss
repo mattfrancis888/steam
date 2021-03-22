@@ -30,10 +30,15 @@
     }
 
     @media screen and (min-width: $md_breakpoint) {
-        padding: 1rem 6rem;
+        padding: 1rem 10rem;
     }
-
-    @media screen and (min-width: $lg_breakpoint) {
+    // @media screen and (min-width: $lg_breakpoint) {
+    //     padding: 1rem 10rem;
+    // }
+    @media screen and (min-width: $xl_breakpoint) {
+        padding: 1rem 15rem;
+    }
+    @media screen and (min-width: 1400px) {
         padding: 1rem 20rem;
     }
 }

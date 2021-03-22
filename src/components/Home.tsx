@@ -257,9 +257,7 @@ const Home: React.FC<HomeProps> = (props) => {
                             <h1 className="bannerTitle">
                                 The Community Recommends
                             </h1>
-                            <CommunityCarousel
-                                content={props.games.data.games}
-                            />
+                            <CommunityCarousel content={carouselSplit[3]} />
                         </div>
                         <div className="chartTabsWrap">
                             <div

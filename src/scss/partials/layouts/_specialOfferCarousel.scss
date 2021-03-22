@@ -1,3 +1,11 @@
+.specialOfferContainerCarousel {
+    opacity: 0;
+    cursor: pointer;
+    @media screen and (min-width: $lg_breakpoint) {
+        margin: 0 5rem;
+    }
+    height: 100%;
+}
 .specialOfferCarouselSectionContainer {
     width: 100%;
     // display: flex;

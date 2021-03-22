@@ -28,10 +28,10 @@ const SpecialOfferCarousel: React.FC<SpecialOfferCarouselProps> = (props) => {
                 <Slide index={index} key={index}>
                     <LazyLoad>
                         <div
-                            className={`featuredContainerCarousel featuredAnime${index}`}
+                            className={`specialOfferContainerCarousel specialAnime${index}`}
                             onLoad={() => {
                                 anime({
-                                    targets: `.featuredAnime${index}`,
+                                    targets: `.specialAnime${index}`,
                                     // Properties
                                     // Animation Parameters
 

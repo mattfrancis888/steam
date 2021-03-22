@@ -415,7 +415,9 @@ body {
 }
 
 .featuredContainerCarousel {
+  opacity: 0;
   cursor: pointer;
+  height: 100%;
 }
 @media screen and (min-width: 992px) {
   .featuredContainerCarousel {
@@ -425,9 +427,11 @@ body {
 
 .featuredCarouselSectionWrap {
   display: flex;
+  height: 100%;
 }
 
 .featuredCarouselImageSection {
+  height: 100%;
   position: relative;
   width: 100%;
 }
@@ -679,6 +683,17 @@ body {
   display: none !important;
 }
 
+.specialOfferContainerCarousel {
+  opacity: 0;
+  cursor: pointer;
+  height: 100%;
+}
+@media screen and (min-width: 992px) {
+  .specialOfferContainerCarousel {
+    margin: 0 5rem;
+  }
+}
+
 .specialOfferCarouselSectionContainer {
   width: 100%;
   display: grid;
@@ -804,18 +819,15 @@ body {
   }
 }
 
-.communityContainerCarousel {
-  display: flex;
-}
-
-@media screen and (min-width: 992px) {
-  .communityContainerCarousel {
-    margin: 0 5rem;
-  }
-}
-
 .communityCarouselSectionWrap {
   display: flex;
+  cursor: pointer;
+  height: 100%;
+}
+@media screen and (min-width: 992px) {
+  .communityCarouselSectionWrap {
+    margin: 0 5rem;
+  }
 }
 
 .communityCarouselImageSection {
@@ -841,42 +853,41 @@ body {
   display: none;
 }
 
-.communityCarouselReviewSection {
+.communityCarouselAboutSection {
   background: linear-gradient(to bottom, #506c86 5%, #10143100 96%);
+  padding: 1rem;
+  width: 100%;
   display: none;
 }
 @media screen and (min-width: 992px) {
-  .communityCarouselReviewSection {
+  .communityCarouselAboutSection {
     display: block;
     width: 30%;
   }
 }
 
-.communityCarouselGameReview {
+.communityCarouselGameAbout {
   color: white;
-  margin-left: 1.5rem;
   font-weight: normal;
   font-size: 1.4rem;
   line-height: 2.4rem;
   margin: 0;
-  display: -webkit-box;
-  -webkit-line-clamp: 4;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
 }
 @media screen and (min-width: 992px) {
-  .communityCarouselGameReview {
-    margin: 2rem 1rem;
+  .communityCarouselGameAbout {
+    display: -webkit-box;
+    -webkit-line-clamp: 6;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
   }
 }
 @media screen and (min-width: 1200px) {
-  .communityCarouselGameReview {
-    margin: 3rem 2rem;
-    font-size: 1.8rem;
+  .communityCarouselGameAbout {
+    font-size: 1.6rem;
   }
 }
 
-.communityCarouselReadMore {
+.communityCarouselVisitGame {
   text-align: center;
   color: #c1dbf4;
   cursor: pointer;
@@ -1780,10 +1791,15 @@ body {
 }
 @media screen and (min-width: 768px) {
   .homeFirstSection {
-    padding: 1rem 6rem;
+    padding: 1rem 10rem;
   }
 }
-@media screen and (min-width: 992px) {
+@media screen and (min-width: 1200px) {
+  .homeFirstSection {
+    padding: 1rem 15rem;
+  }
+}
+@media screen and (min-width: 1400px) {
   .homeFirstSection {
     padding: 1rem 20rem;
   }
@@ -2882,7 +2898,17 @@ body {
 }
 @media screen and (min-width: 992px) {
   .searchGamesColumn {
-    width: 77%;
+    width: 66%;
+  }
+}
+@media screen and (min-width: 1200px) {
+  .searchGamesColumn {
+    width: 70%;
+  }
+}
+@media screen and (min-width: 1400px) {
+  .searchGamesColumn {
+    width: 74%;
   }
 }
 
