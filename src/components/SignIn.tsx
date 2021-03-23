@@ -5,6 +5,7 @@ import { signIn } from "../actions";
 import { StoreState } from "../reducers";
 import { connect } from "react-redux";
 import anime from "animejs/lib/anime.es.js";
+import joinPc from "../img/joinPc.png";
 export interface SignInFormProps {
     onSubmit(formValues: any): void;
     authStatus?: string | null;
@@ -38,7 +39,7 @@ const SignIn: React.FC<SignInProps> = (props) => {
                     <div className="joinImageWrap">
                         <img
                             className="joinImage"
-                            src="https://store.akamai.steamstatic.com/public/shared/images/login/join_pc.png?v=1"
+                            src={joinPc}
                             alt=""
                             onLoad={() => {
                                 anime({

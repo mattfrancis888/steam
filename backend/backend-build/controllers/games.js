@@ -219,6 +219,7 @@ var getGames = function (req, res) { return __awaiter(void 0, void 0, void 0, fu
                 return [3 /*break*/, 3];
             case 2:
                 error_3 = _a.sent();
+                console.log(error_3);
                 return [2 /*return*/, res.sendStatus(constants_1.INTERNAL_SERVER_ERROR_STATUS)];
             case 3: return [2 /*return*/];
         }

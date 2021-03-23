@@ -261,6 +261,7 @@ export const getGames = async (req: Request, res: Response) => {
         res.send({ games: response.rows });
         // res.send({...response.rows})
     } catch (error) {
+        console.log(error);
         return res.sendStatus(INTERNAL_SERVER_ERROR_STATUS);
     }
 };
