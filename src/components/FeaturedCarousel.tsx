@@ -17,11 +17,28 @@ import anime from "animejs/lib/anime.es.js";
 import { LG_SCREEN_SIZE, MED_SCREEN_SIZE } from "../constants";
 import { Game } from "../actions";
 import _ from "lodash";
+import { useTransition, animated, useSpring } from "react-spring";
 
 const FeaturedCarousel: React.FC<FeaturedCarouselProps> = (props) => {
     const { width } = useWindowDimensions();
     const [displayImage, setDisplayImage] = useState("");
     const [autoPlay, setAutoPlay] = useState(false);
+
+    const transition = useTransition(displayImage, {
+        from: {
+            opacity: 0,
+        },
+        enter: {
+            opacity: 1,
+        },
+        leave: {
+            opacity: 1,
+        },
+
+        config: {
+            duration: 1000,
+        },
+    });
 
     const renderPrice = (content: Game) => {
         if (parseFloat(content.discount_percentage) > 0) {
@@ -71,9 +88,9 @@ const FeaturedCarousel: React.FC<FeaturedCarouselProps> = (props) => {
                             onMouseEnter={(e) => {
                                 setDisplayImage(screenshot);
                             }}
-                            onMouseLeave={(e) => {
-                                setDisplayImage("");
-                            }}
+                            // onMouseLeave={(e) => {
+                            //     setDisplayImage("");
+                            // }}
                             alt="preview"
                         ></img>
                     );
@@ -112,15 +129,19 @@ const FeaturedCarousel: React.FC<FeaturedCarouselProps> = (props) => {
                     >
                         <div className="featuredCarouselSectionWrap">
                             <div className="featuredCarouselImageSection">
-                                <img
-                                    // src={content.cover_url}
-                                    src={
-                                        displayImage === ""
-                                            ? content.cover_url
-                                            : displayImage
-                                    }
-                                    alt="game cover"
-                                ></img>
+                                {transition((style, item) => {
+                                    return (
+                                        <animated.img
+                                            style={style}
+                                            src={
+                                                displayImage === ""
+                                                    ? content.cover_url
+                                                    : displayImage
+                                            }
+                                            alt="game cover"
+                                        ></animated.img>
+                                    );
+                                })}
                                 <div className="featuredCarouselGamePrice">
                                     {renderPrice(content)}
                                 </div>
@@ -129,7 +150,12 @@ const FeaturedCarousel: React.FC<FeaturedCarouselProps> = (props) => {
                                 <h1 className="featuredCarouselGameTitle">
                                     {content.title}
                                 </h1>
-                                <div className="featuredCarouselGameScreenshotsWrap">
+                                <div
+                                    className="featuredCarouselGameScreenshotsWrap"
+                                    onMouseLeave={(e) => {
+                                        setDisplayImage("");
+                                    }}
+                                >
                                     {renderScreenshotsForGame(content.game_id)}
                                 </div>
                             </div>
