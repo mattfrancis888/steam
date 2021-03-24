@@ -1,0 +1,11 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+var express_1 = require("express");
+var profile_1 = require("../controllers/profile");
+var profileRouter = express_1.Router();
+profileRouter.get("/get-profile", profile_1.getUserProfile);
+profileRouter.patch("/edit-profile", profile_1.editUserProfile);
+profileRouter.post("/upload-image", profile_1.uploadImage);
+profileRouter.put("/edit-image/:cloudinaryPublicId", profile_1.editImage);
+profileRouter.delete("/delete-image/:cloudinaryPublicId", profile_1.deleteImage);
+exports.default = profileRouter;

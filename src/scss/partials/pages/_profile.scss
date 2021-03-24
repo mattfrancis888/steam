@@ -1,0 +1,75 @@
+.profileContainer {
+    padding: 1rem 3rem;
+    padding-bottom: 5rem;
+    @media screen and (min-width: $md_breakpoint) {
+        padding: 1rem 6rem;
+        padding-bottom: 10rem;
+    }
+
+    @media screen and (min-width: $lg_breakpoint) {
+        padding: 1rem 20rem;
+        padding-bottom: 10rem;
+    }
+}
+.profileHeader {
+    background: rgba(58, 62, 71, 0.5);
+    border-radius: 0.25rem;
+    margin-bottom: 3rem;
+    display: flex;
+
+    align-items: center;
+    padding: 1rem;
+    @media screen and (min-width: $md_breakpoint) {
+        margin-bottom: 5rem;
+
+        padding: 2rem;
+    }
+    h1 {
+        overflow: hidden;
+        display: inline;
+        text-overflow: ellipsis;
+        width: 70%;
+        font-size: 1.3rem;
+        @media screen and (min-width: $md_breakpoint) {
+            font-size: 1.8rem;
+        }
+        margin: 0;
+    }
+}
+.profileHeaderAvatar {
+    margin-right: 1rem;
+    width: 6.4rem;
+    height: 6.4rem;
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+}
+
+.profileAboutTitle {
+    font-weight: normal;
+    font-size: 2rem;
+    @media screen and (min-width: $md_breakpoint) {
+        font-size: 2.5rem;
+    }
+    letter-spacing: 0.2rem;
+    text-transform: uppercase;
+}
+
+.profileTextAndFormWrap {
+    p {
+        color: #969696;
+        font-size: 1.3rem;
+        @media screen and (min-width: $md_breakpoint) {
+            font-size: 1.6rem;
+        }
+    }
+}
+
+.profileTextWrap {
+    margin-bottom: 5rem;
+    @media screen and (min-width: $md_breakpoint) {
+        margin-bottom: 7rem;
+    }
+}

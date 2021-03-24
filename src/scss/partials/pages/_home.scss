@@ -1,0 +1,327 @@
+.bannerTitle {
+    text-transform: uppercase;
+    font-weight: 500;
+    font-size: 1rem;
+    letter-spacing: 0.2rem;
+    margin-top: 5rem;
+
+    @media screen and(min-width: $sm_breakpoint) {
+        font-size: 1.3rem;
+    }
+    @media screen and(min-width: $md_breakpoint) {
+        font-size: 1.6rem;
+    }
+
+    @media screen and (min-width: $lg_breakpoint) {
+        margin-left: 5.5rem;
+    }
+}
+
+.homeContainer {
+    background: url(https://res.cloudinary.com/du8n2aa4p/image/upload/v1616458895/steam/background/cluster_bg.png)
+        bottom center no-repeat;
+}
+.homeFirstSection {
+    padding: 1rem 3rem;
+    display: flex;
+    flex-direction: column;
+    @media screen and (min-width: $sm_breakpoint) {
+        padding: 1rem 3rem;
+    }
+
+    @media screen and (min-width: $md_breakpoint) {
+        padding: 1rem 10rem;
+    }
+    // @media screen and (min-width: $lg_breakpoint) {
+    //     padding: 1rem 10rem;
+    // }
+    @media screen and (min-width: $xl_breakpoint) {
+        padding: 1rem 15rem;
+    }
+    @media screen and (min-width: 1400px) {
+        padding: 1rem 20rem;
+    }
+}
+
+.chart {
+    display: flex;
+    width: 100%;
+    background-image: linear-gradient(
+        rgb(42, 71, 94) 5%,
+        rgba(42, 71, 94, 0) 70%
+    );
+
+    padding: 1rem 1rem;
+    padding-bottom: 4rem;
+    @media screen and (min-width: $sm_breakpoint) {
+        padding: 1rem 3rem;
+        padding-bottom: 5rem;
+    }
+
+    @media screen and (min-width: $md_breakpoint) {
+        padding: 1rem 6rem;
+        padding-bottom: 6rem;
+    }
+}
+
+.chartGamesColumn {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    @media screen and (min-width: $lg_breakpoint) {
+        width: 80%;
+    }
+}
+.chartGameAndPreviewContainer {
+    display: flex;
+    flex-wrap: nowrap;
+}
+.chartGameContainer {
+    cursor: pointer;
+    position: relative;
+    display: flex;
+    background: rgba(0, 0, 0, 0.2);
+    align-items: center;
+    cursor: pointer;
+    margin-bottom: 0.5rem;
+    width: 100%;
+    height: 5rem;
+
+    @media screen and (min-width: $md_breakpoint) {
+        height: 6rem;
+    }
+}
+.chartGameContainerToggled {
+    .chartGameTitle,
+    .chartGamePrice {
+        color: #384959;
+    }
+    background: linear-gradient(to right, #c6e6f8 5%, #95bcd3 95%);
+
+    padding-right: 0;
+
+    @media screen and (min-width: $lg_breakpoint) {
+        box-sizing: content-box;
+        padding-right: 5rem;
+    }
+}
+
+.chartGameImage {
+    opacity: 0;
+    width: 22rem;
+    height: 100%;
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    @media screen and (min-width: $xl_breakpoint) {
+        // max-height: 7rem;
+        width: 22rem;
+    }
+}
+.gameChartScreenshotPreview {
+    opacity: 0;
+}
+.chartGameInfo {
+    color: #c7d5e0;
+    width: 100%;
+    //Used margin instead of padding here becasue margin and box-sizing: content-box; dosent affect the spacings
+    margin: 0.5rem 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    @media screen and (min-width: $sm_breakpoint) {
+        margin: 1rem 2rem;
+    }
+    @media screen and (min-width: $md_breakpoint) {
+        margin: 1.5rem 2rem;
+    }
+}
+
+.chartGameGenres {
+    color: #384959;
+    font-size: 1rem;
+    margin: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    @media screen and (min-width: $sm_breakpoint) {
+        font-size: 1.2rem;
+    }
+    @media screen and (min-width: $md_breakpoint) {
+        font-size: 1.4rem;
+    }
+    @media screen and (min-width: $lg_breakpoint) {
+        font-size: 1.2rem;
+    }
+}
+.chartGameTitle {
+    overflow: hidden;
+    display: inline;
+    text-overflow: ellipsis;
+    font-size: 1.2rem;
+    margin: 0;
+    margin-bottom: 1rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    @media screen and (min-width: $sm_breakpoint) {
+        font-size: 1.4rem;
+    }
+
+    @media screen and (min-width: $md_breakpoint) {
+        font-size: 1.6rem;
+    }
+}
+
+.chartDiscount {
+    @include discountPriceColor;
+    margin-right: 1rem;
+    padding: 0.5rem;
+    font-size: 1.4rem;
+}
+.chartAdjustedPriceWrap {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 10rem;
+    @media screen and (min-width: $md_breakpoint) {
+    }
+}
+.chartOrigPriceStriked {
+    text-decoration: line-through;
+    font-size: 1.2rem;
+    margin: 0;
+    margin-bottom: 0.25rem;
+    color: #626366;
+}
+.chartGamePrice {
+    font-size: 1.2rem;
+    margin: 0;
+
+    @media screen and (min-width: $md_breakpoint) {
+        font-size: 1.4rem;
+    }
+}
+
+.chartTabsWrap {
+    display: flex;
+    padding: 0 1rem;
+    margin-top: 1.5rem;
+    @media screen and (min-width: $sm_breakpoint) {
+        padding: 0 3rem;
+    }
+
+    @media screen and (min-width: $md_breakpoint) {
+        padding: 0 6rem;
+    }
+}
+
+.chartTab {
+    margin-right: 1rem;
+    color: #2f89bc;
+    padding: 1rem;
+    font-size: 1.2rem;
+    @media screen and (min-width: $sm_breakpoint) {
+        font-size: 1.4rem;
+    }
+    border-top-left-radius: 0.25rem;
+    border-top-right-radius: 0.25rem;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    &:hover {
+        background-color: #2a475e;
+
+        color: white;
+    }
+}
+
+.chartTabToggled {
+    background-color: #2a475e;
+    color: white;
+}
+
+.chartGamePreviewHover {
+    cursor: pointer;
+    display: none;
+    margin-left: 5rem;
+    // float: right;
+
+    @media screen and (min-width: $lg_breakpoint) {
+        display: block;
+    }
+    width: 32rem;
+    // max-width: 32rem;
+    padding: 1rem;
+    background: linear-gradient(to right, #c6e6f8 5%, #95bcd3 95%);
+}
+
+.chartGamePreviewScreenshots {
+    width: 100%;
+    img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        margin-bottom: 0.25rem;
+    }
+}
+
+.chartGamePreviewTitle {
+    color: #263645;
+    font-size: 1.6rem;
+    margin: 0;
+    margin-bottom: 1rem;
+}
+
+.chartGamePreviewGenresWrap {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+    .chartGamePreviewGenres {
+        background-color: rgba(38, 54, 69, 0.6);
+        margin: 0;
+        margin-right: 0.25rem;
+        margin-bottom: 0.25rem;
+        padding: 0.5rem;
+        color: white;
+    }
+}
+
+.seeMoreWrap {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    margin-bottom: 1rem;
+    margin-right: 0.5rem;
+}
+.seeMoreText {
+    font-size: 1rem;
+    margin: 0;
+    margin-right: 1rem;
+    @media screen and (min-width: $sm_breakpoint) {
+        font-size: 1.2rem;
+    }
+    @media screen and (min-width: md_breakpoint) {
+        font-size: 1.4rem;
+    }
+}
+.chartSeeMore {
+    border: 1px solid rgba(255, 255, 255, 0.4);
+
+    padding: 0.5rem;
+    cursor: pointer;
+
+    @media screen and (min-width: $sm_breakpoint) {
+        padding: 1rem;
+        font-size: 1.2rem;
+    }
+    @media screen and (min-width: md_breakpoint) {
+        padding: 1rem;
+        font-size: 1.4rem;
+    }
+    &:hover {
+        border: 1px solid white;
+    }
+}

@@ -1,0 +1,3131 @@
+/* Document
+   ========================================================================== */
+/**
+ * 1. Correct the line height in all browsers.
+ * 2. Prevent adjustments of font size after orientation changes in iOS.
+ */
+html {
+  line-height: 1.15;
+  /* 1 */
+  -webkit-text-size-adjust: 100%;
+  /* 2 */
+  box-sizing: border-box;
+}
+
+*,
+*:before,
+*:after {
+  /*If default font-size is 16px; 1 rem = 10 px*/
+  box-sizing: inherit;
+}
+
+/* Sections
+   ========================================================================== */
+/**
+ * Remove the margin in all browsers.
+ */
+body {
+  margin-top: 5rem;
+}
+
+/**
+ * Render the `main` element consistently in IE.
+ */
+main {
+  display: block;
+}
+
+/**
+ * Correct the font size and margin on `h1` elements within `section` and
+ * `article` contexts in Chrome, Firefox, and Safari.
+ */
+h1 {
+  font-size: 2em;
+  margin: 0.67em 0;
+}
+
+/* Grouping content
+   ========================================================================== */
+/**
+ * 1. Add the correct box sizing in Firefox.
+ * 2. Show the overflow in Edge and IE.
+ */
+hr {
+  box-sizing: content-box;
+  /* 1 */
+  height: 0;
+  /* 1 */
+  overflow: visible;
+  /* 2 */
+}
+
+/**
+ * 1. Correct the inheritance and scaling of font size in all browsers.
+ * 2. Correct the odd `em` font sizing in all browsers.
+ */
+pre {
+  font-family: monospace, monospace;
+  /* 1 */
+  font-size: 1em;
+  /* 2 */
+}
+
+/* Text-level semantics
+   ========================================================================== */
+/**
+ * Remove the gray background on active links in IE 10.
+ */
+a {
+  background-color: transparent;
+}
+
+/**
+ * 1. Remove the bottom border in Chrome 57-
+ * 2. Add the correct text decoration in Chrome, Edge, IE, Opera, and Safari.
+ */
+abbr[title] {
+  border-bottom: none;
+  /* 1 */
+  text-decoration: underline;
+  /* 2 */
+  text-decoration: underline dotted;
+  /* 2 */
+}
+
+/**
+ * Add the correct font weight in Chrome, Edge, and Safari.
+ */
+b,
+strong {
+  font-weight: bolder;
+}
+
+/**
+ * 1. Correct the inheritance and scaling of font size in all browsers.
+ * 2. Correct the odd `em` font sizing in all browsers.
+ */
+code,
+kbd,
+samp {
+  font-family: monospace, monospace;
+  /* 1 */
+  font-size: 1em;
+  /* 2 */
+}
+
+/**
+ * Add the correct font size in all browsers.
+ */
+small {
+  font-size: 80%;
+}
+
+/**
+ * Prevent `sub` and `sup` elements from affecting the line height in
+ * all browsers.
+ */
+sub,
+sup {
+  font-size: 75%;
+  line-height: 0;
+  position: relative;
+  vertical-align: baseline;
+}
+
+sub {
+  bottom: -0.25em;
+}
+
+sup {
+  top: -0.5em;
+}
+
+/* Embedded content
+   ========================================================================== */
+/**
+ * Remove the border on images inside links in IE 10.
+ */
+img {
+  border-style: none;
+}
+
+/* Forms
+   ========================================================================== */
+/**
+ * 1. Change the font styles in all browsers.
+ * 2. Remove the margin in Firefox and Safari.
+ */
+button,
+input,
+optgroup,
+select,
+textarea {
+  font-family: inherit;
+  /* 1 */
+  font-size: 100%;
+  /* 1 */
+  line-height: 1.15;
+  /* 1 */
+  margin: 0;
+  /* 2 */
+}
+
+/**
+ * Show the overflow in IE.
+ * 1. Show the overflow in Edge.
+ */
+button,
+input {
+  /* 1 */
+  overflow: visible;
+}
+
+/**
+ * Remove the inheritance of text transform in Edge, Firefox, and IE.
+ * 1. Remove the inheritance of text transform in Firefox.
+ */
+button,
+select {
+  /* 1 */
+  text-transform: none;
+}
+
+/**
+ * Correct the inability to style clickable types in iOS and Safari.
+ */
+button,
+[type=button],
+[type=reset],
+[type=submit] {
+  -webkit-appearance: button;
+}
+
+/**
+ * Remove the inner border and padding in Firefox.
+ */
+button::-moz-focus-inner,
+[type=button]::-moz-focus-inner,
+[type=reset]::-moz-focus-inner,
+[type=submit]::-moz-focus-inner {
+  border-style: none;
+  padding: 0;
+}
+
+/**
+ * Restore the focus styles unset by the previous rule.
+ */
+button:-moz-focusring,
+[type=button]:-moz-focusring,
+[type=reset]:-moz-focusring,
+[type=submit]:-moz-focusring {
+  outline: 1px dotted ButtonText;
+}
+
+/**
+ * Correct the padding in Firefox.
+ */
+fieldset {
+  padding: 0.35em 0.75em 0.625em;
+}
+
+/**
+ * 1. Correct the text wrapping in Edge and IE.
+ * 2. Correct the color inheritance from `fieldset` elements in IE.
+ * 3. Remove the padding so developers are not caught out when they zero out
+ *    `fieldset` elements in all browsers.
+ */
+legend {
+  box-sizing: border-box;
+  /* 1 */
+  color: inherit;
+  /* 2 */
+  display: table;
+  /* 1 */
+  max-width: 100%;
+  /* 1 */
+  padding: 0;
+  /* 3 */
+  white-space: normal;
+  /* 1 */
+}
+
+/**
+ * Add the correct vertical alignment in Chrome, Firefox, and Opera.
+ */
+progress {
+  vertical-align: baseline;
+}
+
+/**
+ * Remove the default vertical scrollbar in IE 10+.
+ */
+textarea {
+  overflow: auto;
+}
+
+/**
+ * 1. Add the correct box sizing in IE 10.
+ * 2. Remove the padding in IE 10.
+ */
+[type=checkbox],
+[type=radio] {
+  box-sizing: border-box;
+  /* 1 */
+  padding: 0;
+  /* 2 */
+}
+
+/**
+ * Correct the cursor style of increment and decrement buttons in Chrome.
+ */
+[type=number]::-webkit-inner-spin-button, [type=number]::-webkit-outer-spin-button {
+  height: auto;
+}
+
+/**
+ * 1. Correct the odd appearance in Chrome and Safari.
+ * 2. Correct the outline style in Safari.
+ */
+[type=search] {
+  -webkit-appearance: textfield;
+  /* 1 */
+  outline-offset: -2px;
+  /* 2 */
+}
+[type=search]::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+
+/**
+ * Remove the inner padding in Chrome and Safari on macOS.
+ */
+/**
+ * 1. Correct the inability to style clickable types in iOS and Safari.
+ * 2. Change font properties to `inherit` in Safari.
+ */
+::-webkit-file-upload-button {
+  -webkit-appearance: button;
+  /* 1 */
+  font: inherit;
+  /* 2 */
+}
+
+/* Interactive
+   ========================================================================== */
+/*
+ * Add the correct display in Edge, IE 10+, and Firefox.
+ */
+details {
+  display: block;
+}
+
+/*
+ * Add the correct display in all browsers.
+ */
+summary {
+  display: list-item;
+}
+
+/* Misc
+   ========================================================================== */
+/**
+ * Add the correct display in IE 10+.
+ */
+template,
+[hidden] {
+  display: none;
+}
+
+/**
+ * Add the correct display in IE 10.
+ */
+body {
+  margin: 0;
+  background-color: #1b2838;
+  color: white;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+html {
+  /*If default font-size is 16px; 1 rem = 10 px*/
+  font-size: 62.5%;
+}
+
+body {
+  /*Make default font-size bigger. If default font-size is 16px; 1.6 rem = 16 px*/
+  font: 1.1rem "", Arial, sans-serif, Helvetica;
+}
+
+.loadingCenter {
+  display: flex;
+  justify-content: center;
+  padding: 5rem 0;
+}
+@media screen and (min-width: 768px) {
+  .loadingCenter {
+    padding: 10rem 0;
+  }
+}
+
+.headerContainer {
+  background: #171a21;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2rem;
+}
+@media screen and (min-width: 520px) {
+  .headerContainer {
+    padding: 2rem 4rem;
+  }
+}
+@media screen and (min-width: 768px) {
+  .headerContainer {
+    padding: 2rem 6rem;
+  }
+}
+
+.headerAuthWrap {
+  display: flex;
+  align-items: center;
+  color: #d9dadd;
+}
+
+.headerProfileText {
+  cursor: pointer;
+  margin-right: 2rem;
+  font-size: 1.3rem;
+  font-weight: normal;
+}
+@media screen and (min-width: 520px) {
+  .headerProfileText {
+    font-size: 1.7rem;
+  }
+}
+@media screen and (min-width: 992px) {
+  .headerProfileText {
+    font-size: 1.7rem;
+  }
+}
+
+.headerAuthText {
+  cursor: pointer;
+  font-weight: normal;
+  font-size: 1.3rem;
+}
+@media screen and (min-width: 520px) {
+  .headerAuthText {
+    font-size: 1.7rem;
+  }
+}
+@media screen and (min-width: 992px) {
+  .headerAuthText {
+    font-size: 1.7rem;
+  }
+}
+
+.headerLogoImageWrap {
+  width: 15rem;
+  cursor: pointer;
+}
+.headerLogoImageWrap img {
+  width: 100%;
+}
+
+.featuredContainerCarousel {
+  opacity: 0;
+  cursor: pointer;
+  height: 100%;
+}
+@media screen and (min-width: 992px) {
+  .featuredContainerCarousel {
+    margin: 0 5rem;
+  }
+}
+
+.featuredCarouselSectionWrap {
+  display: flex;
+  height: 100%;
+}
+
+.featuredCarouselImageSection {
+  height: 100%;
+  position: relative;
+  width: 100%;
+}
+@media screen and (min-width: 992px) {
+  .featuredCarouselImageSection {
+    width: 70%;
+  }
+}
+
+.hideFeaturedCarouselScreenshotSection {
+  display: none;
+}
+
+.featuredCarouselScreenshotSection {
+  background-color: black;
+  display: none;
+}
+@media screen and (min-width: 992px) {
+  .featuredCarouselScreenshotSection {
+    display: block;
+    width: 30%;
+  }
+}
+.featuredCarouselScreenshotSection .featuredCarouselGameTitle {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  margin-left: 1.5rem;
+  font-weight: normal;
+  letter-spacing: 0.2rem;
+  margin: 0;
+}
+@media screen and (min-width: 992px) {
+  .featuredCarouselScreenshotSection .featuredCarouselGameTitle {
+    margin: 2rem 0.7rem;
+  }
+}
+@media screen and (min-width: 1200px) {
+  .featuredCarouselScreenshotSection .featuredCarouselGameTitle {
+    margin: 3rem 1rem;
+  }
+}
+.featuredCarouselScreenshotSection .featuredCarouselGameScreenshotsWrap {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 0.5rem;
+}
+@media screen and (min-width: 1200px) {
+  .featuredCarouselScreenshotSection .featuredCarouselGameScreenshotsWrap {
+    grid-gap: 1rem;
+  }
+}
+
+.sliderAndButtonWrap {
+  position: relative;
+}
+
+.showButtonsForSmallScreensWrap {
+  display: flex;
+  justify-content: space-between;
+}
+
+.hideFeaturedCarouselButton,
+.hideFeaturedCarouselButtonsWrap {
+  display: none !important;
+}
+
+.featuredCarouselGamePrice {
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: #acdbf5;
+  bottom: 2rem;
+  right: 0;
+  font-size: 1rem;
+}
+@media screen and (min-width: 520px) {
+  .featuredCarouselGamePrice {
+    bottom: 5rem;
+    right: 0;
+    font-size: 1.4rem;
+  }
+}
+
+.featuredAdjustedPriceWrap {
+  display: flex;
+  align-items: center;
+}
+
+.featuredOrigPriceStriked {
+  text-decoration: line-through;
+  font-size: 1.2rem;
+  margin: 0;
+  margin-bottom: 0.25rem;
+  color: #626366;
+}
+
+.featuredGamePrice {
+  font-size: 1.2rem;
+  margin: 0;
+}
+@media screen and (min-width: 768px) {
+  .featuredGamePrice {
+    font-size: 1.4rem;
+  }
+}
+
+.featuredPriceStrikedAndPriceWrap {
+  padding: 0.25rem;
+  padding-right: 1rem;
+}
+
+.featuredGamePriceInnerWrap {
+  padding: 0.75rem;
+  padding-right: 1rem;
+  padding-left: 1rem;
+}
+
+.featuredDiscount {
+  background: #4c6b22;
+  color: #a4d007;
+  display: flex;
+  align-items: center;
+  height: 100%;
+  margin-right: 1rem;
+  padding: 1rem;
+  font-size: 1.4rem;
+}
+.featuredDiscount > p {
+  margin: 0;
+}
+
+.gameCarouselWrap {
+  width: 100%;
+}
+.gameCarouselWrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.gameNextButton {
+  display: block;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  font-size: 2rem;
+  color: white;
+  border: none;
+  transition: all 0.3s ease-in;
+  background: linear-gradient(to right, rgba(0, 0, 0, 0) 5%, rgba(0, 0, 0, 0.3) 95%);
+  padding: 0;
+  padding-left: 3rem;
+  outline: none !important;
+  transition: opacity 0.5s;
+}
+@media screen and (min-width: 520px) {
+  .gameNextButton {
+    font-size: 3rem;
+  }
+}
+@media screen and (min-width: 768px) {
+  .gameNextButton {
+    font-size: 4rem;
+  }
+}
+@media screen and (min-width: 992px) {
+  .gameNextButton {
+    font-size: 5rem;
+  }
+}
+.gameNextButton:hover {
+  background: linear-gradient(to right, rgba(171, 218, 244, 0) 5%, rgba(171, 218, 244, 0.3) 95%);
+}
+@media screen and (min-width: 992px) {
+  .gameNextButton {
+    padding: 3rem 0rem;
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}
+
+.gameBackButton {
+  display: block;
+  display: flex;
+  align-items: center;
+  text-align: center;
+  font-size: 2rem;
+  color: white;
+  border: none;
+  transition: all 0.3s ease-in;
+  background: linear-gradient(to right, rgba(0, 0, 0, 0.3) 5%, rgba(0, 0, 0, 0) 95%);
+  padding: 0;
+  padding-right: 3rem;
+  outline: none !important;
+  transition: opacity 0.5s;
+}
+@media screen and (min-width: 520px) {
+  .gameBackButton {
+    font-size: 3rem;
+  }
+}
+@media screen and (min-width: 768px) {
+  .gameBackButton {
+    font-size: 4rem;
+  }
+}
+@media screen and (min-width: 992px) {
+  .gameBackButton {
+    font-size: 5rem;
+  }
+}
+.gameBackButton:hover {
+  background: linear-gradient(to right, rgba(171, 218, 244, 0.3) 5%, rgba(171, 218, 244, 0) 95%);
+}
+@media screen and (min-width: 992px) {
+  .gameBackButton {
+    padding: 3rem 0rem;
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}
+
+.carouselDotGroupWrap {
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.carouselDotGroupWrap .carousel__dot--selected {
+  background-color: rgba(255, 255, 255, 0.4) !important;
+}
+.carouselDotGroupWrap button {
+  transition: background-color 0.2s;
+  background-color: rgba(255, 255, 255, 0.2);
+  outline: none !important;
+  box-shadow: none !important;
+  border: none;
+  margin-right: 0.3rem;
+  padding: 0.4rem 1rem;
+  border-radius: 0.3rem;
+}
+
+.hideCarouselDotGroup {
+  display: none !important;
+}
+
+.specialOfferContainerCarousel {
+  opacity: 0;
+  cursor: pointer;
+  height: 100%;
+}
+@media screen and (min-width: 992px) {
+  .specialOfferContainerCarousel {
+    margin: 0 5rem;
+  }
+}
+
+.specialOfferCarouselSectionContainer {
+  width: 100%;
+  display: grid;
+  grid-template-rows: repeat(3, 1fr);
+  grid-template-columns: repeat(2, 1fr);
+  grid-gap: 1rem;
+  flex-wrap: wrap;
+}
+@media screen and (min-width: 768px) {
+  .specialOfferCarouselSectionContainer {
+    grid-template-rows: repeat(2, 1fr);
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+.specialOfferGameContainer {
+  position: relative;
+  width: 100%;
+}
+.specialOfferGameContainer img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+.specialOfferGameTextWrap {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 100%;
+  padding: 0.25rem;
+  background: url("https://res.cloudinary.com/du8n2aa4p/image/upload/v1616458778/steam/background/background_spotlight.jpg") bottom center repeat;
+}
+@media screen and (min-width: 520px) {
+  .specialOfferGameTextWrap {
+    padding: 0.5rem;
+  }
+}
+
+.highlightedGamePriceWrap {
+  display: flex;
+  align-items: stretch;
+  justify-content: flex-end;
+}
+
+.adjustedPriceWrap {
+  background-color: rgba(20, 31, 44, 0.8);
+  padding: 0.25rem;
+}
+.adjustedPriceWrap .gameOrigPrice {
+  margin: 0;
+  text-decoration: line-through;
+  font-size: 0.5rem;
+  color: #626366;
+}
+@media screen and (min-width: 520px) {
+  .adjustedPriceWrap .gameOrigPrice {
+    font-size: 1rem;
+  }
+}
+@media screen and (min-width: 768px) {
+  .adjustedPriceWrap .gameOrigPrice {
+    font-size: 1rem;
+  }
+}
+@media screen and (min-width: 1200px) {
+  .adjustedPriceWrap .gameOrigPrice {
+    font-size: 1.2rem;
+  }
+}
+.adjustedPriceWrap .gameAdjustedPrice {
+  margin: 0;
+  font-size: 0.5rem;
+  color: #acdbf5;
+}
+@media screen and (min-width: 520px) {
+  .adjustedPriceWrap .gameAdjustedPrice {
+    font-size: 1.2rem;
+  }
+}
+@media screen and (min-width: 768px) {
+  .adjustedPriceWrap .gameAdjustedPrice {
+    font-size: 1rem;
+  }
+}
+@media screen and (min-width: 1200px) {
+  .adjustedPriceWrap .gameAdjustedPrice {
+    font-size: 1.3rem;
+  }
+}
+@media screen and (min-width: 520px) {
+  .adjustedPriceWrap {
+    padding: 0.5rem;
+  }
+}
+
+.discountGamePrice {
+  display: flex;
+  padding: 0 0.5rem;
+  font-size: 0.8rem;
+  align-items: center;
+  background: #4c6b22;
+  color: #a4d007;
+}
+@media screen and (min-width: 520px) {
+  .discountGamePrice {
+    font-size: 1.3rem;
+  }
+}
+@media screen and (min-width: 992px) {
+  .discountGamePrice {
+    font-size: 1.5rem;
+  }
+}
+@media screen and (min-width: 992px) {
+  .discountGamePrice {
+    font-size: 1.7rem;
+  }
+}
+@media screen and (min-width: 1200px) {
+  .discountGamePrice {
+    font-size: 1.7rem;
+  }
+}
+
+.communityCarouselSectionWrap {
+  display: flex;
+  cursor: pointer;
+  height: 100%;
+}
+@media screen and (min-width: 992px) {
+  .communityCarouselSectionWrap {
+    margin: 0 5rem;
+  }
+}
+
+.communityCarouselImageSection {
+  width: 100%;
+  position: relative;
+}
+@media screen and (min-width: 992px) {
+  .communityCarouselImageSection {
+    width: 70%;
+  }
+}
+.communityCarouselImageSection .communityCarouselVid {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+  transition: all 0.3s ease;
+  width: 100%;
+  z-index: 1;
+}
+
+.hideFeaturedCarouselScreenshotSection {
+  display: none;
+}
+
+.communityCarouselAboutSection {
+  background: linear-gradient(to bottom, #506c86 5%, #10143100 96%);
+  padding: 1rem;
+  width: 100%;
+  display: none;
+}
+@media screen and (min-width: 992px) {
+  .communityCarouselAboutSection {
+    display: block;
+    width: 30%;
+  }
+}
+
+.communityCarouselGameAbout {
+  color: white;
+  font-weight: normal;
+  font-size: 1.4rem;
+  line-height: 2.4rem;
+  margin: 0;
+}
+@media screen and (min-width: 992px) {
+  .communityCarouselGameAbout {
+    display: -webkit-box;
+    -webkit-line-clamp: 6;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+}
+@media screen and (min-width: 1200px) {
+  .communityCarouselGameAbout {
+    font-size: 1.6rem;
+  }
+}
+
+.communityCarouselVisitGame {
+  text-align: center;
+  color: #c1dbf4;
+  cursor: pointer;
+}
+
+.sliderAndButtonWrap {
+  position: relative;
+}
+
+.communityUserInfoWrap {
+  margin-top: 5rem;
+  display: flex;
+  padding: 1rem;
+  align-items: center;
+}
+.communityUserInfoWrap .communityAvatar {
+  width: 5rem;
+  height: 5rem;
+}
+@media screen and (min-width: 1200px) {
+  .communityUserInfoWrap .communityAvatar {
+    width: 7rem;
+    height: 7rem;
+  }
+}
+.communityUserInfoWrap .communityUsername {
+  margin: 0;
+  margin-left: 1rem;
+  font-weight: bold;
+  color: #c1dbf4;
+  font-size: 1.3rem;
+}
+
+.showButtonsForSmallScreensWrap {
+  display: flex;
+  justify-content: space-between;
+}
+
+.hideCommunityCarouselButton,
+.hideCommunityCarouselButtonsWrap {
+  display: none !important;
+}
+
+.communityAdjustedPriceWrap {
+  display: flex;
+  align-items: center;
+}
+
+.communityOrigPriceStriked {
+  text-decoration: line-through;
+  font-size: 1.2rem;
+  margin: 0;
+  margin-bottom: 0.25rem;
+  color: #626366;
+}
+
+.communityGamePrice {
+  font-size: 1.2rem;
+  margin: 0;
+}
+@media screen and (min-width: 768px) {
+  .communityGamePrice {
+    font-size: 1.4rem;
+  }
+}
+
+.communityPrice {
+  position: absolute;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: #acdbf5;
+  bottom: 2rem;
+  right: 0;
+  padding: 0.75rem;
+  font-size: 1rem;
+}
+@media screen and (min-width: 520px) {
+  .communityPrice {
+    bottom: 5rem;
+    right: 0;
+    padding: 1rem;
+    font-size: 1.4rem;
+  }
+}
+
+.communityDiscount {
+  background: #4c6b22;
+  color: #a4d007;
+  margin-right: 1rem;
+  padding: 0.5rem;
+  font-size: 1.4rem;
+}
+
+.gameInfoCarouselScreenshots {
+  display: flex;
+  cursor: pointer;
+  opacity: 0;
+}
+
+.gameInfoCarouselScreenshotsClicked {
+  border: 2px solid white;
+}
+
+.gameInfoCarouselSectionWrap {
+  display: flex;
+  flex-direction: column;
+}
+
+.gameInfoCarouselImageSection {
+  width: 100%;
+}
+
+.gameInfoContainerCarousel {
+  width: 100%;
+}
+
+.gameInfoDisplayImage {
+  width: 100%;
+  opacity: 0;
+}
+
+.reviewForm {
+  margin-top: 2rem;
+  padding: 1rem;
+  background-image: linear-gradient(135deg, rgba(97, 100, 101, 0.3) 0%, rgba(226, 244, 255, 0.3) 100%);
+}
+@media screen and (min-width: 768px) {
+  .reviewForm {
+    margin-top: 3rem;
+    padding: 1rem 2rem 1rem 2rem;
+  }
+}
+
+.reviewSectionsWrap {
+  width: 100%;
+}
+
+.writeAReviewTitle {
+  color: #66c0f4;
+  font-weight: normal;
+  font-size: 1.4rem;
+  margin: 0;
+  margin-bottom: 1rem;
+}
+
+.pleaseDescribe {
+  font-size: 1.1rem;
+  color: #8f98a0;
+  margin: 0;
+  margin-bottom: 1rem;
+}
+@media screen and (min-width: 768px) {
+  .pleaseDescribe {
+    font-size: 1.4rem;
+  }
+}
+
+.doYouRecommend {
+  font-size: 1.1rem;
+}
+@media screen and (min-width: 992px) {
+  .doYouRecommend {
+    font-size: 1.3rem;
+  }
+}
+
+.reviewFieldTitleWrap {
+  align-items: center;
+  padding: 0.5rem 0;
+}
+@media screen and (min-width: 520px) {
+  .reviewFieldTitleWrap {
+    margin-bottom: 0.7rem;
+  }
+}
+
+.authFormFieldTitleEmailInUse {
+  margin: 0;
+  color: red;
+  margin-left: 0.3rem;
+  font-size: 1.4rem;
+  font-weight: normal;
+}
+
+.errorText {
+  margin: 0.2rem 0;
+  color: red;
+  font-size: 1rem;
+}
+@media screen and (min-width: 520px) {
+  .errorText {
+    font-size: 1.2rem;
+    margin: 1rem 0;
+  }
+}
+@media screen and (min-width: 768px) {
+  .errorText {
+    font-size: 1.4rem;
+  }
+}
+
+.createReviewTextArea {
+  background: #222b35;
+  color: #d6d7d8;
+  border: 1px solid #233c51;
+  box-shadow: inset 0px 0px 7px rgba(0, 0, 0, 0.5);
+  padding: 1rem;
+  border: 1px solid #c1dbf4;
+  padding: 1rem;
+  height: 13rem;
+  font-size: 1.2rem;
+  width: 100%;
+  margin-bottom: 0.5rem;
+}
+.createReviewTextArea:focus {
+  outline: none;
+}
+@media screen and (min-width: 520px) {
+  .createReviewTextArea {
+    font-size: 1.5rem;
+  }
+}
+@media screen and (min-width: 768px) {
+  .createReviewTextArea {
+    font-size: 1.7rem;
+  }
+}
+
+.reviewTextAreaAndAvatarWrap {
+  display: flex;
+}
+
+.reviewAvatar {
+  min-width: 6.6rem;
+  height: 6.6rem;
+  border: 1px solid white;
+  margin-right: 1rem;
+}
+@media screen and (min-width: 768px) {
+  .reviewAvatar {
+    min-width: 9.5rem;
+    height: 9.5rem;
+  }
+}
+.reviewAvatar > img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.myReviewWrap {
+  width: 100%;
+}
+
+.recommendOrNotButtonsWrap {
+  display: flex;
+}
+
+.recommendOrNotButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #67c1f5;
+  font-size: 1.4rem;
+  padding: 0.8rem;
+  background: rgba(103, 193, 245, 0.2);
+  outline: none !important;
+  box-shadow: none !important;
+  border: none;
+  cursor: pointer;
+  margin-right: 1rem;
+}
+.recommendOrNotButton:hover {
+  transition: all 0.2s ease;
+  background: rgba(103, 193, 245, 0.6);
+}
+.recommendOrNotButton > p {
+  margin: 0;
+  margin-left: 1rem;
+}
+
+.recommendOrNotButtonClicked {
+  background: rgba(103, 193, 245, 0.6);
+}
+
+.postReviewButton {
+  cursor: pointer;
+  font-size: 1.4rem;
+  color: #2b5066;
+  background: linear-gradient(to bottom, #c1e4f9 5%, #94b7ca 95%);
+  border-radius: 0.4rem;
+  margin-top: 2rem;
+  margin-left: auto;
+  padding: 0.5rem 0.75rem;
+}
+.postReviewButton:hover {
+  color: white;
+  background: linear-gradient(to bottom, #66c0f4 5%, #2f89bc 95%);
+}
+@media screen and (min-width: 520px) {
+  .postReviewButton {
+    width: auto;
+    margin-top: 0;
+    padding: 0 2rem;
+  }
+}
+
+.reviewButtonsSection {
+  margin: 1rem 0;
+}
+@media screen and (min-width: 520px) {
+  .reviewButtonsSection {
+    margin: 2rem 0;
+  }
+}
+
+.reviewButtonsWrap {
+  display: flex;
+  flex-direction: column;
+}
+@media screen and (min-width: 520px) {
+  .reviewButtonsWrap {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+}
+
+.editForm {
+  margin-bottom: 5rem;
+}
+
+.editAndDeleteReviewButton {
+  cursor: pointer;
+  font-size: 1.4rem;
+  color: #2b5066;
+  background: linear-gradient(to bottom, #c1e4f9 5%, #94b7ca 95%);
+  border-radius: 0.4rem;
+  margin-top: 2rem;
+  margin-left: auto;
+  padding: 0.5rem 0.75rem;
+  height: 100%;
+}
+.editAndDeleteReviewButton:hover {
+  color: white;
+  background: linear-gradient(to bottom, #66c0f4 5%, #2f89bc 95%);
+}
+@media screen and (min-width: 520px) {
+  .editAndDeleteReviewButton {
+    width: auto;
+    margin-top: 0;
+    padding: 0 2rem;
+  }
+}
+
+.deleteReviewButton {
+  color: #67c1f5;
+  background: rgba(103, 193, 245, 0.2);
+  margin-right: 1rem;
+}
+.deleteReviewButton:hover {
+  background: linear-gradient(-60deg, #417a9b 5%, #67c1f5 95%);
+  color: white;
+}
+
+.authForm {
+  width: 80%;
+}
+@media screen and (min-width: 768px) {
+  .authForm {
+    width: 70%;
+  }
+}
+@media screen and (min-width: 992px) {
+  .authForm {
+    width: 50%;
+  }
+}
+
+.authFieldSection {
+  margin-bottom: 3rem;
+}
+
+.authFormFieldTitleWrap {
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  color: #b8b6b4;
+}
+@media screen and (min-width: 520px) {
+  .authFormFieldTitleWrap {
+    margin-bottom: 0.7rem;
+  }
+}
+.authFormFieldTitleWrap h1 {
+  font-size: 1.4rem;
+  font-weight: normal;
+}
+
+.authFormFieldTitleEmailInUse {
+  margin: 0;
+  color: red;
+  margin-left: 0.3rem;
+  font-size: 1.4rem;
+  font-weight: normal;
+}
+
+.errorText {
+  margin: 0.2rem 0;
+  color: red;
+  font-size: 1rem;
+}
+@media screen and (min-width: 520px) {
+  .errorText {
+    font-size: 1.2rem;
+    margin: 1rem 0;
+  }
+}
+@media screen and (min-width: 768px) {
+  .errorText {
+    font-size: 1.4rem;
+  }
+}
+
+.createAuthInputs {
+  border: 1px;
+  background-color: #32353c;
+  color: #e9e9e9;
+  padding: 1rem;
+  outline: none !important;
+  box-shadow: none !important;
+  font-size: 1.2rem;
+  width: 100%;
+  margin-bottom: 0.5rem;
+}
+.createAuthInputs:focus {
+  outline: none;
+  border: 1px solid #c1dbf4;
+  box-shadow: 0 0 5px #c1dbf4;
+  background-color: white;
+  color: black;
+}
+@media screen and (min-width: 768px) {
+  .createAuthInputs {
+    font-size: 1.4rem;
+  }
+}
+
+.authButton {
+  margin-top: 1rem;
+  margin-bottom: 4rem;
+  color: #c3e1f8;
+  font-size: 1.4rem;
+  padding: 1.1rem 1rem;
+  background-image: linear-gradient(to right, #47bfff 5%, #1a44c2 60%);
+  cursor: pointer;
+  padding: 1rem 4rem;
+  outline: none !important;
+  box-shadow: none !important;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.authButton:hover {
+  color: white;
+  background-image: linear-gradient(to right, #47bfff 25%, #1a44c2 100%);
+  transition: all 0.2s ease;
+}
+
+.signInForm {
+  display: flex;
+  flex-direction: column;
+}
+
+.signInFormContainer {
+  background-color: black;
+  border-radius: 0.4rem;
+  padding: 2rem;
+  color: #b8b6b4;
+  width: 90%;
+  margin-top: 5rem;
+  z-index: 2;
+}
+@media screen and (min-width: 768px) {
+  .signInFormContainer {
+    width: 50%;
+    padding: 2rem 5rem;
+  }
+}
+
+.signInFormTitle {
+  font-style: "Netflix Sans Bold";
+  margin-bottom: 4rem;
+}
+
+.signInFormFieldTitleWrap {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 0;
+}
+.signInFormFieldTitleWrap h1 {
+  font-weight: normal;
+  font-size: 1.4rem;
+  margin: 0;
+  margin-bottom: 0.3rem;
+}
+@media screen and (min-width: 768px) {
+  .signInFormFieldTitleWrap h1 {
+    font-size: 1.7rem;
+  }
+}
+
+.signInTextInput {
+  padding: 1.4rem;
+  font-size: 1.4rem;
+  border-radius: 0.4rem;
+  width: 100%;
+  margin-bottom: 0.5rem;
+  background-color: #32353c;
+  color: white;
+  outline: none !important;
+  box-shadow: none !important;
+  border: none;
+}
+@media screen and (min-width: 992px) {
+  .signInTextInput {
+    padding: 1.7rem;
+    font-size: 1.7rem;
+  }
+}
+
+.signInButton {
+  margin: 1.4rem auto 4rem auto;
+  color: #c3e1f8;
+  font-size: 1.4rem;
+  padding: 1.1rem 1rem;
+  background-image: linear-gradient(to right, #47bfff 5%, #1a44c2 60%);
+  cursor: pointer;
+  padding: 1rem 4rem;
+  outline: none !important;
+  box-shadow: none !important;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.signInButton:hover {
+  color: white;
+  background-image: linear-gradient(to right, #47bfff 25%, #1a44c2 100%);
+  transition: all 0.2s ease;
+}
+@media screen and (min-width: 992px) {
+  .signInButton {
+    margin-left: auto;
+    margin-right: 0;
+  }
+}
+
+.editProfileForm {
+  text-align: left;
+  border-radius: 0.5rem;
+}
+
+.editProfileInputsWrap {
+  width: 100%;
+}
+
+.editProfileInputs {
+  background-color: rgba(0, 0, 0, 0.25);
+  box-shadow: inset 1px 1px 0px #000a;
+  color: #909090;
+  outline: none !important;
+  border: none;
+  border-radius: 0.5rem;
+  outline: none;
+  padding: 1rem;
+  font-size: 1.1rem;
+  width: 100%;
+  margin-bottom: 0.5rem;
+}
+.editProfileInputs:focus {
+  outline: none;
+}
+@media screen and (min-width: 520px) {
+  .editProfileInputs {
+    padding: 1.3rem;
+    width: 33rem;
+  }
+}
+@media screen and (min-width: 768px) {
+  .editProfileInputs {
+    width: 40rem;
+    font-size: 1.7rem;
+  }
+}
+@media screen and (min-width: 992px) {
+  .editProfileInputs {
+    width: 45rem;
+  }
+}
+
+.editProfileFieldSection {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 3.5rem;
+}
+.editProfileFieldSection h1 {
+  font-weight: normal;
+  color: #969696;
+  text-transform: uppercase;
+  letter-spacing: 0.1rem;
+  margin: 0;
+  font-size: 1.4rem;
+}
+@media screen and (min-width: 520px) {
+  .editProfileFieldSection h1 {
+    font-size: 1.45rem;
+  }
+}
+@media screen and (min-width: 768px) {
+  .editProfileFieldSection {
+    margin-bottom: 5.5rem;
+  }
+}
+
+.editProfileSubmitWrap {
+  display: flex;
+}
+
+.editProfileSubmit {
+  cursor: pointer;
+  padding: 1rem 2rem;
+  border-radius: 0.5rem;
+  margin: 0;
+  margin-left: auto;
+  font-weight: bold;
+  font-size: 1.2rem;
+  letter-spacing: 0.1rem;
+  background: linear-gradient(to right, #47bfff 0%, #1a44c2 60%);
+  color: white;
+}
+@media screen and (min-width: 768px) {
+  .editProfileSubmit {
+    font-size: 1.4rem;
+    padding: 1.3rem 2.5rem;
+  }
+}
+
+.errorText {
+  margin: 0.2rem 0;
+  color: red;
+  font-size: 1rem;
+}
+@media screen and (min-width: 520px) {
+  .errorText {
+    font-size: 1.2rem;
+    margin: 1rem 0;
+  }
+}
+@media screen and (min-width: 768px) {
+  .errorText {
+    font-size: 1.4rem;
+  }
+}
+
+.editProfileFieldTitleWrap {
+  display: flex;
+  align-items: center;
+  margin-bottom: 0.7rem;
+  padding: 0.5rem 0;
+  margin-right: 2rem;
+  min-width: 8rem;
+}
+@media screen and (min-width: 520px) {
+  .editProfileFieldTitleWrap {
+    min-width: 10rem;
+  }
+}
+
+.imageUploadWrapper {
+  display: flex;
+  flex-direction: column;
+  max-width: 10rem;
+}
+.imageUploadWrapper .editProfileAvatar {
+  cursor: pointer;
+  width: 6.2rem;
+  padding: 2rem;
+  outline: none !important;
+  box-shadow: none !important;
+  border: none;
+  height: 6.2rem;
+  background-position: center;
+  background-size: contain;
+}
+.imageUploadWrapper .editProfileAvatar:focus {
+  outline: none !important;
+  border: 1px solid #c1dbf4;
+}
+@media screen and (min-width: 520px) {
+  .imageUploadWrapper .editProfileAvatar {
+    width: 10rem;
+    height: 10rem;
+  }
+}
+.imageUploadWrapper .removeUploadedImage {
+  color: #999999;
+  text-align: center;
+  cursor: pointer;
+}
+
+.searchBarForm {
+  background: #316282;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: space-around;
+  border-radius: 0.25rem;
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  box-shadow: 1px 1px 0px rgba(255, 255, 255, 0.2);
+  color: white;
+  padding: 0.25rem;
+  padding-left: 1.5rem;
+  margin-top: 1rem;
+  margin-right: auto;
+  position: relative;
+}
+
+.searchBarIcons {
+  color: #c1dbf4;
+  font-size: 1.3rem;
+  cursor: pointer;
+  margin-right: 0.3rem;
+}
+@media screen and (min-width: 520px) {
+  .searchBarIcons {
+    font-size: 1.7rem;
+  }
+}
+@media screen and (min-width: 768px) {
+  .searchBarIcons {
+    font-size: 2.7rem;
+    margin-right: 0.8rem;
+  }
+}
+
+.searchBarInput {
+  font-size: 1.2rem;
+  background: transparent;
+  color: white;
+  border: none;
+  outline: none;
+  margin: none;
+  width: 100%;
+  font-size: 1rem;
+}
+.searchBarInput:focus {
+  box-shadow: none;
+}
+@media screen and (min-width: 768px) {
+  .searchBarInput {
+    font-size: 1.3rem;
+  }
+}
+
+[type=search]::-webkit-search-cancel-button,
+[type=search]::-webkit-search-decoration {
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.matchContainer {
+  opacity: 1;
+  width: 28rem;
+  position: absolute;
+  top: 3rem;
+  left: 0.2rem;
+  z-index: 3;
+  transition: opacity 0.2s ease-in;
+  box-shadow: 0 0 12px #000000;
+}
+@media screen and (min-width: 520px) {
+  .matchContainer {
+    width: 34rem;
+  }
+}
+@media screen and (min-width: 768px) {
+  .matchContainer {
+    width: 50rem;
+  }
+}
+
+.matchRow {
+  padding: 0.5rem;
+  display: flex;
+  cursor: pointer;
+  border-bottom: 1px solid black;
+  background: linear-gradient(to bottom, #e3eaef 5%, #c7d5e0 95%);
+}
+.matchRow:hover {
+  background: #212d3d;
+}
+.matchRow:hover .matchTextWrap {
+  color: white;
+}
+.matchRow .matchRowImage {
+  opacity: 0;
+  width: 12rem;
+  height: 4.5rem;
+}
+@media screen and (min-width: 768px) {
+  .matchRow .matchRowImage {
+    width: 12rem;
+    height: 4.5rem;
+  }
+}
+
+.hideMatchContainer {
+  opacity: 0;
+}
+
+.matchTextWrap {
+  margin-left: 1rem;
+  color: black;
+  overflow: hidden;
+}
+.matchTextWrap .matchTitle {
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.matchTextWrap .matchPrice {
+  margin: 0;
+  margin-top: 0.25rem;
+}
+@media screen and (min-width: 768px) {
+  .matchTextWrap .matchPrice {
+    margin-top: 0.5rem;
+  }
+}
+
+.serverErrorContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5rem 0;
+}
+.serverErrorContainer h3 {
+  color: white;
+  font-size: 1.1rem;
+  font-weight: normal;
+  padding: 3rem;
+}
+@media screen and (min-width: 768px) {
+  .serverErrorContainer h3 {
+    font-size: 1.4rem;
+  }
+}
+@media screen and (min-width: 768px) {
+  .serverErrorContainer {
+    padding: 10rem 0;
+  }
+}
+
+.bannerTitle {
+  text-transform: uppercase;
+  font-weight: 500;
+  font-size: 1rem;
+  letter-spacing: 0.2rem;
+  margin-top: 5rem;
+}
+@media screen and (min-width: 520px) {
+  .bannerTitle {
+    font-size: 1.3rem;
+  }
+}
+@media screen and (min-width: 768px) {
+  .bannerTitle {
+    font-size: 1.6rem;
+  }
+}
+@media screen and (min-width: 992px) {
+  .bannerTitle {
+    margin-left: 5.5rem;
+  }
+}
+
+.homeContainer {
+  background: url(https://res.cloudinary.com/du8n2aa4p/image/upload/v1616458895/steam/background/cluster_bg.png) bottom center no-repeat;
+}
+
+.homeFirstSection {
+  padding: 1rem 3rem;
+  display: flex;
+  flex-direction: column;
+}
+@media screen and (min-width: 520px) {
+  .homeFirstSection {
+    padding: 1rem 3rem;
+  }
+}
+@media screen and (min-width: 768px) {
+  .homeFirstSection {
+    padding: 1rem 10rem;
+  }
+}
+@media screen and (min-width: 1200px) {
+  .homeFirstSection {
+    padding: 1rem 15rem;
+  }
+}
+@media screen and (min-width: 1400px) {
+  .homeFirstSection {
+    padding: 1rem 20rem;
+  }
+}
+
+.chart {
+  display: flex;
+  width: 100%;
+  background-image: linear-gradient(#2a475e 5%, rgba(42, 71, 94, 0) 70%);
+  padding: 1rem 1rem;
+  padding-bottom: 4rem;
+}
+@media screen and (min-width: 520px) {
+  .chart {
+    padding: 1rem 3rem;
+    padding-bottom: 5rem;
+  }
+}
+@media screen and (min-width: 768px) {
+  .chart {
+    padding: 1rem 6rem;
+    padding-bottom: 6rem;
+  }
+}
+
+.chartGamesColumn {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+@media screen and (min-width: 992px) {
+  .chartGamesColumn {
+    width: 80%;
+  }
+}
+
+.chartGameAndPreviewContainer {
+  display: flex;
+  flex-wrap: nowrap;
+}
+
+.chartGameContainer {
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  background: rgba(0, 0, 0, 0.2);
+  align-items: center;
+  cursor: pointer;
+  margin-bottom: 0.5rem;
+  width: 100%;
+  height: 5rem;
+}
+@media screen and (min-width: 768px) {
+  .chartGameContainer {
+    height: 6rem;
+  }
+}
+
+.chartGameContainerToggled {
+  background: linear-gradient(to right, #c6e6f8 5%, #95bcd3 95%);
+  padding-right: 0;
+}
+.chartGameContainerToggled .chartGameTitle,
+.chartGameContainerToggled .chartGamePrice {
+  color: #384959;
+}
+@media screen and (min-width: 992px) {
+  .chartGameContainerToggled {
+    box-sizing: content-box;
+    padding-right: 5rem;
+  }
+}
+
+.chartGameImage {
+  opacity: 0;
+  width: 22rem;
+  height: 100%;
+}
+.chartGameImage img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+@media screen and (min-width: 1200px) {
+  .chartGameImage {
+    width: 22rem;
+  }
+}
+
+.gameChartScreenshotPreview {
+  opacity: 0;
+}
+
+.chartGameInfo {
+  color: #c7d5e0;
+  width: 100%;
+  margin: 0.5rem 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+@media screen and (min-width: 520px) {
+  .chartGameInfo {
+    margin: 1rem 2rem;
+  }
+}
+@media screen and (min-width: 768px) {
+  .chartGameInfo {
+    margin: 1.5rem 2rem;
+  }
+}
+
+.chartGameGenres {
+  color: #384959;
+  font-size: 1rem;
+  margin: 0;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+@media screen and (min-width: 520px) {
+  .chartGameGenres {
+    font-size: 1.2rem;
+  }
+}
+@media screen and (min-width: 768px) {
+  .chartGameGenres {
+    font-size: 1.4rem;
+  }
+}
+@media screen and (min-width: 992px) {
+  .chartGameGenres {
+    font-size: 1.2rem;
+  }
+}
+
+.chartGameTitle {
+  overflow: hidden;
+  display: inline;
+  text-overflow: ellipsis;
+  font-size: 1.2rem;
+  margin: 0;
+  margin-bottom: 1rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+@media screen and (min-width: 520px) {
+  .chartGameTitle {
+    font-size: 1.4rem;
+  }
+}
+@media screen and (min-width: 768px) {
+  .chartGameTitle {
+    font-size: 1.6rem;
+  }
+}
+
+.chartDiscount {
+  background: #4c6b22;
+  color: #a4d007;
+  margin-right: 1rem;
+  padding: 0.5rem;
+  font-size: 1.4rem;
+}
+
+.chartAdjustedPriceWrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 10rem;
+}
+.chartOrigPriceStriked {
+  text-decoration: line-through;
+  font-size: 1.2rem;
+  margin: 0;
+  margin-bottom: 0.25rem;
+  color: #626366;
+}
+
+.chartGamePrice {
+  font-size: 1.2rem;
+  margin: 0;
+}
+@media screen and (min-width: 768px) {
+  .chartGamePrice {
+    font-size: 1.4rem;
+  }
+}
+
+.chartTabsWrap {
+  display: flex;
+  padding: 0 1rem;
+  margin-top: 1.5rem;
+}
+@media screen and (min-width: 520px) {
+  .chartTabsWrap {
+    padding: 0 3rem;
+  }
+}
+@media screen and (min-width: 768px) {
+  .chartTabsWrap {
+    padding: 0 6rem;
+  }
+}
+
+.chartTab {
+  margin-right: 1rem;
+  color: #2f89bc;
+  padding: 1rem;
+  font-size: 1.2rem;
+  border-top-left-radius: 0.25rem;
+  border-top-right-radius: 0.25rem;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+@media screen and (min-width: 520px) {
+  .chartTab {
+    font-size: 1.4rem;
+  }
+}
+.chartTab:hover {
+  background-color: #2a475e;
+  color: white;
+}
+
+.chartTabToggled {
+  background-color: #2a475e;
+  color: white;
+}
+
+.chartGamePreviewHover {
+  cursor: pointer;
+  display: none;
+  margin-left: 5rem;
+  width: 32rem;
+  padding: 1rem;
+  background: linear-gradient(to right, #c6e6f8 5%, #95bcd3 95%);
+}
+@media screen and (min-width: 992px) {
+  .chartGamePreviewHover {
+    display: block;
+  }
+}
+
+.chartGamePreviewScreenshots {
+  width: 100%;
+}
+.chartGamePreviewScreenshots img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  margin-bottom: 0.25rem;
+}
+
+.chartGamePreviewTitle {
+  color: #263645;
+  font-size: 1.6rem;
+  margin: 0;
+  margin-bottom: 1rem;
+}
+
+.chartGamePreviewGenresWrap {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 1rem;
+}
+.chartGamePreviewGenresWrap .chartGamePreviewGenres {
+  background-color: rgba(38, 54, 69, 0.6);
+  margin: 0;
+  margin-right: 0.25rem;
+  margin-bottom: 0.25rem;
+  padding: 0.5rem;
+  color: white;
+}
+
+.seeMoreWrap {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+  margin-bottom: 1rem;
+  margin-right: 0.5rem;
+}
+
+.seeMoreText {
+  font-size: 1rem;
+  margin: 0;
+  margin-right: 1rem;
+}
+@media screen and (min-width: 520px) {
+  .seeMoreText {
+    font-size: 1.2rem;
+  }
+}
+@media screen and (min-width: md_breakpoint) {
+  .seeMoreText {
+    font-size: 1.4rem;
+  }
+}
+
+.chartSeeMore {
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  padding: 0.5rem;
+  cursor: pointer;
+}
+@media screen and (min-width: 520px) {
+  .chartSeeMore {
+    padding: 1rem;
+    font-size: 1.2rem;
+  }
+}
+@media screen and (min-width: md_breakpoint) {
+  .chartSeeMore {
+    padding: 1rem;
+    font-size: 1.4rem;
+  }
+}
+.chartSeeMore:hover {
+  border: 1px solid white;
+}
+
+.gameInfoContainer {
+  padding: 0rem 3rem 5rem 3rem;
+  display: flex;
+  flex-direction: column;
+}
+@media screen and (min-width: 992px) {
+  .gameInfoContainer {
+    padding: 2rem 8rem 10rem 8rem;
+  }
+}
+@media screen and (min-width: 1200px) {
+  .gameInfoContainer {
+    padding: 2rem 20rem 10rem 20rem;
+  }
+}
+
+.gameInfoTitle {
+  padding: 0 0rem;
+}
+
+.gameInfoShowcaseContainer {
+  display: flex;
+  flex-direction: column;
+  background-image: linear-gradient(to right, rgba(0, 0, 0, 0) 50%, rgba(0, 0, 0, 0.4) 100%);
+  overflow: hidden;
+}
+@media screen and (min-width: 992px) {
+  .gameInfoShowcaseContainer {
+    flex-direction: row-reverse;
+  }
+}
+
+.gameInfoShowcasePreviewWrap {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  margin-bottom: 2rem;
+  color: #c6c4df;
+}
+@media screen and (min-width: 992px) {
+  .gameInfoShowcasePreviewWrap {
+    margin-bottom: 0rem;
+    display: block;
+    width: 40%;
+    margin-left: 2rem;
+  }
+}
+
+.gameInfoShowcaseTextWrap {
+  padding: 0.25rem 0.5rem;
+}
+.gameInfoShowcaseTextWrap p {
+  font-size: 0.8rem;
+  margin-bottom: 0.3rem;
+}
+@media screen and (min-width: 520px) {
+  .gameInfoShowcaseTextWrap p {
+    font-size: 1rem;
+  }
+}
+@media screen and (min-width: 768px) {
+  .gameInfoShowcaseTextWrap p {
+    font-size: 1.3rem;
+    margin-bottom: 1.2rem;
+  }
+}
+@media screen and (min-width: 1200px) {
+  .gameInfoShowcaseTextWrap p {
+    font-size: 1.3rem;
+  }
+}
+@media screen and (min-width: 520px) {
+  .gameInfoShowcaseTextWrap {
+    padding: 0.5rem 1rem;
+  }
+}
+@media screen and (min-width: 992px) {
+  .gameInfoShowcaseTextWrap {
+    padding: 0;
+  }
+}
+
+.gameInfoGenresWrap {
+  display: flex;
+}
+
+.gameInfoGenreTag {
+  color: #67c1f5;
+  background-color: rgba(103, 193, 245, 0.2);
+  margin-right: 0.5rem;
+  padding: 0.5rem;
+}
+.gameInfoGenreTag:hover {
+  color: white;
+  background: linear-gradient(135deg, #67c1f5 0%, #417a9b 100%);
+}
+
+.gameInfoShowcaseCarouselWrap {
+  width: 60%;
+  width: 100%;
+}
+@media screen and (min-width: 992px) {
+  .gameInfoShowcaseCarouselWrap {
+    width: 60%;
+  }
+}
+
+.gameInfoShowcaseTitleImage {
+  width: 60%;
+  opacity: 0;
+}
+@media screen and (min-width: 992px) {
+  .gameInfoShowcaseTitleImage {
+    width: 100%;
+  }
+}
+
+.gameInfoBuyContainer {
+  position: relative;
+  width: 100%;
+  background: linear-gradient(-60deg, rgba(226, 244, 255, 0.3) 5%, rgba(84, 107, 115, 0.3) 95%);
+  border-radius: 0.4rem;
+  color: white;
+  padding: 1.6rem;
+  padding-bottom: 3.6rem;
+  margin: 5rem 0;
+}
+@media screen and (min-width: 992px) {
+  .gameInfoBuyContainer {
+    width: 59%;
+  }
+}
+.gameInfoBuyContainer > h1 {
+  font-size: 1.4rem;
+}
+@media screen and (min-width: 520px) {
+  .gameInfoBuyContainer > h1 {
+    font-size: 1.6rem;
+  }
+}
+@media screen and (min-width: 768px) {
+  .gameInfoBuyContainer > h1 {
+    font-size: 1.8rem;
+  }
+}
+@media screen and (min-width: 992px) {
+  .gameInfoBuyContainer > h1 {
+    font-size: 1.6rem;
+  }
+}
+
+.gameInfoAddToCartWrap {
+  display: flex;
+  background: black;
+  padding: 0.25rem;
+  position: absolute;
+  bottom: -1.5rem;
+  right: 4rem;
+}
+@media screen and (min-width: 520px) {
+  .gameInfoAddToCartWrap {
+    font-size: 1.2rem;
+  }
+}
+@media screen and (min-width: 768px) {
+  .gameInfoAddToCartWrap {
+    font-size: 1.4rem;
+  }
+}
+
+.gameInfoOrigPrice {
+  text-decoration: line-through;
+  margin: 0;
+  margin-right: 1rem;
+}
+
+.gameInfoadjustedPrice {
+  margin: 0;
+}
+
+.gameInfoPriceWrap {
+  display: flex;
+  align-items: center;
+  color: #c6d4df;
+}
+
+.gameInfoPriceStrikedAndPriceWrap {
+  padding: 0.25rem;
+  padding-right: 1rem;
+}
+
+.chartGamePriceInnerWrap {
+  padding: 0.25rem;
+  padding-right: 1rem;
+  padding-left: 1rem;
+}
+
+.gameInfoAddToCartButton {
+  border-radius: 0.25rem;
+  background-color: #80a106;
+  color: #d2efa9;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  padding: 0.7rem 1.5rem;
+  font-weight: bold;
+  font-size: 1rem;
+  outline: none !important;
+  box-shadow: none !important;
+  border: none;
+}
+.gameInfoAddToCartButton:hover {
+  color: white;
+  background-color: #769605;
+  transition: all 0.3s ease;
+}
+@media screen and (min-width: 520px) {
+  .gameInfoAddToCartButton {
+    font-size: 1.2rem;
+  }
+}
+
+.gameInfoSectionTitle {
+  font-size: 1.5rem;
+  letter-spacing: 0.3rem;
+  padding-bottom: 0.25rem;
+  border-bottom: 1px solid #acb2b8;
+  text-transform: uppercase;
+  font-weight: normal;
+  color: white;
+  margin-top: 8rem;
+}
+
+.gameDescription {
+  color: #acb2b8;
+  font-size: 1.4rem;
+  line-height: 2rem;
+}
+
+.reviewBox {
+  display: flex;
+  background-color: rgba(0, 0, 0, 0.2);
+  padding: 1rem;
+  flex-direction: column;
+  margin-bottom: 1rem;
+}
+@media screen and (min-width: 768px) {
+  .reviewBox {
+    flex-direction: row;
+  }
+}
+
+.reviewerInfoWrap {
+  padding: 1.25rem 0.5rem;
+  display: flex;
+  width: 100%;
+}
+.reviewerInfoWrap .reviewerAvatarWrap {
+  width: 6.5rem;
+  height: 6.5rem;
+  margin-right: 1rem;
+}
+@media screen and (min-width: 768px) {
+  .reviewerInfoWrap .reviewerAvatarWrap {
+    min-width: 3.5rem;
+    height: 3.5rem;
+    max-width: 4rem;
+  }
+}
+.reviewerInfoWrap .reviewerAvatarWrap img {
+  object-fit: cover;
+  width: 100%;
+  height: 100%;
+}
+@media screen and (min-width: 768px) {
+  .reviewerInfoWrap {
+    width: 25%;
+  }
+}
+
+.reviewerUsername {
+  font-weight: bold;
+  color: #c6d4df;
+  font-size: 1.2rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0;
+}
+
+.reviewerReviewWrap {
+  padding: 0 1rem;
+  padding-right: 0rem;
+  width: 100%;
+}
+
+.reviewerVerdictWrap {
+  display: flex;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.2);
+  color: #d6d7d8;
+}
+@media screen and (min-width: 768px) {
+  .reviewerVerdictWrap {
+    padding: 0 1rem;
+  }
+}
+
+.reviewerThumbIcon {
+  font-size: 1.5rem;
+  margin-right: 1rem;
+}
+
+.reviewerVerdict {
+  font-size: 1.5rem;
+}
+
+.reviewerDesc {
+  font-size: 1.3rem;
+  color: #acb2b8;
+}
+@media screen and (min-width: 768px) {
+  .reviewerDesc {
+    padding: 0 1rem;
+  }
+}
+
+.gameInfoAdjustedPriceWrap {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}
+
+.gameInfoOrigPriceStriked {
+  text-decoration: line-through;
+  font-size: 1.2rem;
+  margin: 0;
+  margin-bottom: 0.25rem;
+  color: #626366;
+}
+
+.gameInfoPrice {
+  background-color: rgba(0, 0, 0, 0.6);
+  color: #acdbf5;
+  margin: 0;
+  font-size: 1rem;
+}
+@media screen and (min-width: 520px) {
+  .gameInfoPrice {
+    font-size: 1.4rem;
+  }
+}
+
+.gameInfoDiscount {
+  background: #4c6b22;
+  color: #a4d007;
+  display: flex;
+  align-items: center;
+  margin-right: 1rem;
+  padding: 0.5rem 1.25rem;
+  font-size: 1.4rem;
+  height: 100%;
+}
+@media screen and (min-width: 520px) {
+  .gameInfoDiscount {
+    font-size: 1.6rem;
+  }
+}
+.gameInfoDiscount > p {
+  margin: 0;
+}
+
+.releaseDate {
+  color: #556772;
+}
+
+.showcaseAbout {
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  padding-right: 2rem;
+}
+@media screen and (min-width: 992px) {
+  .showcaseAbout {
+    padding-right: 6rem;
+  }
+}
+
+.noReviews {
+  color: #acb2b8;
+  font-size: 1.3rem;
+  font-weight: normal;
+}
+@media screen and (min-width: 992px) {
+  .noReviews {
+    font-size: 1.6rem;
+  }
+}
+
+.registerContainer {
+  background-image: url(https://res.cloudinary.com/du8n2aa4p/image/upload/v1616459182/steam/background/bg_steam.jpg);
+  background-repeat: no-repeat;
+  background-color: #212429;
+  color: #e9e9e9;
+  padding: 2rem 0;
+  min-height: 100vh;
+}
+@media screen and (min-width: 768px) {
+  .registerContainer {
+    padding: 6rem 0;
+  }
+}
+
+.registerContentWrap {
+  margin-left: 5rem;
+}
+@media screen and (min-width: 768px) {
+  .registerContentWrap {
+    margin-left: 10rem;
+  }
+}
+@media screen and (min-width: 992px) {
+  .registerContentWrap {
+    margin-left: 30rem;
+  }
+}
+
+.createYourAccountHeader {
+  text-transform: uppercase;
+  margin-bottom: 5rem;
+  font-size: 3rem;
+  font-weight: normal;
+}
+
+.cartHeader {
+  text-transform: uppercase;
+  font-size: 3rem;
+  letter-spacing: 0.4rem;
+  margin-bottom: 3rem;
+  font-weight: normal;
+}
+
+.cartHeaderContainer {
+  background: url(https://res.cloudinary.com/du8n2aa4p/image/upload/v1616458823/steam/background/cluster_bg_2.png) bottom center no-repeat;
+  padding: 5rem 2rem;
+  padding-top: 1rem;
+}
+@media screen and (min-width: 768px) {
+  .cartHeaderContainer {
+    padding: 5rem 5rem;
+  }
+}
+@media screen and (min-width: 768px) {
+  .cartHeaderContainer {
+    padding: 5rem 10rem;
+  }
+}
+
+.cartContainer {
+  color: #c7d5e0;
+  padding: 2rem;
+}
+@media screen and (min-width: 768px) {
+  .cartContainer {
+    padding: 2rem 10rem;
+  }
+}
+
+.cartRow {
+  display: flex;
+  background-color: rgba(0, 0, 0, 0.2);
+  margin-bottom: 1rem;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.cartImageAndTitleWrap {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.cartGameImage {
+  opacity: 0;
+  width: 50%;
+  margin-right: 1rem;
+}
+@media screen and (min-width: 520px) {
+  .cartGameImage {
+    width: 20%;
+  }
+}
+.cartGameImage img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.cartPrice,
+.cartTitle {
+  font-size: 1.4rem;
+}
+
+.totalContainer,
+.cartRow {
+  padding: 1rem 1.5rem;
+}
+
+.totalContainer {
+  display: flex;
+  flex-direction: column;
+  background-color: rgba(0, 0, 0, 0.2);
+  font-size: 1.4rem;
+}
+
+.totalTextWrap {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.estimatedTotal,
+.totalPrice {
+  font-weight: bold;
+}
+
+.purchaseButton {
+  border-radius: 0.25rem;
+  background-color: #80a106;
+  color: #d2efa9;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  padding: 0.7rem 1.5rem;
+  font-weight: bold;
+  outline: none !important;
+  box-shadow: none !important;
+  border: none;
+  width: 15rem;
+  margin-left: auto;
+  margin-top: 3rem;
+  margin-bottom: 2rem;
+}
+.purchaseButton:hover {
+  color: white;
+  background-color: #769605;
+  transition: all 0.3s ease;
+}
+
+.cartPriceAndRemoveWrap {
+  text-align: center;
+}
+.cartPriceAndRemoveWrap .removeFromCart {
+  color: #56707f;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.cartPriceAndRemoveWrap .removeFromCart:hover {
+  color: #c1dbf4;
+}
+
+.cartAndSearchWrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem 0;
+  margin-bottom: 1rem;
+}
+
+.cart {
+  text-transform: uppercase;
+  color: #a4d007;
+  background-color: rgba(164, 208, 7, 0.4);
+  background-image: url(https://res.cloudinary.com/du8n2aa4p/image/upload/v1616459272/steam/background/background_cart.jpg);
+  cursor: pointer;
+  outline: none !important;
+  box-shadow: none !important;
+  border: none;
+  padding: 0.25rem 2rem;
+  font-size: 1.2rem;
+  margin-right: auto;
+}
+.cart:hover {
+  color: #111111;
+  background-color: rgba(164, 208, 7, 0.5);
+}
+
+.signInContainer {
+  background-image: url(https://res.cloudinary.com/du8n2aa4p/image/upload/v1616459182/steam/background/bg_steam.jpg);
+  background-repeat: no-repeat;
+  background-color: #212429;
+  color: #e9e9e9;
+  min-height: 100vh;
+}
+
+.signInTitle {
+  text-transform: uppercase;
+  font-weight: normal;
+  text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+  font-size: 3.4rem;
+  letter-spacing: 0.2rem;
+  color: #ffffff;
+  margin: 0;
+  margin-bottom: 3rem;
+  text-align: center;
+}
+@media screen and (min-width: 992px) {
+  .signInTitle {
+    margin-bottom: 5rem;
+    text-align: left;
+  }
+}
+
+.signInSectionsWrap {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  justify-content: center;
+  margin: 0 auto;
+  padding: 5rem;
+}
+@media screen and (min-width: 992px) {
+  .signInSectionsWrap {
+    flex-direction: row;
+    width: 80%;
+  }
+}
+
+.signInFormSection {
+  width: 100%;
+}
+@media screen and (min-width: 992px) {
+  .signInFormSection {
+    width: 50%;
+  }
+}
+
+.joinSection {
+  width: 100%;
+  color: #b8b6b4;
+  text-align: center;
+  font-size: 1.4rem;
+}
+@media screen and (min-width: 992px) {
+  .joinSection {
+    width: 30%;
+  }
+}
+
+.joinSteamText {
+  width: 100%;
+  margin: 0 auto;
+}
+@media screen and (min-width: 992px) {
+  .joinSteamText {
+    width: 70%;
+  }
+}
+
+.joinImageWrap {
+  max-width: 32rem;
+  margin: 0 auto;
+}
+.joinImageWrap .joinImage {
+  opacity: 0;
+  width: 100%;
+  object-fit: cover;
+}
+
+.joinSteamButton {
+  cursor: pointer;
+  background: transparent;
+  color: white;
+  border: 1px solid white;
+  padding: 1rem;
+  margin-left: auto;
+}
+
+.profileContainer {
+  padding: 1rem 3rem;
+  padding-bottom: 5rem;
+}
+@media screen and (min-width: 768px) {
+  .profileContainer {
+    padding: 1rem 6rem;
+    padding-bottom: 10rem;
+  }
+}
+@media screen and (min-width: 992px) {
+  .profileContainer {
+    padding: 1rem 20rem;
+    padding-bottom: 10rem;
+  }
+}
+
+.profileHeader {
+  background: rgba(58, 62, 71, 0.5);
+  border-radius: 0.25rem;
+  margin-bottom: 3rem;
+  display: flex;
+  align-items: center;
+  padding: 1rem;
+}
+@media screen and (min-width: 768px) {
+  .profileHeader {
+    margin-bottom: 5rem;
+    padding: 2rem;
+  }
+}
+.profileHeader h1 {
+  overflow: hidden;
+  display: inline;
+  text-overflow: ellipsis;
+  width: 70%;
+  font-size: 1.3rem;
+  margin: 0;
+}
+@media screen and (min-width: 768px) {
+  .profileHeader h1 {
+    font-size: 1.8rem;
+  }
+}
+
+.profileHeaderAvatar {
+  margin-right: 1rem;
+  width: 6.4rem;
+  height: 6.4rem;
+}
+.profileHeaderAvatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.profileAboutTitle {
+  font-weight: normal;
+  font-size: 2rem;
+  letter-spacing: 0.2rem;
+  text-transform: uppercase;
+}
+@media screen and (min-width: 768px) {
+  .profileAboutTitle {
+    font-size: 2.5rem;
+  }
+}
+
+.profileTextAndFormWrap p {
+  color: #969696;
+  font-size: 1.3rem;
+}
+@media screen and (min-width: 768px) {
+  .profileTextAndFormWrap p {
+    font-size: 1.6rem;
+  }
+}
+
+.profileTextWrap {
+  margin-bottom: 5rem;
+}
+@media screen and (min-width: 768px) {
+  .profileTextWrap {
+    margin-bottom: 7rem;
+  }
+}
+
+.searchContainer {
+  padding: 1rem 1rem;
+}
+@media screen and (min-width: 520px) {
+  .searchContainer {
+    padding: 1rem 3rem;
+  }
+}
+@media screen and (min-width: 768px) {
+  .searchContainer {
+    padding: 1rem 6rem;
+  }
+}
+
+.searchGamesColumn {
+  width: 100%;
+}
+@media screen and (min-width: 992px) {
+  .searchGamesColumn {
+    width: 66%;
+  }
+}
+@media screen and (min-width: 1200px) {
+  .searchGamesColumn {
+    width: 70%;
+  }
+}
+@media screen and (min-width: 1400px) {
+  .searchGamesColumn {
+    width: 74%;
+  }
+}
+
+.searchColumnsWrap {
+  display: flex;
+}
+
+.searchGameContainer {
+  position: relative;
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  cursor: pointer;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.2);
+  color: #c6d4df;
+  margin-bottom: 0.5rem;
+  min-height: 10.9rem;
+}
+.searchGameContainer:hover {
+  background: linear-gradient(to right, #c6e6f8 5%, #95bcd3 95%);
+}
+.searchGameContainer:hover .searchGameTitle,
+.searchGameContainer:hover .searchGameDateAndPriceWrap {
+  color: #384959;
+}
+@media screen and (min-width: 768px) {
+  .searchGameContainer {
+    flex-wrap: nowrap;
+    min-height: 6.6rem;
+  }
+}
+
+.searchGameImageAndTitleWrap {
+  display: flex;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.searchGameImageAndTitleWrap > img {
+  width: 14rem;
+  height: 100%;
+  object-fit: cover;
+}
+.searchGameImageAndTitleWrap .searchGameTitle {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0;
+  font-size: 1.2rem;
+  margin-left: 0.5rem;
+  margin-top: 0.5rem;
+}
+@media screen and (min-width: 520px) {
+  .searchGameImageAndTitleWrap .searchGameTitle {
+    font-size: 1.4rem;
+    margin-left: 1rem;
+    margin-top: 0.75rem;
+  }
+}
+
+.searchGameDateAndPriceWrap {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  justify-content: flex-end;
+  margin: 0.5rem 1rem;
+  width: 100%;
+}
+.searchGameDateAndPriceWrap .searchGameDate {
+  font-size: 1.1rem;
+  color: #4c6c8c;
+  margin-right: auto;
+}
+@media screen and (min-width: 520px) {
+  .searchGameDateAndPriceWrap .searchGameDate {
+    display: block;
+  }
+}
+@media screen and (min-width: 768px) {
+  .searchGameDateAndPriceWrap {
+    margin-top: 0;
+    width: 40%;
+  }
+}
+
+.searchGameDiscount {
+  margin-right: 2rem;
+  min-height: 100%;
+  font-size: 1.3rem;
+  padding: 0.8rem 0.5rem;
+  background: #4c6b22;
+  color: #a4d007;
+}
+
+.searchGamePriceStriked {
+  text-decoration: line-through;
+  font-size: 1.3rem;
+  margin: 0;
+  margin-bottom: 0.25rem;
+  color: #626366;
+}
+
+.searchGamePrice {
+  margin: 0;
+  font-size: 1.3rem;
+}
+
+.searchPreviewHover {
+  position: absolute;
+  right: -30rem;
+  display: none;
+  width: 30rem;
+  padding: 1rem;
+  background: linear-gradient(to right, #c6e6f8 5%, #95bcd3 95%);
+}
+@media screen and (min-width: 992px) {
+  .searchPreviewHover {
+    display: block;
+  }
+}
+
+.hideSearchPreviewHover {
+  opacity: 0;
+}
+
+.searchGamePreviewTitle {
+  color: #263645;
+  font-size: 1.6rem;
+  margin: 0;
+  margin-bottom: 1rem;
+}
+
+.searchGameGenresWrap {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.searchGameGenres {
+  background-color: #96a3ae;
+  color: #e3eaef;
+  font-size: 1.1rem;
+  margin: 0;
+  margin-right: 0.25rem;
+  margin-bottom: 0.5rem;
+  padding: 0.5rem;
+}
+
+.searchGameAdjustedPriceWrap {
+  width: 11rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.searchGameContainerToggled {
+  background: linear-gradient(to right, #c6e6f8 5%, #95bcd3 95%);
+  padding-right: 0;
+}
+.searchGameContainerToggled .searchGameTitle,
+.searchGameContainerToggled .searchGameDateAndPriceWrap {
+  color: #384959;
+}
+@media screen and (min-width: 992px) {
+  .searchGameContainerToggled {
+    box-sizing: content-box;
+    padding-right: 5rem;
+  }
+}
+
+.noResultsWrap {
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.2);
+  padding: 0.5rem;
+  font-size: 1.2rem;
+}
+@media screen and (min-width: 768px) {
+  .noResultsWrap {
+    padding: 1rem;
+    font-size: 1.4rem;
+  }
+}
+
+.searchScreenshotImage {
+  opacity: 0;
+}
+
+.searchGameImage {
+  opacity: 0;
+}
+
+/*# sourceMappingURL=main.css.map */

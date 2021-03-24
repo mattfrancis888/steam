@@ -1,0 +1,149 @@
+// .communityContainerCarousel {
+//     display: flex;
+// }
+
+.communityCarouselSectionWrap {
+    display: flex;
+    cursor: pointer;
+    @media screen and (min-width: $lg_breakpoint) {
+        margin: 0 5rem;
+    }
+    height: 100%;
+}
+
+.communityCarouselImageSection {
+    width: 100%;
+    position: relative;
+
+    @media screen and (min-width: $lg_breakpoint) {
+        width: 70%;
+    }
+
+    .communityCarouselVid {
+        position: absolute;
+        top: 0;
+        left: 0;
+        opacity: 0;
+        transition: all 0.3s ease;
+        width: 100%;
+
+        z-index: 1;
+    }
+}
+
+.hideFeaturedCarouselScreenshotSection {
+    display: none;
+}
+.communityCarouselAboutSection {
+    background: linear-gradient(to bottom, #506c86 5%, #10143100 96%);
+    padding: 1rem;
+    width: 100%;
+    display: none;
+
+    @media screen and (min-width: $lg_breakpoint) {
+        display: block;
+        width: 30%;
+    }
+}
+
+.communityCarouselGameAbout {
+    color: white;
+    // margin-left: 1.5rem;
+    font-weight: normal;
+    font-size: 1.4rem;
+    line-height: 2.4rem;
+    margin: 0;
+    @media screen and (min-width: $lg_breakpoint) {
+        // margin: 2rem 1rem;
+        display: -webkit-box;
+        -webkit-line-clamp: 6;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+    @media screen and (min-width: $xl_breakpoint) {
+        // margin: 3rem 2rem;
+        font-size: 1.6rem;
+    }
+}
+
+.communityCarouselVisitGame {
+    text-align: center;
+    color: $light-blue;
+    cursor: pointer;
+}
+
+.sliderAndButtonWrap {
+    position: relative;
+}
+
+.communityUserInfoWrap {
+    margin-top: 5rem;
+    display: flex;
+    padding: 1rem;
+    align-items: center;
+    .communityAvatar {
+        width: 5rem;
+        height: 5rem;
+        @media screen and (min-width: $xl_breakpoint) {
+            width: 7rem;
+            height: 7rem;
+        }
+    }
+    .communityUsername {
+        margin: 0;
+        margin-left: 1rem;
+        font-weight: bold;
+        color: $light-blue;
+        font-size: 1.3rem;
+    }
+}
+.showButtonsForSmallScreensWrap {
+    display: flex;
+    justify-content: space-between;
+}
+.hideCommunityCarouselButton,
+.hideCommunityCarouselButtonsWrap {
+    display: none !important;
+}
+
+.communityAdjustedPriceWrap {
+    display: flex;
+    align-items: center;
+}
+.communityOrigPriceStriked {
+    text-decoration: line-through;
+    font-size: 1.2rem;
+    margin: 0;
+    margin-bottom: 0.25rem;
+    color: #626366;
+}
+.communityGamePrice {
+    font-size: 1.2rem;
+    margin: 0;
+
+    @media screen and (min-width: $md_breakpoint) {
+        font-size: 1.4rem;
+    }
+}
+.communityPrice {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: #acdbf5;
+    bottom: 2rem;
+    right: 0;
+    padding: 0.75rem;
+    font-size: 1rem;
+    @media screen and (min-width: $sm_breakpoint) {
+        bottom: 5rem;
+        right: 0;
+        padding: 1rem;
+        font-size: 1.4rem;
+    }
+}
+
+.communityDiscount {
+    @include discountPriceColor;
+    margin-right: 1rem;
+    padding: 0.5rem;
+    font-size: 1.4rem;
+}
