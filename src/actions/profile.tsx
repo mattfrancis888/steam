@@ -32,7 +32,7 @@ export interface CloudinaryImageDelete {
 
 export const fetchProfile = () => async (dispatch: Dispatch) => {
     try {
-        const response = await axios.get<ProfileResponse>(`/api/profile`);
+        const response = await axios.get<ProfileResponse>(`/api/get-profile`);
         dispatch<FetchProfileAction>({
             type: ActionTypes.FETCH_PROFILE,
             payload: response.data,

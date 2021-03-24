@@ -1,0 +1,200 @@
+.searchContainer {
+    padding: 1rem 1rem;
+    @media screen and (min-width: $sm_breakpoint) {
+        padding: 1rem 3rem;
+    }
+
+    @media screen and (min-width: $md_breakpoint) {
+        padding: 1rem 6rem;
+    }
+}
+
+.searchGamesColumn {
+    width: 100%;
+    @media screen and (min-width: $lg_breakpoint) {
+        width: 66%;
+    }
+    @media screen and (min-width: $xl_breakpoint) {
+        width: 70%;
+    }
+    @media screen and (min-width: 1400px) {
+        width: 74%;
+    }
+}
+.searchColumnsWrap {
+    display: flex;
+}
+.searchGameContainer {
+    position: relative; //important! you need position relative for box-sizing
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    cursor: pointer;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.2);
+    color: #c6d4df;
+    &:hover {
+        background: linear-gradient(to right, #c6e6f8 5%, #95bcd3 95%);
+        .searchGameTitle,
+        .searchGameDateAndPriceWrap {
+            color: #384959;
+        }
+    }
+    @media screen and (min-width: $md_breakpoint) {
+        flex-wrap: nowrap;
+        min-height: 6.6rem;
+    }
+    margin-bottom: 0.5rem;
+    min-height: 10.9rem;
+}
+.searchGameImageAndTitleWrap {
+    display: flex;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    > img {
+        width: 14rem;
+        height: 100%;
+        object-fit: cover;
+    }
+    .searchGameTitle {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        margin: 0;
+        font-size: 1.2rem;
+        margin-left: 0.5rem;
+        margin-top: 0.5rem;
+        @media screen and (min-width: $sm_breakpoint) {
+            font-size: 1.4rem;
+            margin-left: 1rem;
+            margin-top: 0.75rem;
+        }
+    }
+}
+
+.searchGameDateAndPriceWrap {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: flex-end;
+
+    //Used margin instead of padding here becasue margin and box-sizing: content-box; dosent affect the spacings
+    margin: 0.5rem 1rem;
+    width: 100%;
+    .searchGameDate {
+        @media screen and (min-width: $sm_breakpoint) {
+            display: block;
+        }
+        font-size: 1.1rem;
+        color: #4c6c8c;
+        margin-right: auto;
+    }
+
+    @media screen and (min-width: $md_breakpoint) {
+        margin-top: 0;
+        // width: auto;
+        // padding-left: 1rem;
+        width: 40%;
+    }
+}
+.searchGameDiscount {
+    margin-right: 2rem;
+    min-height: 100%;
+    font-size: 1.3rem;
+    padding: 0.8rem 0.5rem;
+
+    @include discountPriceColor;
+}
+
+.searchGamePriceStriked {
+    text-decoration: line-through;
+    font-size: 1.3rem;
+    margin: 0;
+    margin-bottom: 0.25rem;
+    color: #626366;
+}
+.searchGamePrice {
+    margin: 0;
+    font-size: 1.3rem;
+}
+
+.searchPreviewHover {
+    position: absolute;
+    right: -30rem;
+
+    display: none;
+    @media screen and (min-width: $lg_breakpoint) {
+        display: block;
+    }
+    // max-width: 30rem;
+    width: 30rem;
+    padding: 1rem;
+    background: linear-gradient(to right, #c6e6f8 5%, #95bcd3 95%);
+}
+.hideSearchPreviewHover {
+    opacity: 0;
+}
+
+.searchGamePreviewTitle {
+    color: #263645;
+    font-size: 1.6rem;
+    margin: 0;
+    margin-bottom: 1rem;
+}
+
+.searchGameGenresWrap {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.searchGameGenres {
+    background-color: #96a3ae;
+    color: rgba(227, 234, 239, 1);
+    font-size: 1.1rem;
+    margin: 0;
+    margin-right: 0.25rem;
+    margin-bottom: 0.5rem;
+    padding: 0.5rem;
+}
+
+.searchGameAdjustedPriceWrap {
+    width: 11rem;
+    display: flex;
+    justify-content: space-between;
+}
+.searchGameContainerToggled {
+    .searchGameTitle,
+    .searchGameDateAndPriceWrap {
+        color: #384959;
+    }
+
+    background: linear-gradient(to right, #c6e6f8 5%, #95bcd3 95%);
+
+    padding-right: 0;
+
+    @media screen and (min-width: $lg_breakpoint) {
+        box-sizing: content-box;
+        padding-right: 5rem;
+    }
+}
+
+.noResultsWrap {
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.2);
+    padding: 0.5rem;
+    font-size: 1.2rem;
+    @media screen and (min-width: $md_breakpoint) {
+        padding: 1rem;
+        font-size: 1.4rem;
+    }
+}
+
+.searchScreenshotImage {
+    opacity: 0;
+}
+
+.searchGameImage {
+    opacity: 0;
+}

@@ -254,13 +254,14 @@ export const getGames = async (req: Request, res: Response) => {
                 join screenshot s on s.screenshot_id = ls.screenshot_id
               group by ls.game_id
            ) sc on sc.game_id = ga.game_id
-           INNER JOIN game_price gp on ga.price_id = gp.price_id ;`;
+           INNER JOIN game_price gp on ga.price_id = gp.price_id  ORDER BY ga.game_id ;`;
 
         const response = await pool.query(sql);
 
         res.send({ games: response.rows });
         // res.send({...response.rows})
     } catch (error) {
+        console.log(error);
         return res.sendStatus(INTERNAL_SERVER_ERROR_STATUS);
     }
 };
@@ -283,9 +284,39 @@ export const getDiscountedGames = async (req: Request, res: Response) => {
               group by ls.game_id
            ) sc on sc.game_id = ga.game_id
            INNER JOIN game_price gp on ga.price_id = gp.price_id 
-           WHERE gp.discount_percentage  > 0 ;`;
+           WHERE gp.discount_percentage  > 0  ORDER BY ga.game_id ;`;
 
         const response = await pool.query(sql);
+
+        res.send({ games: response.rows });
+        // res.send({...response.rows})
+    } catch (error) {
+        return res.sendStatus(INTERNAL_SERVER_ERROR_STATUS);
+    }
+};
+
+export const getGamesBySearch = async (req: Request, res: Response) => {
+    const searchKeyword = req.query.q;
+    try {
+        let sql = `SELECT ga.game_id, ga.title, ga.cover_url, ga.release_date,
+        ga.about, g.genres, sc.screenshots, gp.price, gp.discount_percentage, gp.price_after_discount
+        FROM game ga
+            JOIN (
+              select lg.game_id, ARRAY_AGG(gr.genre_type) as genres
+              from lookup_game_genre lg 
+                  JOIN genre gr on gr.genre_id = lg.genre_id
+              group by lg.game_id
+           ) g on g.game_id = ga.game_id
+            JOIN ( 
+              select ls.game_id, ARRAY_AGG(s.screenshot_url) as screenshots
+              from lookup_game_screenshot ls 
+                join screenshot s on s.screenshot_id = ls.screenshot_id
+              group by ls.game_id
+           ) sc on sc.game_id = ga.game_id
+           INNER JOIN game_price gp on ga.price_id = gp.price_id 
+           WHERE name_tokens @@ to_tsquery($1) ORDER BY ga.game_id `;
+
+        const response = await pool.query(sql, [searchKeyword]);
 
         res.send({ games: response.rows });
         // res.send({...response.rows})

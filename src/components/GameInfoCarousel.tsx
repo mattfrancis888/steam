@@ -22,6 +22,13 @@ const GameInfoCarousel: React.FC<GameInfoCarouselProps> = (props) => {
     const [displayImage, setDisplayImage] = useState(props.screenshots[0]);
     const [imageClicked, setImageClicked] = useState(0);
 
+    useEffect(() => {
+        //When user clicks another game in home page after clicking a game
+        // displayImage hook was at the previous's displayImage
+        //so update it here
+        setDisplayImage(props.screenshots[0]);
+    }, [props.screenshots]);
+
     const renderSlides = () => {
         return props.screenshots.map((screenshot, index) => {
             return (
@@ -29,26 +36,26 @@ const GameInfoCarousel: React.FC<GameInfoCarouselProps> = (props) => {
                     <LazyLoad>
                         <div
                             className={`gameInfoContainerCarousel gameInfoAnime${index}`}
-                            onLoad={() => {
-                                anime({
-                                    targets: `.gameInfoAnime${index}`,
-                                    // Properties
-                                    // Animation Parameters
+                            // onLoad={() => {
+                            //     anime({
+                            //         targets: `.gameInfoAnime${index}`,
+                            //         // Properties
+                            //         // Animation Parameters
 
-                                    opacity: [
-                                        {
-                                            value: [0, 1],
-                                            duration: 250,
-                                            easing: "easeOutQuad",
-                                        },
-                                    ],
-                                });
-                            }}
+                            //         opacity: [
+                            //             {
+                            //                 value: [0, 1],
+                            //                 duration: 250,
+                            //                 easing: "easeOutQuad",
+                            //             },
+                            //         ],
+                            //     });
+                            // }}
                             onClick={(event) => {
                                 setDisplayImage(screenshot);
                                 setImageClicked(index);
                                 anime({
-                                    targets: `.gameInfoDisplayImag`,
+                                    targets: `.gameInfoDisplayImage`,
                                     // Properties
                                     // Animation Parameters
 
@@ -63,13 +70,32 @@ const GameInfoCarousel: React.FC<GameInfoCarouselProps> = (props) => {
                             }}
                         >
                             <div
-                                className={`gameInfoCarouselScreenshots ${
+                                className={`gameInfoCarouselScreenshots gameInfoScreenshot${index} ${
                                     imageClicked === index
                                         ? `gameInfoCarouselScreenshotsClicked`
                                         : ``
                                 } `}
+                                onLoad={() => {
+                                    anime({
+                                        targets: `.gameInfoScreenshot${index}`,
+                                        // Properties
+                                        // Animation Parameters
+
+                                        opacity: [
+                                            {
+                                                value: [0, 1],
+                                                duration: 250,
+                                                easing: "easeOutQuad",
+                                            },
+                                        ],
+                                    });
+                                }}
                             >
-                                <img src={screenshot} alt="screenshot" />
+                                <img
+                                    className={`gameInfoScreenshot`}
+                                    src={screenshot}
+                                    alt="screenshot"
+                                />
                             </div>
                         </div>
                     </LazyLoad>
@@ -110,18 +136,15 @@ const GameInfoCarousel: React.FC<GameInfoCarouselProps> = (props) => {
     return (
         <div>
             <img
-                className="gameInfoDisplayImag"
+                className="gameInfoDisplayImage"
                 src={displayImage}
                 onLoad={() => {
                     anime({
-                        targets: `.gameInfoDisplayImag`,
-                        // Properties
-                        // Animation Parameters
-
+                        targets: `.gameInfoDisplayImage`,
                         opacity: [
                             {
                                 value: [0, 1],
-                                duration: 100,
+                                duration: 400,
                                 easing: "linear",
                             },
                         ],

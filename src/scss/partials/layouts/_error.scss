@@ -1,0 +1,18 @@
+.serverErrorContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    h3 {
+        color: white;
+        font-size: 1.1rem;
+        font-weight: normal;
+        padding: 3rem;
+        @media screen and (min-width: $md_breakpoint) {
+            font-size: 1.4rem;
+        }
+    }
+    padding: 5rem 0;
+    @media screen and (min-width: $md_breakpoint) {
+        padding: 10rem 0;
+    }
+}

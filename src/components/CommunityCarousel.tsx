@@ -15,9 +15,19 @@ import useWindowDimensions from "../windowDimensions";
 import { CommunityCarouelProps } from "./Home";
 import anime from "animejs/lib/anime.es.js";
 import history from "../browserHistory";
-import { LG_SCREEN_SIZE, XL_SCREEN_SIZE, MED_SCREEN_SIZE } from "../constants";
+import {
+    LG_SCREEN_SIZE,
+    XL_SCREEN_SIZE,
+    MED_SCREEN_SIZE,
+    SM_SCREEN_SIZE,
+} from "../constants";
 import { Game } from "../actions";
-
+const videosFromSteam = [
+    "https://cdn.akamai.steamstatic.com/steam/apps/256767815/movie480.webm?t=1583175736",
+    "https://cdn.cloudflare.steamstatic.com/steam/apps/81958/movie480.webm?t=1554409259",
+    "https://cdn.cloudflare.steamstatic.com/steam/apps/256694830/movie480.webm?t=1561485484",
+    "https://cdn.akamai.steamstatic.com/steam/apps/2028471/movie480.webm?t=1447357639",
+];
 const CommunityCarousel: React.FC<CommunityCarouelProps> = (props) => {
     const { width } = useWindowDimensions();
     const [style, setStyle] = useState({ opacity: "1" });
@@ -59,16 +69,16 @@ const CommunityCarousel: React.FC<CommunityCarouelProps> = (props) => {
                     index={index}
                     key={index}
                     onClick={() => {
-                        history.push(`game/${content.game_id}`);
+                        history.push(`/game/${content.game_id}`);
                     }}
                 >
                     <LazyLoad>
                         <div
                             key={index}
-                            className={`featuredContainerCarousel featuredAnime${index}`}
+                            className={`communityContainerCarousel communityAnime${index}`}
                             onLoad={() => {
                                 anime({
-                                    targets: `.featuredAnime${index}`,
+                                    targets: `.communityAnime${index}`,
                                     // Properties
                                     // Animation Parameters
 
@@ -105,8 +115,12 @@ const CommunityCarousel: React.FC<CommunityCarouelProps> = (props) => {
                                         loop={true}
                                         style={style}
                                     >
-                                        <source
+                                        {/* <source
                                             src="  https://cdn.cloudflare.steamstatic.com/steam/apps/256820708/movie480_vp9.webm?t=1612810771"
+                                            type="video/mp4"
+                                        /> */}
+                                        <source
+                                            src={videosFromSteam[index]}
                                             type="video/mp4"
                                         />
                                     </video>
@@ -114,19 +128,16 @@ const CommunityCarousel: React.FC<CommunityCarouelProps> = (props) => {
                                         {renderPrice(content)}
                                     </div>
                                 </div>
-                                <div className="communityCarouselReviewSection">
-                                    <p className="communityCarouselGameReview">
-                                        "I do not play a lot of games of this
-                                        genre, so it is difficult for me to
-                                        compare and give an expert opinion on
-                                        the game, but I liked the game. ..."
+                                <div className="communityCarouselAboutSection">
+                                    <p className="communityCarouselGameAbout">
+                                        {content.about}
                                     </p>
 
-                                    <p className="communityCarouselReadMore">
-                                        Read Entire Review
+                                    <p className="communityCarouselVisitGame">
+                                        Visit Game Page
                                     </p>
 
-                                    <div className="communityUserInfoWrap">
+                                    {/* <div className="communityUserInfoWrap">
                                         <img
                                             className="communityAvatar"
                                             src="https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/avatars/fd/fdfd938f7eae06151877fc2e14e6d70806463c8c.jpg"
@@ -135,7 +146,7 @@ const CommunityCarousel: React.FC<CommunityCarouelProps> = (props) => {
                                         <p className="communityUsername">
                                             Username of user
                                         </p>
-                                    </div>
+                                    </div> */}
                                 </div>
                             </div>
                         </div>
@@ -143,17 +154,6 @@ const CommunityCarousel: React.FC<CommunityCarouelProps> = (props) => {
                 </Slide>
             );
         });
-    };
-
-    const renderHeight = () => {
-        if (width < LG_SCREEN_SIZE) {
-            return 55;
-        } else if (width < XL_SCREEN_SIZE) {
-            return 37;
-        } else if (width >= XL_SCREEN_SIZE) {
-            return 31;
-        }
-        return 1;
     };
 
     const renderCarousel = (): JSX.Element | JSX.Element[] => {
@@ -168,8 +168,8 @@ const CommunityCarousel: React.FC<CommunityCarouelProps> = (props) => {
             >
                 <CarouselProvider
                     naturalSlideWidth={100}
-                    naturalSlideHeight={renderHeight()}
-                    totalSlides={2}
+                    naturalSlideHeight={width < LG_SCREEN_SIZE ? 45 : 31}
+                    totalSlides={props.content.length}
                     className="gameCarouselWrap"
                     visibleSlides={1}
                     infinite={true}

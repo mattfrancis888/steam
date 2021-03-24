@@ -26,6 +26,7 @@ import EditReview from "./EditReview";
 import jwt_decode from "jwt-decode";
 import Cookies from "js-cookie";
 import { ACCESS_TOKEN } from "../constants";
+import CartAndSearchbar from "./CartAndSearchbar";
 export interface WriteReviewFormProps {
     onSubmit(formValues: any): void;
     authStatus?: string | null;
@@ -65,7 +66,7 @@ const GameInfo: React.FC<GameInfoProps> = (props) => {
     let [cart, setCart] = useState<[]>([]);
     let localCart = localStorage.getItem("cart");
 
-    const addItem = (item: any) => {
+    const addItem = (item: Game) => {
         //create a copy of our cart state, avoid overwritting existing state
         let cartCopy: any = [...cart];
 
@@ -74,11 +75,11 @@ const GameInfo: React.FC<GameInfoProps> = (props) => {
 
         //look for item in cart array
         let existingItem = cartCopy.find(
-            (cartItem: any) => cartItem.game_id == game_id
+            (cartItem: Game) => cartItem.game_id === game_id
         );
 
         //if item already exists
-        console.log(existingItem);
+
         if (existingItem) {
         } else {
             //if item doesn't exist, simply add it
@@ -94,9 +95,6 @@ const GameInfo: React.FC<GameInfoProps> = (props) => {
     };
 
     useEffect(() => {
-        //turn it into js
-        //console.log(localCart);
-
         if (localCart != null) {
             let parsedLocalCart = JSON.parse(localCart);
             //load persisted cart into state if it exists
@@ -216,9 +214,9 @@ const GameInfo: React.FC<GameInfoProps> = (props) => {
             return (
                 <div className="gameInfoAdjustedPriceWrap">
                     <div className="gameInfoDiscount">
-                        -{parseFloat(game.discount_percentage) * 100}%
+                        <p>-{parseFloat(game.discount_percentage) * 100}%</p>
                     </div>
-                    <div>
+                    <div className="gameInfoPriceStrikedAndPriceWrap">
                         <p className="gameInfoOrigPriceStriked">
                             ${parseFloat(game.price).toFixed(2)}
                         </p>
@@ -231,9 +229,11 @@ const GameInfo: React.FC<GameInfoProps> = (props) => {
         } else {
             //no discount
             return (
-                <p className="chartGamePrice">
-                    ${parseFloat(game.price).toFixed(2)}
-                </p>
+                <div className="chartGamePriceInnerWrap">
+                    <p className="chartGamePrice">
+                        ${parseFloat(game.price).toFixed(2)}
+                    </p>
+                </div>
             );
         }
     };
@@ -306,13 +306,14 @@ const GameInfo: React.FC<GameInfoProps> = (props) => {
         });
     };
 
-    const onSubmitPostReview = (formValues: WriteReviewFormValues) => {
+    const onSubmitPostReview = async (formValues: WriteReviewFormValues) => {
         const recommendObj = { recommend: recommend };
         const updatedObj: IPostAndEditReview = Object.assign(
             formValues,
             recommendObj
         );
-        props.postReview(updatedObj, props.match.params.gameId);
+        //Ignore warning comment by eslint, it actually waits
+        await props.postReview(updatedObj, props.match.params.gameId);
         itemEls.current[0]?.scrollIntoView({ behavior: "smooth" });
     };
 
@@ -356,110 +357,121 @@ const GameInfo: React.FC<GameInfoProps> = (props) => {
                 </div>
             );
         } else if (props.gameInfo.data && props.gameInfoReviews.data) {
-            return (
-                <div className="gameInfoContainer">
-                    <button
-                        className="cart"
-                        onClick={() => {
-                            history.push("/cart");
-                        }}
-                    >{`Cart(${localCart != null ? cart.length : "0"})`}</button>
+            if (props.gameInfo.data.games.length > 0)
+                //A review can be empty but the game info CANNOT be empty
+                return (
+                    <div className="gameInfoContainer">
+                        <CartAndSearchbar />
 
-                    <h1 className="gameInfoTitle">
-                        {props.gameInfo.data.games[0].title}
-                    </h1>
-                    <div className="gameInfoShowcaseContainer">
-                        <div className="gameInfoShowcasePreviewWrap">
-                            <img
-                                className="gameInfoShowcaseTitleImage"
-                                src={props.gameInfo.data.games[0].cover_url}
-                                alt=""
-                                onLoad={() => {
-                                    anime({
-                                        targets: `.gameInfoShowcaseTitleImage`,
-                                        // Properties
-                                        // Animation Parameters
+                        <h1 className="gameInfoTitle">
+                            {props.gameInfo.data.games[0].title}
+                        </h1>
+                        <div className="gameInfoShowcaseContainer">
+                            <div className="gameInfoShowcasePreviewWrap">
+                                <img
+                                    className="gameInfoShowcaseTitleImage"
+                                    src={props.gameInfo.data.games[0].cover_url}
+                                    alt=""
+                                    onLoad={() => {
+                                        anime({
+                                            targets: `.gameInfoShowcaseTitleImage`,
 
-                                        opacity: [
-                                            {
-                                                value: [0, 1],
-                                                duration: 250,
-                                                easing: "easeOutQuad",
-                                            },
-                                        ],
-                                    });
-                                }}
-                            ></img>
-                            <div className="gameInfoShowcaseTextWrap">
-                                <p className="showcaseAbout">
-                                    {props.gameInfo.data.games[0].about}
-                                </p>
-                                <p className="releaseDate">
-                                    {`Release Date -  ${moment(
-                                        props.gameInfo.data.games[0]
-                                            .release_date
-                                    ).format("YYYY/MM/DD")}`}
-                                </p>
-                                <div className="gameInfoGenresWrap">
-                                    {props.gameInfo.data.games[0].genres.map(
-                                        (genre, index) => {
-                                            return (
-                                                <p
-                                                    key={index}
-                                                    className="gameInfoGenreTag"
-                                                >
-                                                    {genre}
-                                                </p>
-                                            );
-                                        }
-                                    )}
+                                            opacity: [
+                                                {
+                                                    value: [0, 1],
+                                                    duration: 250,
+                                                    easing: "easeOutQuad",
+                                                },
+                                            ],
+                                        });
+                                    }}
+                                ></img>
+                                <div className="gameInfoShowcaseTextWrap">
+                                    <p className="showcaseAbout">
+                                        {props.gameInfo.data.games[0].about}
+                                    </p>
+                                    <p className="releaseDate">
+                                        {`Release Date -  ${moment(
+                                            props.gameInfo.data.games[0]
+                                                .release_date
+                                        ).format("YYYY/MM/DD")}`}
+                                    </p>
+                                    <div className="gameInfoGenresWrap">
+                                        {props.gameInfo.data.games[0].genres.map(
+                                            (genre, index) => {
+                                                return (
+                                                    <p
+                                                        key={index}
+                                                        className="gameInfoGenreTag"
+                                                    >
+                                                        {genre}
+                                                    </p>
+                                                );
+                                            }
+                                        )}
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div className="gameInfoShowcaseCarouselWrap">
-                            <GameInfoCarousel
-                                screenshots={
-                                    props.gameInfo.data.games[0].screenshots
-                                }
-                            />
-                        </div>
-                    </div>
-
-                    {renderWriteReview()}
-                    <div className="gameInfoBuyContainer">
-                        <h1>Buy {props.gameInfo.data.games[0].title}</h1>
-                        <div className="gameInfoAddToCartWrap">
-                            <div className="gameInfoPriceWrap">
-                                {renderPrice(props.gameInfo.data.games[0])}
+                            <div className="gameInfoShowcaseCarouselWrap">
+                                <GameInfoCarousel
+                                    screenshots={
+                                        props.gameInfo.data.games[0].screenshots
+                                    }
+                                />
                             </div>
-                            <button
-                                className="gameInfoAddToCartButton"
-                                data-testid="addToCartbutton"
-                                onClick={() => {
-                                    if (props.gameInfo.data?.games)
-                                        addItem(props.gameInfo.data.games[0]);
-                                    history.push("/cart");
-                                }}
-                            >
-                                Add To Cart
-                            </button>
+                        </div>
+
+                        {renderWriteReview()}
+                        <div className="gameInfoBuyContainer">
+                            <h1>Buy {props.gameInfo.data.games[0].title}</h1>
+                            <div className="gameInfoAddToCartWrap">
+                                <div className="gameInfoPriceWrap">
+                                    {renderPrice(props.gameInfo.data.games[0])}
+                                </div>
+                                <button
+                                    className="gameInfoAddToCartButton"
+                                    data-testid="addToCartbutton"
+                                    onClick={() => {
+                                        if (props.gameInfo.data?.games)
+                                            addItem(
+                                                props.gameInfo.data.games[0]
+                                            );
+                                        history.push("/cart");
+                                    }}
+                                >
+                                    Add To Cart
+                                </button>
+                            </div>
+                        </div>
+                        <h1 className="gameInfoSectionTitle">
+                            About This Game
+                        </h1>
+                        <p className="gameDescription">
+                            {props.gameInfo.data.games[0].about}
+                        </p>
+                        <h1 className="gameInfoSectionTitle">Recent Reviews</h1>
+                        {renderEditReview()}
+                        <div className="reviewsContainer">
+                            {renderReviews(props.gameInfoReviews.data.reviews)}
                         </div>
                     </div>
-                    <h1 className="gameInfoSectionTitle">About This Game</h1>
-                    <p className="gameDescription">
-                        {props.gameInfo.data.games[0].about}
-                    </p>
-                    <h1 className="gameInfoSectionTitle">Recent Reviews</h1>
-                    {renderEditReview()}
-                    <div className="reviewsContainer">
-                        {renderReviews(props.gameInfoReviews.data.reviews)}
+                );
+            else {
+                return (
+                    <div className="loadingCenter">
+                        <Loading />
                     </div>
+                );
+            }
+        } else {
+            return (
+                <div className="loadingCenter">
+                    <Loading />
                 </div>
             );
-        } else {
-            return <Loading />;
         }
     };
+
     return <React.Fragment>{renderContent()}</React.Fragment>;
 };
 

@@ -30,16 +30,7 @@ var router = express_1.Router();
 //     //     https://solidgeargroup.com/en/refresh-token-with-jwt-authentication-node-js/
 //     res.send("hi");
 // });
-router.get("/", requireAuth, function (req, res) {
-    // If JWT token can be understood (only registered users have JWT tokens that are valid/can be read),
-    //  show this page
-    //     Note: To validate token, you could use authenticateToken(used in authentication.ts)
-    //      or requireAuth (passport strategy), both are valid approaches
-    //     authenticateToken approach is based on:
-    //     https://github.com/WebDevSimplified/JWT-Authentication/blob/master/authServer.js
-    //     https://github.com/hnasr/javascript_playground/blob/master/jwt-course/jwt-final/jwtAuth.mjs
-    //     requireAuth approach is based on:
-    //     https://solidgeargroup.com/en/refresh-token-with-jwt-authentication-node-js/
-    res.send("hi");
+router.get("/profile", requireAuth, function (req, res) {
+    res.sendStatus(200);
 });
 exports.default = router;

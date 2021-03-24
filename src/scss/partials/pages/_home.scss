@@ -18,7 +18,7 @@
 }
 
 .homeContainer {
-    background: url(https://store.akamai.steamstatic.com/public/images/v6/home/cluster_bg.png?v=1)
+    background: url(https://res.cloudinary.com/du8n2aa4p/image/upload/v1616458895/steam/background/cluster_bg.png)
         bottom center no-repeat;
 }
 .homeFirstSection {
@@ -30,10 +30,15 @@
     }
 
     @media screen and (min-width: $md_breakpoint) {
-        padding: 1rem 6rem;
+        padding: 1rem 10rem;
     }
-
-    @media screen and (min-width: $lg_breakpoint) {
+    // @media screen and (min-width: $lg_breakpoint) {
+    //     padding: 1rem 10rem;
+    // }
+    @media screen and (min-width: $xl_breakpoint) {
+        padding: 1rem 15rem;
+    }
+    @media screen and (min-width: 1400px) {
         padding: 1rem 20rem;
     }
 }
@@ -47,20 +52,23 @@
     );
 
     padding: 1rem 1rem;
+    padding-bottom: 4rem;
     @media screen and (min-width: $sm_breakpoint) {
         padding: 1rem 3rem;
+        padding-bottom: 5rem;
     }
 
     @media screen and (min-width: $md_breakpoint) {
         padding: 1rem 6rem;
+        padding-bottom: 6rem;
     }
 }
 
 .chartGamesColumn {
+    display: flex;
+    flex-direction: column;
     width: 100%;
     @media screen and (min-width: $lg_breakpoint) {
-        // padding-left: 10rem;
-        // padding-right: 40rem;
         width: 80%;
     }
 }
@@ -69,6 +77,7 @@
     flex-wrap: nowrap;
 }
 .chartGameContainer {
+    cursor: pointer;
     position: relative;
     display: flex;
     background: rgba(0, 0, 0, 0.2);
@@ -98,6 +107,7 @@
 }
 
 .chartGameImage {
+    opacity: 0;
     width: 22rem;
     height: 100%;
     img {
@@ -109,6 +119,9 @@
         // max-height: 7rem;
         width: 22rem;
     }
+}
+.gameChartScreenshotPreview {
+    opacity: 0;
 }
 .chartGameInfo {
     color: #c7d5e0;
@@ -133,7 +146,7 @@
     display: -webkit-box;
     -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
-
+    overflow: hidden;
     @media screen and (min-width: $sm_breakpoint) {
         font-size: 1.2rem;
     }
@@ -172,6 +185,10 @@
 .chartAdjustedPriceWrap {
     display: flex;
     align-items: center;
+    justify-content: space-between;
+    width: 10rem;
+    @media screen and (min-width: $md_breakpoint) {
+    }
 }
 .chartOrigPriceStriked {
     text-decoration: line-through;
@@ -227,12 +244,16 @@
 }
 
 .chartGamePreviewHover {
+    cursor: pointer;
     display: none;
     margin-left: 5rem;
+    // float: right;
+
     @media screen and (min-width: $lg_breakpoint) {
         display: block;
     }
-    max-width: 30rem;
+    width: 32rem;
+    // max-width: 32rem;
     padding: 1rem;
     background: linear-gradient(to right, #c6e6f8 5%, #95bcd3 95%);
 }
@@ -249,6 +270,9 @@
 
 .chartGamePreviewTitle {
     color: #263645;
+    font-size: 1.6rem;
+    margin: 0;
+    margin-bottom: 1rem;
 }
 
 .chartGamePreviewGenresWrap {
@@ -262,5 +286,42 @@
         margin-bottom: 0.25rem;
         padding: 0.5rem;
         color: white;
+    }
+}
+
+.seeMoreWrap {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+    margin-bottom: 1rem;
+    margin-right: 0.5rem;
+}
+.seeMoreText {
+    font-size: 1rem;
+    margin: 0;
+    margin-right: 1rem;
+    @media screen and (min-width: $sm_breakpoint) {
+        font-size: 1.2rem;
+    }
+    @media screen and (min-width: md_breakpoint) {
+        font-size: 1.4rem;
+    }
+}
+.chartSeeMore {
+    border: 1px solid rgba(255, 255, 255, 0.4);
+
+    padding: 0.5rem;
+    cursor: pointer;
+
+    @media screen and (min-width: $sm_breakpoint) {
+        padding: 1rem;
+        font-size: 1.2rem;
+    }
+    @media screen and (min-width: md_breakpoint) {
+        padding: 1rem;
+        font-size: 1.4rem;
+    }
+    &:hover {
+        border: 1px solid white;
     }
 }

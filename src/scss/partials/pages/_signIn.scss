@@ -1,5 +1,6 @@
 .signInContainer {
-    background-image: url(https://store.akamai.steamstatic.com/public/shared/images/joinsteam/acct_creation_bg.jpg);
+    background-image: url(https://res.cloudinary.com/du8n2aa4p/image/upload/v1616459182/steam/background/bg_steam.jpg);
+    background-repeat: no-repeat;
     background-color: #212429;
     color: #e9e9e9;
     min-height: 100vh;
@@ -68,12 +69,14 @@
     max-width: 32rem;
     margin: 0 auto;
     .joinImage {
+        opacity: 0;
         width: 100%;
         object-fit: cover;
     }
 }
 
 .joinSteamButton {
+    cursor: pointer;
     background: transparent;
     color: white;
     border: 1px solid white;

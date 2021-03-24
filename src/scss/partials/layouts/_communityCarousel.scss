@@ -1,16 +1,20 @@
-.communityContainerCarousel {
-    @media screen and (min-width: $lg_breakpoint) {
-        margin: 0 5rem;
-    }
-}
+// .communityContainerCarousel {
+//     display: flex;
+// }
 
 .communityCarouselSectionWrap {
     display: flex;
+    cursor: pointer;
+    @media screen and (min-width: $lg_breakpoint) {
+        margin: 0 5rem;
+    }
+    height: 100%;
 }
 
 .communityCarouselImageSection {
     width: 100%;
     position: relative;
+
     @media screen and (min-width: $lg_breakpoint) {
         width: 70%;
     }
@@ -22,6 +26,7 @@
         opacity: 0;
         transition: all 0.3s ease;
         width: 100%;
+
         z-index: 1;
     }
 }
@@ -29,36 +34,39 @@
 .hideFeaturedCarouselScreenshotSection {
     display: none;
 }
-.communityCarouselReviewSection {
+.communityCarouselAboutSection {
     background: linear-gradient(to bottom, #506c86 5%, #10143100 96%);
-
+    padding: 1rem;
+    width: 100%;
     display: none;
+
     @media screen and (min-width: $lg_breakpoint) {
         display: block;
         width: 30%;
     }
 }
 
-.communityCarouselGameReview {
+.communityCarouselGameAbout {
     color: white;
-    margin-left: 1.5rem;
+    // margin-left: 1.5rem;
     font-weight: normal;
     font-size: 1.4rem;
     line-height: 2.4rem;
     margin: 0;
     @media screen and (min-width: $lg_breakpoint) {
-        margin: 2rem 1rem;
+        // margin: 2rem 1rem;
+        display: -webkit-box;
+        -webkit-line-clamp: 6;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
     }
     @media screen and (min-width: $xl_breakpoint) {
-        margin: 3rem 2rem;
-        font-size: 1.8rem;
+        // margin: 3rem 2rem;
+        font-size: 1.6rem;
     }
-    display: -webkit-box;
-    -webkit-line-clamp: 4;
-    -webkit-box-orient: vertical;
 }
 
-.communityCarouselReadMore {
+.communityCarouselVisitGame {
     text-align: center;
     color: $light-blue;
     cursor: pointer;

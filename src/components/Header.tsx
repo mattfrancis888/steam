@@ -21,18 +21,28 @@ const Header: React.FC<HeaderProps> = (props) => {
                     alt="logo"
                 />
             </div>
-            <h3
-                className="headerAuthText"
-                data-testid="signInOrSignOut"
-                onClick={() => {
-                    if (props.authStatus) props.signOut();
-                    else {
-                        history.push("/signin");
-                    }
-                }}
-            >
-                {props.authStatus ? "Sign Out" : "Sign In"}
-            </h3>
+            <div className="headerAuthWrap">
+                {props.authStatus && (
+                    <h3
+                        className="headerProfileText"
+                        onClick={() => history.push("/profile")}
+                    >
+                        Profile
+                    </h3>
+                )}
+                <h3
+                    className="headerAuthText"
+                    data-testid="signInOrSignOut"
+                    onClick={() => {
+                        if (props.authStatus) props.signOut();
+                        else {
+                            history.push("/signin");
+                        }
+                    }}
+                >
+                    {props.authStatus ? "Sign Out" : "Sign In"}
+                </h3>
+            </div>
         </nav>
     );
 };

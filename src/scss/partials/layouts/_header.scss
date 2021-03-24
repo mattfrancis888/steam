@@ -11,9 +11,29 @@
         padding: 2rem 6rem;
     }
 }
+.headerAuthWrap {
+    display: flex;
+    align-items: center;
+    color: #d9dadd;
+}
+
+.headerProfileText {
+    cursor: pointer;
+    margin-right: 2rem;
+    font-size: 1.3rem;
+    font-weight: normal;
+    @media screen and (min-width: $sm_breakpoint) {
+        font-size: 1.7rem;
+    }
+
+    @media screen and (min-width: $lg_breakpoint) {
+        font-size: 1.7rem;
+    }
+}
+
 .headerAuthText {
     cursor: pointer;
-    display: block;
+
     font-weight: normal;
     font-size: 1.3rem;
     @media screen and (min-width: $sm_breakpoint) {

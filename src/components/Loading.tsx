@@ -10,7 +10,7 @@ const Loading = (): JSX.Element => {
             color="white"
             height={width < MED_SCREEN_SIZE ? 50 : 75}
             width={width < MED_SCREEN_SIZE ? 50 : 75}
-            timeout={3000} //3 secs
+            timeout={30000} //will show for 30 secs
         />
     );
 };

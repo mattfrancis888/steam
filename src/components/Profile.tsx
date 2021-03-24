@@ -8,6 +8,7 @@ import Loading from "./Loading";
 import { StoreState } from "../reducers";
 import { ProfileStateResponse } from "../reducers/profileReducer";
 import { ErrorStateResponse } from "../reducers/errorReducer";
+import requireAuth from "./requireAuth";
 
 export interface EditProfileFormProps {
     onSubmit(formValues: any): void;
@@ -30,7 +31,7 @@ export interface ProfileProps {
 
 const Profile: React.FC<ProfileProps> = (props) => {
     const onSubmitEditProfile = (formValues: any) => {
-        console.log(formValues);
+        // console.log(formValues);
         if (props.profile.data?.profile[0].avatar_url) {
             let cloudinaryPaths = props.profile.data?.profile[0].avatar_url.split(
                 "/"
@@ -122,7 +123,11 @@ const Profile: React.FC<ProfileProps> = (props) => {
                 </div>
             );
         } else {
-            return <Loading />;
+            return (
+                <div className="loadingCenter">
+                    <Loading />
+                </div>
+            );
         }
     };
     return <React.Fragment>{renderContent()}</React.Fragment>;
@@ -138,4 +143,4 @@ const mapStateToProps = (state: StoreState) => {
 export default connect(mapStateToProps, {
     fetchProfile,
     editProfile,
-})(Profile);
+})(requireAuth(Profile));
