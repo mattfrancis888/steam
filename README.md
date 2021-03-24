@@ -1,46 +1,194 @@
-# Getting Started with Create React App
+# Steam
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Replication of [Steam website](https://store.steampowered.com/), the largest video game retailer for PC games. Database is created in BCNF (Boyce Codd Normal Form). Authentication is done via cookies that stores access tokens and refresh tokens (JWTs); users can search for games, including games that are on sale; users can post, delete, edit their reviews; edit their profile and username; add games to their cart. Data is stored on PostgreSQL. Developed with React, Redux, Express, Typescript, React-Testing-Library, Jest, TravisCI, JS, HTML, CSS.
 
-## Available Scripts
+Deployment / Production repo: https://github.com/mattfrancis888/steam
 
-In the project directory, you can run:
+### BCNF database graph:
 
-### `npm start`
+<img src="readmeImg/steamDiagram.png"/>
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### What I learned:
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+-   In testing, I'm using a library that mocks HTTP requests called `mock-axios-adapter`. The mocked HTTP requests will sometimes execute the HTTP requests when testing (eg; a POST would sometimes get executed). In addition, TravisCI returns an error of: `Error: connect ECONNREFUSED 127.0.0.1:80` because of `mock-axios-adapter`.It is related to HTTP request using locahost:5000. Using a proxy in package.json does not solve it. I am unable to find any workarounds with these issues and will be using and will use other mocking HTTP request libraries for future projects.
 
-### `npm test`
+## PostgreSQL
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+-   Able to create queries for many to many relationship tables/junction tables by using subqueries, ARRAY_AGG().
 
-### `npm run build`
+    {
+    "games": [
+    "base_info": [
+    {
+    "game_id": 1,
+    "title": "Monsters Inc Game"
+    },
+    {
+    "game_id": 2,
+    "title": "Dora Game"
+    },
+    ],
+    "genres": [
+    {
+    "genre_id": 1,
+    "game_id": 1,
+    "genre_type": "Action"
+    },
+    {
+    "genre_id": 2,
+    "game_id": 2,
+    "genre_type": "Fantasy"
+    }
+    ],
+    ]
+    }
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+**Into**
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+       {
+           "games": [
+                {
+                    "game_id": 1,
+                    "title": "Monsters Inc Game"
+                    "genres": [
+                        {
+                            "genre_id": 1,
+                            "game_id": 1,
+                             "genre_type": "Action"
+                         }....
+                     ]
+                },
+            "genres": [
+                {
+                    "genre_id": 1,
+                    "game_id": 1,
+                    "genre_type": "Action"
+                },
+                {
+                    "genre_id": 2,
+                    "game_id": 2,
+                    "genre_type": "Fantasy"
+                }
+            ],
+        ]
+    }
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+-   Generated columns for PostgreSQL v12 and above.
 
-### `npm run eject`
+        CREATE TABLE game_price (
+        price_id  SERIAL PRIMARY KEY,
+        price DECIMAL(19, 4),
+        discount_percentage DECIMAL(19,4),
+        price_after_discount DECIMAL(19, 4)  GENERATED ALWAYS AS (price - (price * discount_percentage)) STORED
+        );
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+Note to me: Our database is hosted with PostgreSQL v11. Thus, when we try to `RESTORE` our `pg_dump` the table above would not be created. I was not able to use **GENERATED COLUMNS** and had to create another `game_price` table without it and manually insert all the values again.
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Express.Js
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+-   Able to inject SQL for many to many relationship tables/junction tables with reducer() and map().
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+    {
+    "games": [
+    "base_info": [
+    {
+    "game_id": 1,
+    "title": "Monsters Inc Game"
+    },
+    {
+    "game_id": 2,
+    "title": "Dora Game"
+    },
+    ],
+    "genres": [
+    {
+    "genre_id": 1,
+    "game_id": 1,
+    "genre_type": "Action"
+    },
+    {
+    "genre_id": 2,
+    "game_id": 2,
+    "genre_type": "Fantasy"
+    }
+    ],
+    ]
+    }
 
-## Learn More
+**Into**
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+       {
+           "games": [
+                {
+                    "game_id": 1,
+                    "title": "Monsters Inc Game"
+                    "genres": [
+                        {
+                            "genre_id": 1,
+                            "game_id": 1,
+                             "genre_type": "Action"
+                         }....
+                     ]
+                },
+                {
+                    "game_id": 2,
+                    "title": "Dora"
+                    "genres": [
+                        {
+                            "genre_id": 1,
+                            "game_id": 2,
+                             "genre_type": "Action"
+                         },
+                     ]
+                }
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+               ....
+            ]
+        }
+
+## External Resources:
+
+-   pgAdmin 4 for PostgreSQL GUI.
+-   Postman to test API requests.
+-   Prettier to format code and EsLint for linting.
+-   Redux dev tool google chrome extension to check the values of the states.
+-   React dev tool to check the value of props.
+
+## What It Looks Like
+
+<img src="readmeImg/homeFeaturedCarousel.png" height="350"/>
+<img src="readmeImg/homeSpecialCarousel.png" height="350"/>
+<img src="readmeImg/homeCommunityCarousel.png" height="350"/>
+<img src="readmeImg/homeLg.jpg" height="350"/>
+<img src="readmeImg/homeSpecialsLg.jpg" height="350"/>
+<img src="readmeImg/gameInfoLg.jpg" height="350"/>
+<img src="readmeImg/gameInfoReview.png" height="350"/>
+<img src="readmeImg/gameInfoReviewers.png" height="350"/>
+<img src="readmeImg/editReviewLg.png" height="350"/>
+<img src="readmeImg/cart.png" width="350"/>
+<img src="readmeImg/searchLg.png" height="350"/>
+<img src="readmeImg/searchbar.png" width="350"/>
+<img src="readmeImg/noMatch.png" width="350"/>
+<img src="readmeImg/profile.png" height="350"/>
+<img src="readmeImg/signInLg.png" height="350"/>
+<img src="readmeImg/registerLg.png" height="350"/>
+
+# Getting Started
+
+These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
+
+1. Clone the project. Use `npm install` to install all the dependencies. Go to the client directory, run the project with `npm start` for development or `npm run build` for production.
+
+2. OPTIONAL: If you want to make changes locally, on the terminal, go to the `backend` directory. Type `npm run convert` to start the local server. The command would also listen to changes and convert the Express Typescript files to Express Javascript files that will be used for production. Create your own local database by restoring the pg_dump file of the steam database given (called ‘team_prodroot directory). Configure your own Pool settings in databasePool.
+
+# Prerequisites
+
+What things you need to install the software
+
+```
+- Any package manager (npm, yarn)
+```
+
+# Versioning
+
+None
