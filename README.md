@@ -2,7 +2,7 @@
 
 Replication of [Steam website](https://store.steampowered.com/), the largest video game retailer for PC games. Database is created in BCNF (Boyce Codd Normal Form). Authentication is done via cookies that stores access tokens and refresh tokens (JWTs); users can search for games, including games that are on sale; users can post, delete, edit their reviews; edit their profile and username; add games to their cart. Data is stored on PostgreSQL. Developed with React, Redux, Express, Typescript, React-Testing-Library, Jest, TravisCI, JS, HTML, CSS.
 
-Deployment / Production repo: https://github.com/mattfrancis888/steam
+Deployment / Production repo: https://github.com/mattfrancis888/heroku-steam
 
 ### BCNF database graph:
 
@@ -16,55 +16,57 @@ Deployment / Production repo: https://github.com/mattfrancis888/steam
 
 -   Able to create queries for many to many relationship tables/junction tables by using subqueries, ARRAY_AGG().
 
-
-    {
-        "games": [
-            "base_info": [
-                {
-                    "game_id": 1,
-                    "title": "Monsters Inc Game"
-                },
-                {
-                    "game_id": 2,
-                    "title": "Dora Game"
-                },
-            ],
-            "genres": [
-                {
-                    "genre_id": 1,
-                    "game_id": 1,
-                    "genre_type": "Action"
-                },
-                {
-                    "genre_id": 2,
-                    "game_id": 2,
-                    "genre_type": "Fantasy"
-                }
-            ],
-        ]
-    }
-
-**Into**
-
-        
-    {
-       "games": [
+```
+{
+    "games": [
+        "base_info": [
             {
                 "game_id": 1,
                 "title": "Monsters Inc Game"
-                "genres": [
-                   "Action"
-                 ]
             },
             {
                 "game_id": 2,
                 "title": "Dora Game"
-                "genres": [
-                   "Fantasy"
-                 ]
             },
-        ]
-    }
+        ],
+        "genres": [
+            {
+                "genre_id": 1,
+                "game_id": 1,
+                "genre_type": "Action"
+            },
+            {
+                "genre_id": 2,
+                "game_id": 2,
+                "genre_type": "Fantasy"
+            }
+        ],
+    ]
+}
+```
+
+**Into**
+        
+```
+{
+   "games": [
+        {
+            "game_id": 1,
+            "title": "Monsters Inc Game"
+            "genres": [
+               "Action"
+             ]
+        },
+        {
+            "game_id": 2,
+            "title": "Dora Game"
+            "genres": [
+               "Fantasy"
+             ]
+        },
+    ]
+}
+```
 
 -   Generated columns for PostgreSQL v12 and above.
 
@@ -82,58 +84,61 @@ Note to me: Our database is hosted with PostgreSQL v11. Thus, when we try to `RE
 -   Able to inject SQL for many to many relationship tables/junction tables with reducer() and map().
 
 
-    {
-       "games": [
-            {
-                "game_id": 1,
-                "title": "Monsters Inc Game"
-                "genres": [
-                    {
-                        "game_id": 1,
-                        "genre_type": "Action"
-                     }
-                 ]
-            },
-            {
-                "game_id": 2,
-                "title": "Dora Game"
-                "genres": [
-                    {
-                        "game_id": 2,
-                        "genre_type": "Fantasy"
-                     },
-                 ]
-            }
-        ]
-    }
-
+```
+{
+   "games": [
+        {
+            "game_id": 1,
+            "title": "Monsters Inc Game"
+            "genres": [
+                {
+                    "game_id": 1,
+                    "genre_type": "Action"
+                 }
+             ]
+        },
+        {
+            "game_id": 2,
+            "title": "Dora Game"
+            "genres": [
+                {
+                    "game_id": 2,
+                    "genre_type": "Fantasy"
+                 },
+             ]
+        }
+    ]
+}
+```
 
 **Into**
 
-    {
-       "games": [
-            {
-                "game_id": 1,
-                "title": "Monsters Inc Game"
-                "genres": [
-                    {
-                        "game_id": 1,
-                        "genre_type": "Action"
-                     }
-                 ]
-            },
-            {
-                "game_id": 2,
-                "title": "Dora Game"
-                "genres": [
-                    {
-                        "game_id": 2,
-                        "genre_type": "Fantasy"
-                     },
-                 ]
-            }
-        ]
-    }
+```
+{
+   "games": [
+        {
+            "game_id": 1,
+            "title": "Monsters Inc Game"
+            "genres": [
+                {
+                    "game_id": 1,
+                    "genre_type": "Action"
+                 }
+             ]
+        },
+        {
+            "game_id": 2,
+            "title": "Dora Game"
+            "genres": [
+                {
+                    "game_id": 2,
+                    "genre_type": "Fantasy"
+                 },
+             ]
+        }
+    ]
+}
+```
 
 ## External Resources:
 
@@ -156,8 +161,8 @@ Note to me: Our database is hosted with PostgreSQL v11. Thus, when we try to `RE
 <img src="readmeImg/editReviewLg.png" height="350"/>
 <img src="readmeImg/cart.png" height="350"/>
 <img src="readmeImg/searchLg.png" height="350"/>
-<img src="readmeImg/searchbar.png" height="350"/>
-<img src="readmeImg/noMatch.png" height="350"/>
+<img src="readmeImg/searchbar.png" width="700"/>
+<img src="readmeImg/noMatch.png" width="700"/>
 <img src="readmeImg/profile.png" height="350"/>
 <img src="readmeImg/signInLg.png" height="350"/>
 <img src="readmeImg/registerLg.png" height="350"/>
