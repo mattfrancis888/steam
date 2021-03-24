@@ -16,48 +16,19 @@ Deployment / Production repo: https://github.com/mattfrancis888/steam
 
 -   Able to create queries for many to many relationship tables/junction tables by using subqueries, ARRAY_AGG().
 
-    {
-    "games": [
-    "base_info": [
-    {
-    "game_id": 1,
-    "title": "Monsters Inc Game"
-    },
-    {
-    "game_id": 2,
-    "title": "Dora Game"
-    },
-    ],
-    "genres": [
-    {
-    "genre_id": 1,
-    "game_id": 1,
-    "genre_type": "Action"
-    },
-    {
-    "genre_id": 2,
-    "game_id": 2,
-    "genre_type": "Fantasy"
-    }
-    ],
-    ]
-    }
 
-**Into**
-
-       {
-           "games": [
+    {
+        "games": [
+            "base_info": [
                 {
                     "game_id": 1,
                     "title": "Monsters Inc Game"
-                    "genres": [
-                        {
-                            "genre_id": 1,
-                            "game_id": 1,
-                             "genre_type": "Action"
-                         }....
-                     ]
                 },
+                {
+                    "game_id": 2,
+                    "title": "Dora Game"
+                },
+            ],
             "genres": [
                 {
                     "genre_id": 1,
@@ -73,6 +44,28 @@ Deployment / Production repo: https://github.com/mattfrancis888/steam
         ]
     }
 
+**Into**
+
+        
+    {
+       "games": [
+            {
+                "game_id": 1,
+                "title": "Monsters Inc Game"
+                "genres": [
+                   "Action"
+                 ]
+            },
+            {
+                "game_id": 2,
+                "title": "Dora Game"
+                "genres": [
+                   "Fantasy"
+                 ]
+            },
+        ]
+    }
+
 -   Generated columns for PostgreSQL v12 and above.
 
         CREATE TABLE game_price (
@@ -84,67 +77,63 @@ Deployment / Production repo: https://github.com/mattfrancis888/steam
 
 Note to me: Our database is hosted with PostgreSQL v11. Thus, when we try to `RESTORE` our `pg_dump` the table above would not be created. I was not able to use **GENERATED COLUMNS** and had to create another `game_price` table without it and manually insert all the values again.
 
-## Express.Js
+## Express.JS
 
 -   Able to inject SQL for many to many relationship tables/junction tables with reducer() and map().
 
+
     {
-    "games": [
-    "base_info": [
-    {
-    "game_id": 1,
-    "title": "Monsters Inc Game"
-    },
-    {
-    "game_id": 2,
-    "title": "Dora Game"
-    },
-    ],
-    "genres": [
-    {
-    "genre_id": 1,
-    "game_id": 1,
-    "genre_type": "Action"
-    },
-    {
-    "genre_id": 2,
-    "game_id": 2,
-    "genre_type": "Fantasy"
+       "games": [
+            {
+                "game_id": 1,
+                "title": "Monsters Inc Game"
+                "genres": [
+                    {
+                        "game_id": 1,
+                        "genre_type": "Action"
+                     }
+                 ]
+            },
+            {
+                "game_id": 2,
+                "title": "Dora Game"
+                "genres": [
+                    {
+                        "game_id": 2,
+                        "genre_type": "Fantasy"
+                     },
+                 ]
+            }
+        ]
     }
-    ],
-    ]
-    }
+
 
 **Into**
 
-       {
-           "games": [
-                {
-                    "game_id": 1,
-                    "title": "Monsters Inc Game"
-                    "genres": [
-                        {
-                            "genre_id": 1,
-                            "game_id": 1,
-                             "genre_type": "Action"
-                         }....
-                     ]
-                },
-                {
-                    "game_id": 2,
-                    "title": "Dora"
-                    "genres": [
-                        {
-                            "genre_id": 1,
-                            "game_id": 2,
-                             "genre_type": "Action"
-                         },
-                     ]
-                }
-
-               ....
-            ]
-        }
+    {
+       "games": [
+            {
+                "game_id": 1,
+                "title": "Monsters Inc Game"
+                "genres": [
+                    {
+                        "game_id": 1,
+                        "genre_type": "Action"
+                     }
+                 ]
+            },
+            {
+                "game_id": 2,
+                "title": "Dora Game"
+                "genres": [
+                    {
+                        "game_id": 2,
+                        "genre_type": "Fantasy"
+                     },
+                 ]
+            }
+        ]
+    }
 
 ## External Resources:
 
@@ -165,10 +154,10 @@ Note to me: Our database is hosted with PostgreSQL v11. Thus, when we try to `RE
 <img src="readmeImg/gameInfoReview.png" height="350"/>
 <img src="readmeImg/gameInfoReviewers.png" height="350"/>
 <img src="readmeImg/editReviewLg.png" height="350"/>
-<img src="readmeImg/cart.png" width="350"/>
+<img src="readmeImg/cart.png" height="350"/>
 <img src="readmeImg/searchLg.png" height="350"/>
-<img src="readmeImg/searchbar.png" width="350"/>
-<img src="readmeImg/noMatch.png" width="350"/>
+<img src="readmeImg/searchbar.png" height="350"/>
+<img src="readmeImg/noMatch.png" height="350"/>
 <img src="readmeImg/profile.png" height="350"/>
 <img src="readmeImg/signInLg.png" height="350"/>
 <img src="readmeImg/registerLg.png" height="350"/>
