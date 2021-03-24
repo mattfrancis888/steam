@@ -306,13 +306,14 @@ const GameInfo: React.FC<GameInfoProps> = (props) => {
         });
     };
 
-    const onSubmitPostReview = (formValues: WriteReviewFormValues) => {
+    const onSubmitPostReview = async (formValues: WriteReviewFormValues) => {
         const recommendObj = { recommend: recommend };
         const updatedObj: IPostAndEditReview = Object.assign(
             formValues,
             recommendObj
         );
-        props.postReview(updatedObj, props.match.params.gameId);
+        //Ignore warning comment by eslint, it actually waits
+        await props.postReview(updatedObj, props.match.params.gameId);
         itemEls.current[0]?.scrollIntoView({ behavior: "smooth" });
     };
 

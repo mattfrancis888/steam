@@ -124,7 +124,7 @@ const Searchbar: React.FC<SearchbarProps> = (props) => {
                     className="searchBarIcons"
                     data-testid="searchIcon"
                     onClick={() => {
-                        history.push(`search?q=${searchTerm}`);
+                        history.push(`/search?q=${searchTerm}`);
                     }}
                 />
                 <div

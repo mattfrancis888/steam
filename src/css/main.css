@@ -1864,6 +1864,7 @@ body {
 }
 
 .chartGameContainer {
+  cursor: pointer;
   position: relative;
   display: flex;
   background: rgba(0, 0, 0, 0.2);
@@ -2054,6 +2055,7 @@ body {
 }
 
 .chartGamePreviewHover {
+  cursor: pointer;
   display: none;
   margin-left: 5rem;
   width: 32rem;

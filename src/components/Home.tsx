@@ -345,7 +345,12 @@ const Home: React.FC<HomeProps> = (props) => {
         });
         if (filteredContent.length > 0)
             return (
-                <div className="chartGamePreviewHover">
+                <div
+                    className="chartGamePreviewHover"
+                    onClick={() => {
+                        history.push(`game/${gameId}`);
+                    }}
+                >
                     <p className="chartGamePreviewTitle">
                         {filteredContent.map((content, index) => {
                             return content.title;

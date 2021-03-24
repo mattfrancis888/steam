@@ -7,7 +7,7 @@ import {
     deleteImage,
 } from "../controllers/profile";
 const profileRouter = Router();
-profileRouter.get("/profile", getUserProfile);
+profileRouter.get("/get-profile", getUserProfile);
 profileRouter.patch("/edit-profile", editUserProfile);
 profileRouter.post("/upload-image", uploadImage);
 profileRouter.put("/edit-image/:cloudinaryPublicId", editImage);
